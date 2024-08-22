@@ -1,0 +1,15 @@
+.appearanceToggle {
+    cursor: pointer;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    background-color: var(--gradient-base-top);
+    color: var(--text-secondary);
+    border-radius: 4px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+  }
+
+  
+  .appearanceToggle:active {
+    transform: scale(0.98);
+  }

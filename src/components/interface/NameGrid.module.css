@@ -51,11 +51,10 @@
     cursor: ns-resize;
     background-color: var(--text-secondary);
     color: var(--gradient-base-bottom) !important;
-    border: none;
   }
   
   .letterBox.active {
-    border-color: var(--);
+    border-color: var(--accent);
     box-shadow: 0px 0px 8px var(--accent);
   }
   

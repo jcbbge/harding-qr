@@ -71,7 +71,7 @@ body {
   color: var(--text-primary);
   overflow: hidden;
   position: relative;
-  font-family: Arial, sans-serif;
+  font-family: 'VT323', monospace;
 }
 
 

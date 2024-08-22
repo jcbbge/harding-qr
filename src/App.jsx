@@ -9,7 +9,6 @@ import "./App.css";
 const [company, setCompany] = createSignal('');
 const [role, setRole] = createSignal('');
 const [timeLeft, setTimeLeft] = createSignal(60); // 60 seconds = 1 minute
-const [isDarkMode, setIsDarkMode] = createSignal(false);
 
 function App(){
 
@@ -55,16 +54,12 @@ function App(){
         return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
 
-    const toggleDarkMode = () => {
-        setIsDarkMode(!isDarkMode());
-    };
-
     return (
         <ThemeProvider>
             <ErrorBoundary fallback={(err) => <div>Error: {err}</div>}>
                 <div class="theme-controls">
-                    <ThemeSwitcher />
-                    <AppearanceToggle />
+                    <ThemeSwitcher></ThemeSwitcher>
+                    <AppearanceToggle></AppearanceToggle>
                 </div>
                 <div class="timer-container">
                     <div id="timer">{formattedTime()}</div>
@@ -76,9 +71,6 @@ function App(){
                     <h1>Welcome to my portfolio</h1>
                     <p>This is a portfolio for my work</p>
                 </div>
-                <button class="dark-mode-switch" onClick={toggleDarkMode}>
-                    {isDarkMode() ? "🌞" : "🌙"}
-                </button>
             </ErrorBoundary>
         </ThemeProvider>
     );

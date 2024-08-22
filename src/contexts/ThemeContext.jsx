@@ -5,6 +5,16 @@ const ThemeContext = createContext();
 export function ThemeProvider(props) {
   const [currentTheme, setCurrentTheme] = createSignal('digital-dawn');
   const [appearanceMode, setAppearanceMode] = createSignal('system');
+  const [systemPreference, setSystemPreference] = createSignal(
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  );
+
+  const applyThemeAndMode = () => {
+    document.body.setAttribute('data-theme', currentTheme());
+    
+    const effectiveMode = appearanceMode() === 'system' ? systemPreference() : appearanceMode();
+    document.body.classList.toggle('dark-mode', effectiveMode === 'dark');
+  };
 
   createEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -16,40 +26,56 @@ export function ThemeProvider(props) {
     applyThemeAndMode();
   });
 
-  const applyThemeAndMode = () => {
-    document.body.setAttribute('data-theme', currentTheme());
+  createEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e) => {
+      setSystemPreference(e.matches ? 'dark' : 'light');
+    };
     
-    if (appearanceMode() === 'system') {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.body.classList.toggle('dark-mode', prefersDark);
-    } else {
-      document.body.classList.toggle('dark-mode', appearanceMode() === 'dark');
-    }
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
+  });
 
-    localStorage.setItem('theme', currentTheme());
-    localStorage.setItem('appearance-mode', appearanceMode());
-  };
+  createEffect(() => {
+    // This effect will run whenever systemPreference or appearanceMode changes
+    applyThemeAndMode();
+  });
 
   const toggleAppearanceMode = () => {
     const modes = ['light', 'dark', 'system'];
     const currentIndex = modes.indexOf(appearanceMode());
     const nextIndex = (currentIndex + 1) % modes.length;
     setAppearanceMode(modes[nextIndex]);
-    applyThemeAndMode();
   };
+
+  createEffect(() => {
+    localStorage.setItem('theme', currentTheme());
+    localStorage.setItem('appearance-mode', appearanceMode());
+  });
 
   const changeTheme = (newTheme) => {
     setCurrentTheme(newTheme);
-    applyThemeAndMode();
+  };
+
+  const contextValue = {
+    currentTheme,
+    appearanceMode,
+    toggleAppearanceMode,
+    changeTheme,
+    systemPreference
   };
 
   return (
-    <ThemeContext.Provider value={{ currentTheme, appearanceMode, toggleAppearanceMode, changeTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {props.children}
     </ThemeContext.Provider>
   );
 }
 
 export function useTheme() {
-  return useContext(ThemeContext);
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
 }

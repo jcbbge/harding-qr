@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+:root {
+  /* Digital Dawn - Light theme */
+  --gradient-base-bottom: #FFD1DC;
+  --gradient-base-top: #B0E2FF;
+  --gradient-overlay: #E6E6FA;
+  --text-primary: #000000;
+  --text-secondary: #595959;
+  --accent: #0056B3;
+
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+      --gradient-base-bottom: #1A1A2E;
+      --gradient-base-top: #16213E;
+      --gradient-overlay: #1E2749;
+      --text-primary: #FFFFFF;
+      --text-secondary: #BFBFC3;
+      --accent: #52A8FF;
+    }
+  }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Press Start 2P', cursive;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  color: var(--text-primary);
+  overflow: hidden;
+  position: relative;
+  font-family: Arial, sans-serif;
+}
+
+
+  /* Gradient animations */
+.gradient-base {
+    background: linear-gradient(to bottom, var(--gradient-base-top), var(--gradient-base-bottom));
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+  }
+  
+  .gradient-overlay {
+    background: radial-gradient(circle, var(--gradient-overlay), transparent);
+    background-size: 400% 400%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    animation: breathe 10s ease-in-out infinite;
+  }
+  
+  @keyframes breathe {
+    0%, 100% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+  }
+  
+
+/* Theme switcher styles */
+.theme-switcher {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  gap: 10px;
+}
+
+.theme-switcher button,
+.theme-switcher select {
+  background: var(--gradient-overlay);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.theme-switcher button:hover,
+.theme-switcher select:hover {
+  opacity: 0.8;
+}

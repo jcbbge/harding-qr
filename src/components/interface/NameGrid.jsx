@@ -2,15 +2,15 @@ import { createSignal, createEffect, For, onMount, onCleanup, Show } from 'solid
 import styles from './NameGrid.module.css';
 import GridRow from './GridRow';
 
-import letterChangeSound from '../assets/sounds/natural-tap-1.wav';
-import letterChangeSoundDown from '../assets/sounds/natural-tap-3.wav';
-import correctLetterSound from '../assets/sounds/success.wav';
-import correctWordSound1 from '../assets/sounds/musical-tap-1.wav';
-import correctWordSound2 from '../assets/sounds/musical-tap-3.wav';
-import correctWordSound3 from '../assets/sounds/musical-tap-2.wav';
-import allWordsCompleteSound from '../assets/sounds/atmostphere-2.wav';
+import letterChangeSound from '../../assets/sounds/natural-tap-1.wav';
+import letterChangeSoundDown from '../../assets/sounds/natural-tap-3.wav';
+import correctLetterSound from '../../assets/sounds/success.wav';
+import correctWordSound1 from '../../assets/sounds/musical-tap-1.wav';
+import correctWordSound2 from '../../assets/sounds/musical-tap-3.wav';
+import correctWordSound3 from '../../assets/sounds/musical-tap-2.wav';
+import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 
-import DebugWrapper from './DebugWrapper';
+import DebugWrapper from '../util/DebugWrapper';
 
 // const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
 const fullName = ['MVP', 'KPI', 'OKR'];

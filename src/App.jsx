@@ -1,10 +1,10 @@
 import { createSignal, onMount, onCleanup, ErrorBoundary } from 'solid-js';
+import { ThemeProvider } from './contexts/ThemeContext';
 
-import NameGrid from './components/NameGrid';
-import DarkMode from "./components/DarkMode";
-import ThemeSwitcher from "./components/ThemeSwitcher";
-
-import './App.css';
+import ThemeSwitcher from './components/interface/ThemeSwitcher';
+import AppearanceToggle from './components/interface/AppearanceToggle';
+import NameGrid from './components/interface/NameGrid';
+import "./App.css";
 
 const [company, setCompany] = createSignal('');
 const [role, setRole] = createSignal('');
@@ -60,13 +60,15 @@ function App(){
     };
 
     return (
-        <>
+        <ThemeProvider>
             <ErrorBoundary fallback={(err) => <div>Error: {err}</div>}>
-                <ThemeSwitcher></ThemeSwitcher>
-                    <div class="timer-container">
-                        <div id="timer">{formattedTime()}</div>
-                    </div>
-                <DarkMode></DarkMode>
+                <div class="theme-controls">
+                    <ThemeSwitcher />
+                    <AppearanceToggle />
+                </div>
+                <div class="timer-container">
+                    <div id="timer">{formattedTime()}</div>
+                </div>
                 <div class="top-column">
                     <NameGrid company={company()} role={role()} onLetterUnlock={handleLetterUnlock}></NameGrid>
                 </div>
@@ -78,7 +80,7 @@ function App(){
                     {isDarkMode() ? "🌞" : "🌙"}
                 </button>
             </ErrorBoundary>
-        </>
+        </ThemeProvider>
     );
 }
 

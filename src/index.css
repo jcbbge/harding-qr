@@ -1,27 +1,64 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
 :root {
-  /* Digital Dawn - Light theme */
+  /* Default theme: Digital Dawn - Light */
   --gradient-base-bottom: #FFD1DC;
   --gradient-base-top: #B0E2FF;
   --gradient-overlay: #E6E6FA;
   --text-primary: #000000;
   --text-secondary: #595959;
   --accent: #0056B3;
-
 }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-    :root {
-      --gradient-base-bottom: #1A1A2E;
-      --gradient-base-top: #16213E;
-      --gradient-overlay: #1E2749;
-      --text-primary: #FFFFFF;
-      --text-secondary: #BFBFC3;
-      --accent: #52A8FF;
-    }
-  }
+/* Digital Dawn - Dark */
+[data-theme="digital-dawn"].dark-mode {
+  --gradient-base-bottom: #1A1A2E;
+  --gradient-base-top: #16213E;
+  --gradient-overlay: #1E2749;
+  --text-primary: #FFFFFF;
+  --text-secondary: #BFBFC3;
+  --accent: #52A8FF;
+}
+
+/* Cyber Punk - Light */
+[data-theme="cyber-punk"] {
+  --gradient-base-bottom: #FFF700;
+  --gradient-base-top: #00FFFF;
+  --gradient-overlay: #FF00FF;
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --accent: #FF00FF;
+}
+
+/* Cyber Punk - Dark */
+[data-theme="cyber-punk"].dark-mode {
+  --gradient-base-bottom: #000000;
+  --gradient-base-top: #0D0221;
+  --gradient-overlay: #3B0256;
+  --text-primary: #00FFFF;
+  --text-secondary: #FF00FF;
+  --accent: #FFF700;
+}
+
+/* Retro Wave - Light */
+[data-theme="retro-wave"] {
+  --gradient-base-bottom: #FFA07A;
+  --gradient-base-top: #87CEFA;
+  --gradient-overlay: #DDA0DD;
+  --text-primary: #000000;
+  --text-secondary: #4B0082;
+  --accent: #FF1493;
+}
+
+/* Retro Wave - Dark */
+[data-theme="retro-wave"].dark-mode {
+  --gradient-base-bottom: #191970;
+  --gradient-base-top: #4B0082;
+  --gradient-overlay: #8A2BE2;
+  --text-primary: #FF69B4;
+  --text-secondary: #00FFFF;
+  --accent: #FF1493;
+}
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Press Start 2P', cursive;

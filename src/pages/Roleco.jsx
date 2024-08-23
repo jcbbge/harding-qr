@@ -7,6 +7,9 @@ const Roleco = (props) => {
     const [company, setCompany] = createSignal(props.company);
 
   const params = useParams();
+  const handleLetterUnlock = () => {
+    console.log('letter unlocked - inside Roleco.jsx');
+  };
 
   return (
     <div>

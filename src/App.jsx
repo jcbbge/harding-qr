@@ -39,7 +39,7 @@ function App(){
     onCleanup(() => {
         // window.removeEventListener("wheel", handleScroll);
         // window.removeEventListener("scroll", handleScroll);
-        window.removeEventListener("keydown", handleScroll);
+        // window.removeEventListener("keydown", handleScroll);
         clearInterval(timerInterval); // Clear the timer interval
     });
 
@@ -57,6 +57,9 @@ function App(){
     return (
         <ThemeProvider>
             <ErrorBoundary fallback={(err) => <div>Error: {err}</div>}>
+                <nav>
+                    <a href="/scrumble">Scrumble</a>
+                </nav>
                 <div class="theme-controls">
                     <ThemeSwitcher></ThemeSwitcher>
                     <AppearanceToggle></AppearanceToggle>

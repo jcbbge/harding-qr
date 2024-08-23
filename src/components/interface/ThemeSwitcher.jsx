@@ -5,12 +5,10 @@ const themes = [
   'digital-dawn',
   'cyber-punk',
   'retro-wave',
-  'sand-martin',
+  'echo-sphere',
   'rail-pop',
   'charge-back',
-  'echo-sphere',
   'urban-pulse',
-  'modular-rhythm'
 ];
 
 const ThemeSwitcher = () => {

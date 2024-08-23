@@ -12,12 +12,12 @@
 
 /* Digital Dawn - Dark */
 [data-theme="digital-dawn"].dark-mode {
-  --gradient-base-bottom: #1A1A2E;
-  --gradient-base-top: #16213E;
-  --gradient-overlay: #1E2749;
-  --text-primary: #FFFFFF;
-  --text-secondary: #BFBFC3;
-  --accent: #52A8FF;
+  --gradient-base-bottom: #1A0033;
+  --gradient-base-top: #001F3F;
+  --gradient-overlay: #2C0052;
+  --text-primary: #E6E6FA;
+  --text-secondary: #B0B0B0;
+  --accent: #4D94FF;
 }
 
 /* Cyber Punk - Light */
@@ -32,11 +32,11 @@
 
 /* Cyber Punk - Dark */
 [data-theme="cyber-punk"].dark-mode {
-  --gradient-base-bottom: #000000;
-  --gradient-base-top: #0D0221;
+  --gradient-base-bottom: #0D0221;
+  --gradient-base-top: #1A1A3A;
   --gradient-overlay: #3B0256;
   --text-primary: #00FFFF;
-  --text-secondary: #FF00FF;
+  --text-secondary: #FF69B4;
   --accent: #FFF700;
 }
 
@@ -52,38 +52,12 @@
 
 /* Retro Wave - Dark */
 [data-theme="retro-wave"].dark-mode {
-  --gradient-base-bottom: #191970;
-  --gradient-base-top: #4B0082;
-  --gradient-overlay: #8A2BE2;
+  --gradient-base-bottom: #1A0033;
+  --gradient-base-top: #000080;
+  --gradient-overlay: #4B0082;
   --text-primary: #FF69B4;
   --text-secondary: #00FFFF;
   --accent: #FF1493;
-}
-
-/* Sand Martin - Light theme */
-[data-theme="sand-martin"] {
-  --gradient-base-bottom: #006400;
-  --gradient-base-top: #F0FFF0;
-  --gradient-overlay: #E0EEE0;
-  --text-primary: #000000;
-  --text-secondary: #333333;
-  --accent: #A67C00;
-  --accent-opposite: #8B008B;
-  --accent-fun: #007A7A;
-  --accent-unexpected: #B22222;
-}
-
-/* Sand Martin - Dark theme */
-[data-theme="sand-martin"].dark-mode {
-  --gradient-base-bottom: #003200;
-  --gradient-base-top: #1A2F1A;
-  --gradient-overlay: #0F1F0F;
-  --text-primary: #FFFFFF;
-  --text-secondary: #CCCCCC;
-  --accent: #FFD700;
-  --accent-opposite: #9932CC;
-  --accent-fun: #20B2AA;
-  --accent-unexpected: #FF4500;
 }
 
 /* Rail Pop - Light theme (Accessible) */
@@ -101,14 +75,14 @@
 
 /* Rail Pop - Dark theme (Accessible) */
 [data-theme="rail-pop"].dark-mode {
-  --gradient-base-bottom: #1A2B3C;
-  --gradient-base-top: #2E4263;
-  --gradient-overlay: #7DA1BF;
-  --text-primary: #E0E0E0;
-  --text-secondary: #BDBDBD;
+  --gradient-base-bottom: #0A1A2F;
+  --gradient-base-top: #1E3A5F;
+  --gradient-overlay: #2E5A8F;
+  --text-primary: #F0F0F0;
+  --text-secondary: #D0D0D0;
   --accent: #FF8FA3;
   --accent-opposite: #90CC65;
-  --accent-fun: #FFBA3D;
+  --accent-fun: #FFD700;
   --accent-unexpected: #FF9770;
 }
 
@@ -127,15 +101,15 @@
 
 /* Charge Back - Dark theme (Accessible) */
 [data-theme="charge-back"].dark-mode {
-  --gradient-base-bottom: #8C5656;
-  --gradient-base-top: #B97E7E;
-  --gradient-overlay: #F2C9C9;
-  --text-primary: #E5E5E5;
-  --text-secondary: #C7C7C7;
-  --accent: #FFE347;
-  --accent-opposite: #91B7D9;
-  --accent-fun: #FF8C69;
-  --accent-unexpected: #A0D468;
+  --gradient-base-bottom: #4A2626;
+  --gradient-base-top: #6B3A3A;
+  --gradient-overlay: #8C5656;
+  --text-primary: #F2E6E6;
+  --text-secondary: #D9C2C2;
+  --accent: #FFD700;
+  --accent-opposite: #87CEEB;
+  --accent-fun: #FF7F50;
+  --accent-unexpected: #98FB98;
 }
 
 /* Echo Sphere - Light theme (Accessible) */
@@ -153,15 +127,15 @@
 
 /* Echo Sphere - Dark theme (Accessible) */
 [data-theme="echo-sphere"].dark-mode {
-  --gradient-base-bottom: #3F676F;
-  --gradient-base-top: #669DA7;
-  --gradient-overlay: #A6D1D9;
-  --text-primary: #E0E0E0;
-  --text-secondary: #C3C3C3;
-  --accent: #FFC6CD;
-  --accent-opposite: #B4F0EC;
-  --accent-fun: #FFF0C4;
-  --accent-unexpected: #FFBCAF;
+  --gradient-base-bottom: #1A3A3F;
+  --gradient-base-top: #2A5A66;
+  --gradient-overlay: #3A7A8C;
+  --text-primary: #E6F2F5;
+  --text-secondary: #B8D8E0;
+  --accent: #FF9AAA;
+  --accent-opposite: #66E6D9;
+  --accent-fun: #FFD700;
+  --accent-unexpected: #FF6B6B;
 }
 
 /* Urban Pulse - Light theme (Accessible) */
@@ -179,42 +153,17 @@
 
 /* Urban Pulse - Dark theme (Accessible) */
 [data-theme="urban-pulse"].dark-mode {
-  --gradient-base-bottom: #2E3336;
-  --gradient-base-top: #5C676B;
-  --gradient-overlay: #8C969B;
-  --text-primary: #E8E8E8;
-  --text-secondary: #B0B0B0;
+  --gradient-base-bottom: #1A1E20;
+  --gradient-base-top: #2A3236;
+  --gradient-overlay: #3A464C;
+  --text-primary: #E6E8E9;
+  --text-secondary: #B8BABB;
   --accent: #FFA500;
-  --accent-opposite: #8EBFCC;
-  --accent-fun: #FFC966;
-  --accent-unexpected: #A6A6A6;
+  --accent-opposite: #87CEEB;
+  --accent-fun: #FFD700;
+  --accent-unexpected: #A9A9A9;
 }
 
-/* Modular Rhythm - Light theme (Accessible) */
-[data-theme="modular-rhythm"] {
-  --gradient-base-bottom: #3A4E6A;
-  --gradient-base-top: #B3C2CC;
-  --gradient-overlay: #DDE7EC;
-  --text-primary: #242424;
-  --text-secondary: #545454;
-  --accent: #B38600;
-  --accent-opposite: #6F6F6F;
-  --accent-fun: #CC3333;
-  --accent-unexpected: #767676;
-}
-
-/* Modular Rhythm - Dark theme (Accessible) */
-[data-theme="modular-rhythm"].dark-mode {
-  --gradient-base-bottom: #1F354A;
-  --gradient-base-top: #3A4E6A;
-  --gradient-overlay: #5C6976;
-  --text-primary: #F2F2F2;
-  --text-secondary: #B8B8B8;
-  --accent: #FFCC33;
-  --accent-opposite: #8C8C8C;
-  --accent-fun: #FF6666;
-  --accent-unexpected: #CACACA;
-}
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Press Start 2P', cursive;

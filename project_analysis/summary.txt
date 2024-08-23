@@ -1,0 +1,5 @@
+Recent Changes:
+Added theme switcher. Added Darkmode support.
+
+Upcoming Tasks:
+Install Solid router. Add card elements for content reveal.

@@ -1,0 +1,19 @@
+Project Overview:
+Craft a beautifully designed portfolio website that is modern and interactive! This will help me in my transition from Senior Software Developer to Product Manager and aid in my job search.
+
+Key Components and Processes:
+It will be a Solid JS [https://docs.solidjs.com] project using Solid Router to make it a multi page website. The unifying element to my website/app will be in interactive header that will be function as a word game that uses keyboard navigation and interaction. Each page will init a different version of the game for site visitors but everything will direct the user to me, and my personal brand to showcase my skills and qualification for my job hunt as a Product Manager.
+
+Current Focus and Next Steps:
+Need to install Solid Router using the docs from [https://docs.solidjs.com/solid-router]. Next steps after installing the router will be to customize 3 page views. 1 for landing page, one to handle page params from the url, and the other to be a dedicated page for Scrumble word game. I need to add interactive reveal card elements coinciding with gameplay for each page. I need to build a footer across all pages with page and game details, copyright and dev watermarks, etc. I need to refactor the grid layout to better utilize responsive space when viewed on mobile, and desktop. I need to add some custom detail elements to elevate UI such as letter box rim highlights and subtle glow effects. I need to install a modern and free icon set.
+
+Code Modification Instructions:
+Use Solid.js[https://docs.solidjs.com] conventions and best practices. Do not use any React or any 3rd party libraries/packages in the React ecosystem. Code blocks should be properly formatted with spaces:4 indentation.
+
+Points to Consider:
+- Performance optimization
+- Security best practices
+- Code maintainability
+- Scalability
+- Error handling and logging
+[Add any other specific points relevant to your project]

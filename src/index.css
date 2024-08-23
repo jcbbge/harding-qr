@@ -60,6 +60,162 @@
   --accent: #FF1493;
 }
 
+/* Sand Martin - Light theme */
+[data-theme="sand-martin"] {
+  --gradient-base-bottom: #006400;
+  --gradient-base-top: #F0FFF0;
+  --gradient-overlay: #E0EEE0;
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --accent: #A67C00;
+  --accent-opposite: #8B008B;
+  --accent-fun: #007A7A;
+  --accent-unexpected: #B22222;
+}
+
+/* Sand Martin - Dark theme */
+[data-theme="sand-martin"].dark-mode {
+  --gradient-base-bottom: #003200;
+  --gradient-base-top: #1A2F1A;
+  --gradient-overlay: #0F1F0F;
+  --text-primary: #FFFFFF;
+  --text-secondary: #CCCCCC;
+  --accent: #FFD700;
+  --accent-opposite: #9932CC;
+  --accent-fun: #20B2AA;
+  --accent-unexpected: #FF4500;
+}
+
+/* Rail Pop - Light theme (Accessible) */
+[data-theme="rail-pop"] {
+  --gradient-base-bottom: #2E4263;
+  --gradient-base-top: #7DA1BF;
+  --gradient-overlay: #D7E5F2;
+  --text-primary: #1A1A1A;
+  --text-secondary: #474747;
+  --accent: #C73850;
+  --accent-opposite: #5A8435;
+  --accent-fun: #B78500;
+  --accent-unexpected: #C14D2E;
+}
+
+/* Rail Pop - Dark theme (Accessible) */
+[data-theme="rail-pop"].dark-mode {
+  --gradient-base-bottom: #1A2B3C;
+  --gradient-base-top: #2E4263;
+  --gradient-overlay: #7DA1BF;
+  --text-primary: #E0E0E0;
+  --text-secondary: #BDBDBD;
+  --accent: #FF8FA3;
+  --accent-opposite: #90CC65;
+  --accent-fun: #FFBA3D;
+  --accent-unexpected: #FF9770;
+}
+
+/* Charge Back - Light theme (Accessible) */
+[data-theme="charge-back"] {
+  --gradient-base-bottom: #B97E7E;
+  --gradient-base-top: #F2C9C9;
+  --gradient-overlay: #FCE4E4;
+  --text-primary: #3A3A3A;
+  --text-secondary: #686868;
+  --accent: #B39700;
+  --accent-opposite: #4A719E;
+  --accent-fun: #D35400;
+  --accent-unexpected: #5C8A2B;
+}
+
+/* Charge Back - Dark theme (Accessible) */
+[data-theme="charge-back"].dark-mode {
+  --gradient-base-bottom: #8C5656;
+  --gradient-base-top: #B97E7E;
+  --gradient-overlay: #F2C9C9;
+  --text-primary: #E5E5E5;
+  --text-secondary: #C7C7C7;
+  --accent: #FFE347;
+  --accent-opposite: #91B7D9;
+  --accent-fun: #FF8C69;
+  --accent-unexpected: #A0D468;
+}
+
+/* Echo Sphere - Light theme (Accessible) */
+[data-theme="echo-sphere"] {
+  --gradient-base-bottom: #669DA7;
+  --gradient-base-top: #A6D1D9;
+  --gradient-overlay: #D6F1F5;
+  --text-primary: #333333;
+  --text-secondary: #5A5A5A;
+  --accent: #C45F6E;
+  --accent-opposite: #3E847F;
+  --accent-fun: #B38600;
+  --accent-unexpected: #C13F3E;
+}
+
+/* Echo Sphere - Dark theme (Accessible) */
+[data-theme="echo-sphere"].dark-mode {
+  --gradient-base-bottom: #3F676F;
+  --gradient-base-top: #669DA7;
+  --gradient-overlay: #A6D1D9;
+  --text-primary: #E0E0E0;
+  --text-secondary: #C3C3C3;
+  --accent: #FFC6CD;
+  --accent-opposite: #B4F0EC;
+  --accent-fun: #FFF0C4;
+  --accent-unexpected: #FFBCAF;
+}
+
+/* Urban Pulse - Light theme (Accessible) */
+[data-theme="urban-pulse"] {
+  --gradient-base-bottom: #5C676B;
+  --gradient-base-top: #8C969B;
+  --gradient-overlay: #BCC3C8;
+  --text-primary: #2D2D2D;
+  --text-secondary: #575757;
+  --accent: #B36F00;
+  --accent-opposite: #5C848E;
+  --accent-fun: #B38600;
+  --accent-unexpected: #767676;
+}
+
+/* Urban Pulse - Dark theme (Accessible) */
+[data-theme="urban-pulse"].dark-mode {
+  --gradient-base-bottom: #2E3336;
+  --gradient-base-top: #5C676B;
+  --gradient-overlay: #8C969B;
+  --text-primary: #E8E8E8;
+  --text-secondary: #B0B0B0;
+  --accent: #FFA500;
+  --accent-opposite: #8EBFCC;
+  --accent-fun: #FFC966;
+  --accent-unexpected: #A6A6A6;
+}
+
+/* Modular Rhythm - Light theme (Accessible) */
+[data-theme="modular-rhythm"] {
+  --gradient-base-bottom: #3A4E6A;
+  --gradient-base-top: #B3C2CC;
+  --gradient-overlay: #DDE7EC;
+  --text-primary: #242424;
+  --text-secondary: #545454;
+  --accent: #B38600;
+  --accent-opposite: #6F6F6F;
+  --accent-fun: #CC3333;
+  --accent-unexpected: #767676;
+}
+
+/* Modular Rhythm - Dark theme (Accessible) */
+[data-theme="modular-rhythm"].dark-mode {
+  --gradient-base-bottom: #1F354A;
+  --gradient-base-top: #3A4E6A;
+  --gradient-overlay: #5C6976;
+  --text-primary: #F2F2F2;
+  --text-secondary: #B8B8B8;
+  --accent: #FFCC33;
+  --accent-opposite: #8C8C8C;
+  --accent-fun: #FF6666;
+  --accent-unexpected: #CACACA;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Press Start 2P', cursive;
 }
@@ -72,40 +228,41 @@ body {
   overflow: hidden;
   position: relative;
   font-family: 'VT323', monospace;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-  /* Gradient animations */
+/* Gradient animations */
 .gradient-base {
-    background: linear-gradient(to bottom, var(--gradient-base-top) 20%, var(--gradient-base-bottom));
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -2;
-  }
-  
-  .gradient-overlay {
-    background: radial-gradient(circle at 50% 100%, var(--gradient-base-bottom) 30%, transparent 50%);
-    background-size: 400% 400%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    animation: breathe 12s ease-in-out infinite;
-  }
-  
-  @keyframes breathe {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 50% 50%; }
-  }
-  
+  background: linear-gradient(to bottom, var(--gradient-base-top) 20%, var(--gradient-base-bottom));
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -2;
+  transition: background 0.3s ease;
+}
 
-/* Theme switcher styles */
-.theme-switcher {
+.gradient-overlay {
+  background: radial-gradient(circle at 50% 100%, var(--gradient-base-bottom) 30%, transparent 50%);
+  background-size: 400% 400%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  animation: breathe 12s ease-in-out infinite;
+  transition: background 0.3s ease;
+}
+
+@keyframes breathe {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 50% 50%; }
+}
+
+/* Theme controls styles */
+.theme-controls {
   position: fixed;
   top: 20px;
   right: 20px;
@@ -114,17 +271,18 @@ body {
   gap: 10px;
 }
 
-.theme-switcher button,
-.theme-switcher select {
+.theme-controls button,
+.theme-controls select {
   background: var(--gradient-overlay);
   border: none;
   padding: 5px 10px;
   border-radius: 5px;
   color: var(--text-primary);
   cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
 }
 
-.theme-switcher button:hover,
-.theme-switcher select:hover {
+.theme-controls button:hover,
+.theme-controls select:hover {
   opacity: 0.8;
 }

@@ -1,0 +1,36 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--gradient-base-bottom);
+    color: var(--text-secondary);
+}
+
+.gameDetails, .copyright, .devWatermark {
+    flex: 1;
+}
+
+.copyright {
+    text-align: center;
+}
+
+.devWatermark {
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .gameDetails, .copyright, .devWatermark {
+        margin-bottom: 0.5rem;
+    }
+
+    .devWatermark {
+        text-align: center;
+    }
+                
+}

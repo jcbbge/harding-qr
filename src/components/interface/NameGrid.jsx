@@ -12,8 +12,8 @@ import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 
 import DebugWrapper from '../util/DebugWrapper';
 
-// const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
-const fullName = ['MVP', 'KPI', 'OKR'];
+const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
+// const fullName = ['MVP', 'KPI', 'OKR'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 const isVowel = (char) => 'AEIOU'.includes(char.toUpperCase());
@@ -29,20 +29,25 @@ const areAllWordsComplete = (names) => {
   );
 };
 
+const createInitialNames = () => {
+  const maxLength = Math.max(...fullName.map(name => name.length));
+  const paddedNames = fullName.map(name => name.padStart(maxLength, ' '));
+  
+  return paddedNames.map(name => name.split('').map(char => ({
+    correctLetter: char,
+    currentLetter: isVowel(char) ? getRandomLetter() : char,
+    isVowel: isVowel(char),
+    matched: !isVowel(char) && char !== ' '
+  })));
+};
+
 const NameGrid = ({ onLetterUnlock }) => {
 
     let letterChangeAudio, letterChangeAudioDown, correctLetterAudio, allWordsCompleteAudio;
     let correctWordAudios = [];
     let lastTouchY = 0;
 
-    const [names, setNames] = createSignal(
-        fullName.map(name => name.split('').map(char => ({
-            correctLetter: char,
-            currentLetter: isVowel(char) ? getRandomLetter() : char,
-            isVowel: isVowel(char),
-            matched: !isVowel(char)
-        })))
-    );
+    const [names, setNames] = createSignal(createInitialNames());
     const [activeNameIndex, setActiveNameIndex] = createSignal(0);
     const [activeVowelIndex, setActiveVowelIndex] = createSignal(
         names()[0].findIndex(char => char.isVowel)
@@ -56,7 +61,7 @@ const NameGrid = ({ onLetterUnlock }) => {
         setFocusedPosition({ row: 0, col: initialVowelIndex });
     });
 
-    const findNextVowel = (startRow, startCol, direction) => {
+    const findNextVowelOrBlank = (startRow, startCol, direction) => {
         let row = startRow;
         let col = startCol;
 
@@ -76,12 +81,13 @@ const NameGrid = ({ onLetterUnlock }) => {
                 }
             }
 
-            if (names()[row][col].isVowel) {
+            const currentLetter = names()[row][col];
+            if (currentLetter.isVowel || currentLetter.correctLetter === ' ') {
                 return { row, col };
             }
 
             if (row === startRow && col === startCol) {
-                // We've gone full circle, no vowels found
+                // We've gone full circle, no vowels or blanks found
                 return { row: startRow, col: startCol };
             }
         }
@@ -96,11 +102,11 @@ const NameGrid = ({ onLetterUnlock }) => {
         switch (key) {
             case 'ArrowLeft':
             case 'a':
-                newPosition = findNextVowel(row, col, -1);
+                newPosition = findNextVowelOrBlank(row, col, -1);
                 break;
             case 'ArrowRight':
             case 'd':
-                newPosition = findNextVowel(row, col, 1);
+                newPosition = findNextVowelOrBlank(row, col, 1);
                 break;
             case 'ArrowUp':
             case 'w':

@@ -9,6 +9,11 @@ const themes = [
   'rail-pop',
   'charge-back',
   'urban-pulse',
+  'neon-nostalgia',
+  'pastel-pop',
+  'vision-tech',
+  'surfside-vibes',
+  'mall-rat'
 ];
 
 const ThemeSwitcher = () => {

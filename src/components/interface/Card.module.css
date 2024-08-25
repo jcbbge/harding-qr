@@ -1,0 +1,179 @@
+:root {
+    --card-color: #1a1a2e;
+    --text-color: #ffffff;
+    --text-secondary: #a0a0a0;
+    --button-color: #2a2a40;
+    /* Controls the color and intensity of the glow effect
+     * Range: 0 (transparent) to 1 (opaque)
+     * Lower values create a more subtle glow, higher values a more intense glow
+     */
+    --highlight-color: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .scene {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    perspective: 1000px;
+    overflow: hidden;
+  }
+
+  .card {
+    position: relative;
+    background-color: var(--card-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform-style: preserve-3d;
+    transform: rotateX(calc((var(--mouse-y) - 150) * 0.01deg))
+               rotateY(calc((var(--mouse-x) - 200) * -0.01deg));
+    transition: transform 0.1s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: radial-gradient(
+        /* Controls the size of the glow effect
+         * Larger values create a more spread out, subtle glow
+         * Smaller values create a more concentrated, intense glow
+         * Range: 0px to any positive value (e.g., 200px, 1000px)
+         */
+        800px circle at var(--mouse-x) var(--mouse-y), 
+        var(--highlight-color),
+        /* Controls how quickly the glow fades out
+         * Lower percentage: glow fades out more quickly (more concentrated)
+         * Higher percentage: glow fades out more slowly (more spread out)
+         * Range: 0% to 100%
+         */
+        transparent 60%
+    );
+    opacity: 0;
+    /* Controls the speed of the glow effect appearance/disappearance
+     * Lower values: faster transition
+     * Higher values: slower transition
+     * Range: 0s to any positive value (e.g., 0.1s, 1s)
+     */
+    transition: opacity 0.3s ease;
+  }
+
+  .card:hover::before {
+    /* Controls the intensity of the glow effect on hover
+     * Range: 0 (invisible) to 1 (fully visible)
+     * Lower values create a more subtle effect, higher values a more pronounced effect
+     */
+    opacity: 0.5;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-left h2 {
+    margin-left: 10px;
+    /* font-size: 18px; */
+  }
+
+  .header-right {
+    display: flex;
+  }
+
+  .icon-button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  .card-body {
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 20px 0;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  .sent-from {
+    /* font-size: 14px; */
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+
+  .subject {
+    /* font-size: 24px; */
+    margin-bottom: 20px;
+  }
+
+  .body-text {
+    /* font-size: 16px; */
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .body-buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  .text-button {
+    background-color: var(--button-color);
+    border: none;
+    border-radius: 4px;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 8px 16px;
+    /* font-size: 14px; */
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 20px;
+    margin-top: auto;
+  }
+
+  .bottom-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      max-width: 90%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .card {
+      max-width: 95%;
+    }
+    
+    .card-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .header-right {
+      margin-top: 10px;
+    }
+  }

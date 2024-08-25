@@ -1,5 +1,6 @@
 Recent Changes:
-Added theme switcher. Added Darkmode support.
+Install Solid router. Added some additional themes.
 
 Upcoming Tasks:
-Install Solid router. Add card elements for content reveal.
+Refactor board layout to be full screen at all widths while maintaining the aspect ratio and letterbox sizing. Should be fully responsive. and use css grid or flexbox.
+

@@ -31,18 +31,24 @@
           main
         remotes/
         origin/
-          main
+          feature/
+            solid-router
+            main
           objects/
     01/
       20333129bc99a49887ac29b1f72e28300b4c3e
       04/
+      1cad8c6bf76db127108bb50c44ecec7ea10d86
       b7a4d8084759bba187ec8c29ab269c2b4c4277
+      06/
+      62db1a73559be87d23b293d3d09831d0c196e5
       08/
       b27cefaa220b313a919ee7bfde0270fbb706d5
       f801332f9e8bc6c27317d123e86afc6dc73331
       0a/
       a8991742260d2a4cbca72bf9590b154ab64620
       10/
+      08e4b94b9dd2f3a37e7468af3fff2c74103053
       2ced421b07882a743c891d30495f76573a8bea
       13/
       006b6a7cf270d6b0a58ca1985f22e8d997c0fe
@@ -52,6 +58,8 @@
       b31b75d065b247022eafdf7a4becd93fd30d1f
       23/
       9796d95c874e014606301dc4250793ccc695b4
+      26/
+      2d6a681d33d271585f89c529d3d03944d3a9ca
       28/
       c5d1bbad91daf9610aa88e9e31306b8602b11d
       29/
@@ -65,6 +73,10 @@
       f65927907f5981b1da11a3a17e0622ae7ad6e5
       30/
       c8152ce37af065360d145d53dfbf22b8268051
+      31/
+      fd0f469de6aed5246e57e10b0a1050d22d2da5
+      36/
+      9964f67020ae22354595f4b83b85e82974269c
       37/
       20772f5985748d1c985d1cd25b27588a28af67
       39/
@@ -78,27 +90,46 @@
       3e/
       07581f69809c1e0d4aea11047aa1125d935eae
       5acbc4765aabbbf566e80ff855a29b05557cfc
+      ba0f2ecb4e380429747578ca9d911485b07a9d
       c964bbcf3d5e895c3302d662bba7f81b622e1c
       43/
       bde1dffcdfeed640589d8892a4f0ed58e64ef7
+      45/
+      0f26aa4a599a1bdb5958c3ed1bf26bfaeea550
+      48/
+      dd997ec7d2d8def7ca6efb729e9a71195375b0
       4b/
+      a14525bb9efe04ccf53be71ea49326cf31dbe1
       b946cb34fcc52a87c0aa6a1b88fe28e4be8af8
       d714e00deff9ad63cec24f2702ded716a77b2b
+      4c/
+      d975a769d2f59075ba2b612f32f31367059081
+      4d/
+      cd05bc3d087aca4440e9569222a9c94a4f63de
       4e/
       038a0a4a0af5c877fccbff32dea0fe7d62d802
       0bcfd52f4705ae50c809de308660db70bce59f
+      53/
+      45ca0ea38c086543b38331844c22c482d5990f
+      55/
+      6f25eda4304a01b248d1f2aba4d7e743474c1a
       57/
+      181b20c22555f46c7b3f74bad80826af8d427c
       50b2f13b98049c715d85aa094b46770c6cee23
       58/
       629a583514eff8ab92fc2e673d127db2e3d350
       5a/
       2744f96277f16e4637746297de8010d4e7790e
+      7d0715bbdfdb349a8d44bbe3875085eda4cdbd
+      5b/
+      c7e8129f26ee13710c74b801a576dc17b2b4e8
       5d/
       40341e7562e6e8c09d0c64f9dbbcc223db0d9f
       5e/
       6153e8b9fe2aa3fce80a02f8206e9c6b37a737
       64/
       12413a65cda64df3004051718088fd42249f57
+      2341097ba5985b73d79e04bc8da07045a21521
       66/
       ce4ec7b3cfa87f63215dfc5b56ab42ad538c83
       6a/
@@ -106,18 +137,26 @@
       fe01a99eb4736e1017c5ff6262c63a5dc80ee2
       6e/
       477379f72599a1c90f292104c53e0d760dc4de
+      6add8bf80f66a4334f29dc0942f1bc9ba71a9b
+      71/
+      f2b4e567f22dea6c097be3284572369737dcdf
       73/
       a866e3c2c3f549500d7d06406ba04bf289ab73
       79/
+      139468287449f412e4db9f7fcd608f7b2a95bf
       fe58e89583284930124533d84330e72597da4e
       7e/
       0672dbf89ee1d7c4bd3431cd5d10be1b15d766
+      7f/
+      901c2e21c4ed22a7b28b6ee20aa3d97dc25cb6
       81/
       c66bb9ca27cc304a260d25ac68b166b09a5f30
       82/
       9c3d8a36a0b47f8871a2ad41166c99c2c4a039
+      da4180ed2f7a826d8433ef7fdd1fe4859fae86
       85/
       35155b83b96f2c9065a693ac202d453c9f9a31
+      62e452834bf41d5e9cd609f645f0d46c8e47b7
       86/
       6c23166266884e0cdbc8354b73a339fb3bb099
       87/
@@ -125,14 +164,28 @@
       89/
       0054417cd50fa59269b25bacc39a4c9cf25087
       5c510d129cc887185a53241c6114a48c883107
+      8a/
+      b3f0580f37a87c8838ac635c5e24c0aad7ad30
+      8c/
+      248ae8681f8e6001d02023fb38624386771df0
       8d/
       3fd58f78358b6920d8ad2490342aa0b2420648
+      93/
+      4b7e5538477deca6858e7f3574d760f8a07ddf
+      94/
+      739d894212b5f3d753c7e43a9921bdcadd983a
       98/
       a79bec6d1500664e05bae78ef20bfcb7a4d5bf
+      9a/
+      e8dd44371c1ff066dba300257ad389a16dcc41
       9d/
       ad6c09fd517b5fc16a0a8be7a6a8241edd8dc5
       a0/
       f769be90099b05af5200f712387cac04d22da2
+      aa/
+      be980b28277f23349727a4ae2ff9ac27787dd4
+      ac/
+      911b12466f27db5d24edec33d52769c1124981
       af/
       0e2dbd6781f1cba43f5fbeec3402d9b9d984fb
       b2/
@@ -149,6 +202,7 @@
       7ad0f8b88651415b7e5394cd54c5e23adeb8c1
       bb84347090ca4cc26975ec6c7167d1cb30e4d6
       c0/
+      038ee25d73cfe33c9982592cba336272db28b7
       bc666a1009b884f3ecb4d7e3fc24593f29b118
       c2/
       5b24da6358c316868b6252c712ab7003b351fa
@@ -163,12 +217,17 @@
       61d4e3714b85688c4f0348e1f78f697286eb05
       cc/
       4d32c41464957afad886e60a67febba7b641d3
+      b42bcc5b46a21967816adabc45a46ebb6e05dc
+      ce/
+      a5e591e3d57e4b5b47e3d63eee885b8816fb6c
       cf/
+      1ac041fa74dd58a4b7d680d521a9e4fd572c1e
       c09c47a81de1b8650bfee06a4b1a3cd1898614
       d1/
       215053449a9fedda2ef3fadf2bb82957f86c5a
       c75bb2e5b68ac02ade54489dcc0f33351b622b
       d5/
+      446db079c882bb9888c8ebbaa6389d4e0d2577
       b9a73076408a517d54a37b2e9474482bf5f1b0
       fad746c84b7e81ecd2efa92c009e3bdd03c385
       d6/
@@ -177,24 +236,39 @@
       dc/
       342617de0d9b7d63c153571270de245ab01dea
       df3075fe05aad8f03fc96a0e29dce2abf57ffc
+      dd/
+      3dbc4cc6d666f5a2fb4f8c5f92fa9c48fb54f0
       df/
+      3ed62ee0c934bf9f2f0f5516756aea482cf3c9
       b9e8bcf0982cfce0293cbc682efdb790c75b1b
+      e0/
+      c246ac908a9c74616680b49540f2fe454f4893
       e3/
       03ccec75b5cce2a0896026149dbc3d91ba87f1
       7c50014a4297518f9f3e2aa88577148515fda5
+      e4/
+      c4869d0077320e76673aa06b4402431137677c
       e5/
       009822f62bc63bf3d77f0a84c18155cd0d7e62
+      e7/
+      31385d66da57bff5c83a19ee4caf5ad034f458
       e8/
       6bc4df4cbad8457aed6d8e214b5a19c65ed903
+      e9/
+      13dfdab4f1f2009f4869a57bccd4c8fdc04900
       ed/
       9b3b4e9aef1f2b35f25d47b2646f600cc09bd0
+      ef/
+      b45eef6f6eee7976a05ce7edd4effb41bdb737
       f7/
       25de2856855cc613f340b0d32e9444f81ae8a6
       a4267f02ad0a8d5d75641b0cd7dd7826122378
       f9/
+      0b9ae4ffba22ae7fbdf08cc0eb1c8d0f88379f
       6284053fb59d7ce326c2b0129b098480eefb05
       fc/
       50649d2293d2765562336effc442611266efb4
+      807990979eb0365686c6f920046b41c4c7635e
       fd/
       62adf2de25f9058da73e593d09d7c8a322ac76
       fe/
@@ -209,7 +283,9 @@
         main
       remotes/
       origin/
-        main
+        feature/
+          solid-router
+          main
         tags/
       .gitignore
 README.md
@@ -219,6 +295,13 @@ package-lock.json
 package.json
 pnpm-lock.yaml
 project_analysis/
+  .gitignore
+  README.md
+  dependencies.json
+  instructions.txt
+  package.json
+  project_structure.txt
+  summary.txt
   src/
   App.css
   App.jsx
@@ -239,8 +322,12 @@ project_analysis/
     interface/
       AppearanceToggle.jsx
       AppearanceToggle.module.css
+      Card.jsx
+      Card.module.css
       CardCarousel.jsx
       CardCarousel.module.css
+      Footer.jsx
+      Footer.module.css
       GridRow.jsx
       NameGrid.jsx
       NameGrid.module.css
@@ -251,4 +338,8 @@ project_analysis/
     ThemeContext.jsx
     index.css
   index.jsx
-  vite.config.mjs
+  pages/
+    NotFound.jsx
+    Roleco.jsx
+    Scrumble.jsx
+    vite.config.mjs

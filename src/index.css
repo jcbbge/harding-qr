@@ -8,6 +8,9 @@
   --text-primary: #000000;
   --text-secondary: #595959;
   --accent: #0056B3;
+  --accent-opposite: #FF4500;
+  --accent-fun: #32CD32;
+  --accent-unexpected: #9400D3;
 }
 
 /* Digital Dawn - Dark */
@@ -18,6 +21,9 @@
   --text-primary: #E6E6FA;
   --text-secondary: #B0B0B0;
   --accent: #4D94FF;
+  --accent-opposite: #FF6347;
+  --accent-fun: #00FF00;
+  --accent-unexpected: #FF1493;
 }
 
 /* Cyber Punk - Light */
@@ -28,6 +34,9 @@
   --text-primary: #000000;
   --text-secondary: #333333;
   --accent: #FF00FF;
+  --accent-opposite: #00FFFF;
+  --accent-fun: #FF1493;
+  --accent-unexpected: #32CD32;
 }
 
 /* Cyber Punk - Dark */
@@ -38,6 +47,9 @@
   --text-primary: #00FFFF;
   --text-secondary: #FF69B4;
   --accent: #FFF700;
+  --accent-opposite: #00FFFF;
+  --accent-fun: #FF1493;
+  --accent-unexpected: #32CD32;
 }
 
 /* Retro Wave - Light */
@@ -48,6 +60,9 @@
   --text-primary: #000000;
   --text-secondary: #4B0082;
   --accent: #FF1493;
+  --accent-opposite: #00FFFF;
+  --accent-fun: #FF00FF;
+  --accent-unexpected: #FFFF00;
 }
 
 /* Retro Wave - Dark */
@@ -58,6 +73,9 @@
   --text-primary: #FF69B4;
   --text-secondary: #00FFFF;
   --accent: #FF1493;
+  --accent-opposite: #00FFFF;
+  --accent-fun: #FF00FF;
+  --accent-unexpected: #FFFF00;
 }
 
 /* Rail Pop - Light theme (Accessible) */

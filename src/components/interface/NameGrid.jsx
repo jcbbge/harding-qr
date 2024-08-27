@@ -31,9 +31,20 @@ const areAllWordsComplete = (names) => {
   );
 };
 
-const createInitialNames = () => {
+const padder = (name) => {
   const maxLength = Math.max(...fullName.map(name => name.length));
-  const paddedNames = fullName.map(name => name.padStart(maxLength, ' '));
+  const lengthPos = maxLength === 3 ? 4 : maxLength;
+
+  if (lengthPos === 4 && fullName.indexOf(name) === 1) {
+    return name.padEnd(lengthPos, ' ');
+  } else {
+    return name.padStart(lengthPos, ' ');
+  }
+
+};
+
+const createInitialNames = () => {
+  const paddedNames = fullName.map(name => padder(name));
 
   return paddedNames.map(name => name.split('').map(char => ({
     correctLetter: char,
@@ -143,8 +154,12 @@ const NameGrid = ({ onLetterUnlock }) => {
     };
 
     const playSound = (audio) => {
-        audio.currentTime = 0;
-        audio.play().catch(error => console.error('Error playing audio:', error));
+        if (audio) {
+            audio.currentTime = 0;
+            audio.play().catch(error => console.error('Error playing audio:', error));
+        } else {
+            console.warn('Audio object is not available.');
+        }
     };
 
     const moveToNextVowel = () => {
@@ -303,8 +318,6 @@ const NameGrid = ({ onLetterUnlock }) => {
     };
 
     onMount(async() => {
-        // window.addEventListener('wheel', throttledHandleScroll, { passive: false });
-        // window.addEventListener('touchmove', handleTouchMove, { passive: false });
         window.addEventListener('keydown', handleKeyDown);
         letterChangeAudio = new Audio(letterChangeSound);
         letterChangeAudioDown = new Audio(letterChangeSoundDown);
@@ -315,18 +328,17 @@ const NameGrid = ({ onLetterUnlock }) => {
             new Audio(correctWordSound3)
         ];
         allWordsCompleteAudio = new Audio(allWordsCompleteSound);
-
+        leftKeyAudio = new Audio(leftKeySound);
+        rightKeyAudio = new Audio(rightKeySound);
     });
 
     onCleanup(() => {
-        // window.removeEventListener('wheel', throttledHandleScroll);
-        // window.removeEventListener('touchmove', handleTouchMove);
         window.removeEventListener('keydown', handleKeyDown);
     });
 
     return (
         <div>
-            <DebugWrapper>
+            <DebugWrapper label="createInitialNames" value={createInitialNames()} >
             <Show when={timerStarted()}>
                 <div class={styles.timer}>Time remaining: {formatTime(timeRemaining())}</div>
             </Show>

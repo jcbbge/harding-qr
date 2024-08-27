@@ -9,6 +9,8 @@ import correctWordSound1 from '../../assets/sounds/musical-tap-1.wav';
 import correctWordSound2 from '../../assets/sounds/musical-tap-3.wav';
 import correctWordSound3 from '../../assets/sounds/musical-tap-2.wav';
 import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
+import leftKeySound from '../../assets/sounds/button-4.wav';
+import rightKeySound from '../../assets/sounds/button-6.wav';
 
 import DebugWrapper from '../util/DebugWrapper';
 
@@ -22,9 +24,9 @@ const getNextLetter = (current, direction) => {
     const currentIndex = alphabet.indexOf(current.toUpperCase());
     return alphabet[(currentIndex + direction + 26) % 26];
 };
-  
+
 const areAllWordsComplete = (names) => {
-  return names.every(name => 
+  return names.every(name =>
     name.every(letter => letter.currentLetter === letter.correctLetter)
   );
 };
@@ -32,7 +34,7 @@ const areAllWordsComplete = (names) => {
 const createInitialNames = () => {
   const maxLength = Math.max(...fullName.map(name => name.length));
   const paddedNames = fullName.map(name => name.padStart(maxLength, ' '));
-  
+
   return paddedNames.map(name => name.split('').map(char => ({
     correctLetter: char,
     currentLetter: isVowel(char) ? getRandomLetter() : char,
@@ -43,7 +45,7 @@ const createInitialNames = () => {
 
 const NameGrid = ({ onLetterUnlock }) => {
 
-    let letterChangeAudio, letterChangeAudioDown, correctLetterAudio, allWordsCompleteAudio;
+    let letterChangeAudio, letterChangeAudioDown, correctLetterAudio, allWordsCompleteAudio, leftKeyAudio, rightKeyAudio;
     let correctWordAudios = [];
     let lastTouchY = 0;
 
@@ -103,10 +105,12 @@ const NameGrid = ({ onLetterUnlock }) => {
             case 'ArrowLeft':
             case 'a':
                 newPosition = findNextVowelOrBlank(row, col, -1);
+                playSound(leftKeyAudio);
                 break;
             case 'ArrowRight':
             case 'd':
                 newPosition = findNextVowelOrBlank(row, col, 1);
+                playSound(rightKeyAudio);
                 break;
             case 'ArrowUp':
             case 'w':
@@ -139,20 +143,20 @@ const NameGrid = ({ onLetterUnlock }) => {
     };
 
     const playSound = (audio) => {
-        audio.currentTime = 0; 
+        audio.currentTime = 0;
         audio.play().catch(error => console.error('Error playing audio:', error));
     };
 
     const moveToNextVowel = () => {
         const currentName = names()[activeNameIndex()];
-        const nextVowelIndex = currentName.findIndex((char, index) => 
+        const nextVowelIndex = currentName.findIndex((char, index) =>
             index > activeVowelIndex() && char.isVowel && !char.matched
         );
 
         if (nextVowelIndex !== -1) {
             setActiveVowelIndex(nextVowelIndex);
         } else {
-            const nextNameIndex = names().findIndex((name, index) => 
+            const nextNameIndex = names().findIndex((name, index) =>
                 index > activeNameIndex() && name.some(char => char.isVowel && !char.matched)
             );
 
@@ -194,7 +198,9 @@ const NameGrid = ({ onLetterUnlock }) => {
     const handleAllWordsComplete = () => {
         if (!gameCompleted()) {
             console.log('All words completed! Game over!');
-            playSound(allWordsCompleteAudio);
+            setTimeout(() => {
+                playSound(allWordsCompleteAudio);
+            }, 400);
             setGameCompleted(true);
         }
     };
@@ -229,11 +235,11 @@ const NameGrid = ({ onLetterUnlock }) => {
                         if (letterIndex === col && letter.isVowel && !letter.matched) {
                             const newLetter = getNextLetter(letter.currentLetter, delta);
 
-                            console.log('Letter changing:', { 
-                                from: letter.currentLetter, 
-                                to: newLetter, 
-                                row, 
-                                col 
+                            console.log('Letter changing:', {
+                                from: letter.currentLetter,
+                                to: newLetter,
+                                row,
+                                col
                             });
 
                             if (newLetter === letter.correctLetter) {
@@ -309,7 +315,7 @@ const NameGrid = ({ onLetterUnlock }) => {
             new Audio(correctWordSound3)
         ];
         allWordsCompleteAudio = new Audio(allWordsCompleteSound);
-    
+
     });
 
     onCleanup(() => {
@@ -327,7 +333,7 @@ const NameGrid = ({ onLetterUnlock }) => {
             <div class={styles.nameGrid}>
                 <For each={names()}>
                     {(name, nameIndex) => (
-                        <GridRow 
+                        <GridRow
                             name={name}
                             isActiveName={nameIndex() === activeNameIndex()}
                             activeVowelIndex={activeVowelIndex()}

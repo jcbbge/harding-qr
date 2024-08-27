@@ -27,10 +27,10 @@
     font-size: 25px;
     font-weight: bold;
     margin-right: 20px;
-    cursor: pointer;
     transition: all 0.3s ease;
     font-family: 'Press Start 2P', cursive;
     border-radius: 5px;
+    box-shadow: 1px 1px 0px var(--accent-fun);
   }
 
   .letterBox:last-child {
@@ -49,20 +49,21 @@
 
   .letterBox.vowel {
     cursor: ns-resize;
-    background-color: var(--text-secondary);
-    color: var(--gradient-base-bottom) !important;
+    background-color: var(--accent-opposite);
+    color: var(--gradient-base-bottom);
+    box-shadow: 2px 2px 0px var(--accent-fun);
   }
   
   .letterBox.active {
-    border-color: var(--accent);
-    box-shadow: 0px 0px 8px var(--accent);
+    border: 2px solid var(--gradient-base-bottom);
+    box-shadow: 3px 3px 0px var(--text-primary);
+    background-color: var(--accent);
   }
   
   .letterBox.vowel.matched {
-    border: none; /* Remove border for matched vowels */
-    background-color: var(--accent);
-    color: var(--shade7);
-    cursor: default; /* Remove the interactive cursor */
+    border: 2px solid var(--text-primary);
+    background-color: var(--accent-unexpected);
+    color: var(--gradient-base-bottom);
   } 
 
 .focused {

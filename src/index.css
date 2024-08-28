@@ -1,213 +1,213 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap");
 
 :root {
-  /* Default theme: Digital Dawn - Light */
-  --gradient-base-bottom: #FFD1DC;
-  --gradient-base-top: #B0E2FF;
-  --gradient-overlay: #E6E6FA;
-  --text-primary: #000000;
-  --text-secondary: #595959;
-  --accent: #0056B3;
-  --accent-opposite: #FF4500;
-  --accent-fun: #32CD32;
-  --accent-unexpected: #9400D3;
+    /* Default theme: Digital Dawn - Light */
+    --gradient-base-bottom: #ffd1dc;
+    --gradient-base-top: #b0e2ff;
+    --gradient-overlay: #e6e6fa;
+    --text-primary: #000000;
+    --text-secondary: #595959;
+    --accent: #0056b3;
+    --accent-opposite: #ff4500;
+    --accent-fun: #32cd32;
+    --accent-unexpected: #9400d3;
 }
 
 /* Digital Dawn - Dark */
 [data-theme="digital-dawn"].dark-mode {
-  --gradient-base-bottom: #1A0033;
-  --gradient-base-top: #001F3F;
-  --gradient-overlay: #2C0052;
-  --text-primary: #E6E6FA;
-  --text-secondary: #B0B0B0;
-  --accent: #4D94FF;
-  --accent-opposite: #FF6347;
-  --accent-fun: #00FF00;
-  --accent-unexpected: #FF1493;
+    --gradient-base-bottom: #1a0033;
+    --gradient-base-top: #001f3f;
+    --gradient-overlay: #2c0052;
+    --text-primary: #e6e6fa;
+    --text-secondary: #b0b0b0;
+    --accent: #4d94ff;
+    --accent-opposite: #ff6347;
+    --accent-fun: #00ff00;
+    --accent-unexpected: #ff1493;
 }
 
 /* Cyber Punk - Light */
 [data-theme="cyber-punk"] {
-  --gradient-base-bottom: #FFF700;
-  --gradient-base-top: #00FFFF;
-  --gradient-overlay: #FF00FF;
-  --text-primary: #000000;
-  --text-secondary: #333333;
-  --accent: #FF00FF;
-  --accent-opposite: #00FFFF;
-  --accent-fun: #FF1493;
-  --accent-unexpected: #32CD32;
+    --gradient-base-bottom: #fff700;
+    --gradient-base-top: #00ffff;
+    --gradient-overlay: #ff00ff;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --accent: #ff00ff;
+    --accent-opposite: #00ffff;
+    --accent-fun: #ff1493;
+    --accent-unexpected: #32cd32;
 }
 
 /* Cyber Punk - Dark */
 [data-theme="cyber-punk"].dark-mode {
-  --gradient-base-bottom: #0D0221;
-  --gradient-base-top: #1A1A3A;
-  --gradient-overlay: #3B0256;
-  --text-primary: #00FFFF;
-  --text-secondary: #FF69B4;
-  --accent: #FFF700;
-  --accent-opposite: #00FFFF;
-  --accent-fun: #FF1493;
-  --accent-unexpected: #32CD32;
+    --gradient-base-bottom: #0d0221;
+    --gradient-base-top: #1a1a3a;
+    --gradient-overlay: #3b0256;
+    --text-primary: #00ffff;
+    --text-secondary: #ff69b4;
+    --accent: #fff700;
+    --accent-opposite: #00ffff;
+    --accent-fun: #ff1493;
+    --accent-unexpected: #32cd32;
 }
 
 /* Retro Wave - Light */
 [data-theme="retro-wave"] {
-  --gradient-base-bottom: #FFA07A;
-  --gradient-base-top: #87CEFA;
-  --gradient-overlay: #DDA0DD;
-  --text-primary: #000000;
-  --text-secondary: #4B0082;
-  --accent: #FF1493;
-  --accent-opposite: #00FFFF;
-  --accent-fun: #FF00FF;
-  --accent-unexpected: #FFFF00;
+    --gradient-base-bottom: #ffa07a;
+    --gradient-base-top: #87cefa;
+    --gradient-overlay: #dda0dd;
+    --text-primary: #000000;
+    --text-secondary: #4b0082;
+    --accent: #ff1493;
+    --accent-opposite: #00ffff;
+    --accent-fun: #ff00ff;
+    --accent-unexpected: #ffff00;
 }
 
 /* Retro Wave - Dark */
 [data-theme="retro-wave"].dark-mode {
-  --gradient-base-bottom: #1A0033;
-  --gradient-base-top: #000080;
-  --gradient-overlay: #4B0082;
-  --text-primary: #FF69B4;
-  --text-secondary: #00FFFF;
-  --accent: #FF1493;
-  --accent-opposite: #00FFFF;
-  --accent-fun: #FF00FF;
-  --accent-unexpected: #FFFF00;
+    --gradient-base-bottom: #1a0033;
+    --gradient-base-top: #000080;
+    --gradient-overlay: #4b0082;
+    --text-primary: #ff69b4;
+    --text-secondary: #00ffff;
+    --accent: #ff1493;
+    --accent-opposite: #00ffff;
+    --accent-fun: #ff00ff;
+    --accent-unexpected: #ffff00;
 }
 
 /* Rail Pop - Light theme (Accessible) */
 [data-theme="rail-pop"] {
-  --gradient-base-bottom: #2E4263;
-  --gradient-base-top: #7DA1BF;
-  --gradient-overlay: #D7E5F2;
-  --text-primary: #1A1A1A;
-  --text-secondary: #474747;
-  --accent: #C73850;
-  --accent-opposite: #5A8435;
-  --accent-fun: #B78500;
-  --accent-unexpected: #C14D2E;
+    --gradient-base-bottom: #2e4263;
+    --gradient-base-top: #7da1bf;
+    --gradient-overlay: #d7e5f2;
+    --text-primary: #1a1a1a;
+    --text-secondary: #474747;
+    --accent: #c73850;
+    --accent-opposite: #5a8435;
+    --accent-fun: #b78500;
+    --accent-unexpected: #c14d2e;
 }
 
 /* Rail Pop - Dark theme (Accessible) */
 [data-theme="rail-pop"].dark-mode {
-  --gradient-base-bottom: #0A1A2F;
-  --gradient-base-top: #1E3A5F;
-  --gradient-overlay: #2E5A8F;
-  --text-primary: #F0F0F0;
-  --text-secondary: #D0D0D0;
-  --accent: #FF8FA3;
-  --accent-opposite: #90CC65;
-  --accent-fun: #FFD700;
-  --accent-unexpected: #FF9770;
+    --gradient-base-bottom: #0a1a2f;
+    --gradient-base-top: #1e3a5f;
+    --gradient-overlay: #2e5a8f;
+    --text-primary: #f0f0f0;
+    --text-secondary: #d0d0d0;
+    --accent: #ff8fa3;
+    --accent-opposite: #90cc65;
+    --accent-fun: #ffd700;
+    --accent-unexpected: #ff9770;
 }
 
 /* Charge Back - Light theme (Accessible) */
 [data-theme="charge-back"] {
-  --gradient-base-bottom: #B97E7E;
-  --gradient-base-top: #F2C9C9;
-  --gradient-overlay: #FCE4E4;
-  --text-primary: #3A3A3A;
-  --text-secondary: #686868;
-  --accent: #B39700;
-  --accent-opposite: #4A719E;
-  --accent-fun: #D35400;
-  --accent-unexpected: #5C8A2B;
+    --gradient-base-bottom: #b97e7e;
+    --gradient-base-top: #f2c9c9;
+    --gradient-overlay: #fce4e4;
+    --text-primary: #3a3a3a;
+    --text-secondary: #686868;
+    --accent: #b39700;
+    --accent-opposite: #4a719e;
+    --accent-fun: #d35400;
+    --accent-unexpected: #5c8a2b;
 }
 
 /* Charge Back - Dark theme (Accessible) */
 [data-theme="charge-back"].dark-mode {
-  --gradient-base-bottom: #4A2626;
-  --gradient-base-top: #6B3A3A;
-  --gradient-overlay: #8C5656;
-  --text-primary: #F2E6E6;
-  --text-secondary: #D9C2C2;
-  --accent: #FFD700;
-  --accent-opposite: #87CEEB;
-  --accent-fun: #FF7F50;
-  --accent-unexpected: #98FB98;
+    --gradient-base-bottom: #4a2626;
+    --gradient-base-top: #6b3a3a;
+    --gradient-overlay: #8c5656;
+    --text-primary: #f2e6e6;
+    --text-secondary: #d9c2c2;
+    --accent: #ffd700;
+    --accent-opposite: #87ceeb;
+    --accent-fun: #ff7f50;
+    --accent-unexpected: #98fb98;
 }
 
 /* Echo Sphere - Light theme (Accessible) */
 [data-theme="echo-sphere"] {
-  --gradient-base-bottom: #669DA7;
-  --gradient-base-top: #A6D1D9;
-  --gradient-overlay: #D6F1F5;
-  --text-primary: #333333;
-  --text-secondary: #5A5A5A;
-  --accent: #C45F6E;
-  --accent-opposite: #3E847F;
-  --accent-fun: #B38600;
-  --accent-unexpected: #C13F3E;
+    --gradient-base-bottom: #669da7;
+    --gradient-base-top: #a6d1d9;
+    --gradient-overlay: #d6f1f5;
+    --text-primary: #333333;
+    --text-secondary: #5a5a5a;
+    --accent: #c45f6e;
+    --accent-opposite: #3e847f;
+    --accent-fun: #b38600;
+    --accent-unexpected: #c13f3e;
 }
 
 /* Echo Sphere - Dark theme (Accessible) */
 [data-theme="echo-sphere"].dark-mode {
-  --gradient-base-bottom: #1A3A3F;
-  --gradient-base-top: #2A5A66;
-  --gradient-overlay: #3A7A8C;
-  --text-primary: #E6F2F5;
-  --text-secondary: #B8D8E0;
-  --accent: #FF9AAA;
-  --accent-opposite: #66E6D9;
-  --accent-fun: #FFD700;
-  --accent-unexpected: #FF6B6B;
+    --gradient-base-bottom: #1a3a3f;
+    --gradient-base-top: #2a5a66;
+    --gradient-overlay: #3a7a8c;
+    --text-primary: #e6f2f5;
+    --text-secondary: #b8d8e0;
+    --accent: #ff9aaa;
+    --accent-opposite: #66e6d9;
+    --accent-fun: #ffd700;
+    --accent-unexpected: #ff6b6b;
 }
 
 /* Urban Pulse - Light theme (Accessible) */
 [data-theme="urban-pulse"] {
-  --gradient-base-bottom: #5C676B;
-  --gradient-base-top: #8C969B;
-  --gradient-overlay: #BCC3C8;
-  --text-primary: #2D2D2D;
-  --text-secondary: #575757;
-  --accent: #B36F00;
-  --accent-opposite: #5C848E;
-  --accent-fun: #B38600;
-  --accent-unexpected: #767676;
+    --gradient-base-bottom: #5c676b;
+    --gradient-base-top: #8c969b;
+    --gradient-overlay: #bcc3c8;
+    --text-primary: #2d2d2d;
+    --text-secondary: #575757;
+    --accent: #b36f00;
+    --accent-opposite: #5c848e;
+    --accent-fun: #b38600;
+    --accent-unexpected: #767676;
 }
 
 /* Urban Pulse - Dark theme (Accessible) */
 [data-theme="urban-pulse"].dark-mode {
-  --gradient-base-bottom: #1A1E20;
-  --gradient-base-top: #2A3236;
-  --gradient-overlay: #3A464C;
-  --text-primary: #E6E8E9;
-  --text-secondary: #B8BABB;
-  --accent: #FFA500;
-  --accent-opposite: #87CEEB;
-  --accent-fun: #FFD700;
-  --accent-unexpected: #A9A9A9;
+    --gradient-base-bottom: #1a1e20;
+    --gradient-base-top: #2a3236;
+    --gradient-overlay: #3a464c;
+    --text-primary: #e6e8e9;
+    --text-secondary: #b8babb;
+    --accent: #ffa500;
+    --accent-opposite: #87ceeb;
+    --accent-fun: #ffd700;
+    --accent-unexpected: #a9a9a9;
 }
 
 /* Neon Nostalgia Network - Light theme */
 [data-theme="neon-nostalgia"] {
-    --gradient-base-bottom: #E0E0E0;
-    --gradient-base-top: #F0F0F0;
-    --gradient-overlay: #FFFFFF;
-    --text-primary: #4A4A4A;
+    --gradient-base-bottom: #e0e0e0;
+    --gradient-base-top: #f0f0f0;
+    --gradient-overlay: #ffffff;
+    --text-primary: #4a4a4a;
     --text-secondary: #808080;
-    --accent: #FFD100;
-    --accent-opposite: #87CEEB;
-    --accent-fun: #FF4500;
+    --accent: #ffd100;
+    --accent-opposite: #87ceeb;
+    --accent-fun: #ff4500;
     --accent-unexpected: #202020;
-  }
-  
-  /* Neon Nostalgia Network - Dark theme */
-  [data-theme="neon-nostalgia"].dark-mode {
+}
+
+/* Neon Nostalgia Network - Dark theme */
+[data-theme="neon-nostalgia"].dark-mode {
     --gradient-base-bottom: #121212;
-    --gradient-base-top: #1E1E1E;
-    --gradient-overlay: #2A2A2A;
-    --text-primary: #E0E0E0;
-    --text-secondary: #A0A0A0;
-    --accent: #FFD700;
-    --accent-opposite: #00BFFF;
-    --accent-fun: #8A2BE2;
-    --accent-unexpected: #00FF00;
-  }
-  /* Retro Pastel Pop - Light theme */
+    --gradient-base-top: #1e1e1e;
+    --gradient-overlay: #2a2a2a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent: #ffd700;
+    --accent-opposite: #00bfff;
+    --accent-fun: #8a2be2;
+    --accent-unexpected: #00ff00;
+}
+/* Retro Pastel Pop - Light theme */
 /* --gradient-base-bottom: Minty Fresh
    Use as: --gradient-base-bottom
    Readable with: --text-primary, --text-secondary, --accent-unexpected
@@ -236,19 +236,19 @@
    Use as: --accent-unexpected
    Readable with: --gradient-base-bottom, --gradient-base-top, --gradient-overlay */
 [data-theme="pastel-pop"] {
-    --gradient-base-bottom: #C5E8D5;
-    --gradient-base-top: #D5F0E2;
-    --gradient-overlay: #F5E8E8;
-    --text-primary: #3D8C7D;
-    --text-secondary: #6B8E9E;
-    --accent: #FF9999;
-    --accent-opposite: #66CCCC;
-    --accent-fun: #FFB347;
-    --accent-unexpected: #3A4A4C;
-  }
-  
-  /* Retro Pastel Pop - Dark theme */
-  /* --gradient-base-bottom: Midnight Teal
+    --gradient-base-bottom: #c5e8d5;
+    --gradient-base-top: #d5f0e2;
+    --gradient-overlay: #f5e8e8;
+    --text-primary: #3d8c7d;
+    --text-secondary: #6b8e9e;
+    --accent: #ff9999;
+    --accent-opposite: #66cccc;
+    --accent-fun: #ffb347;
+    --accent-unexpected: #3a4a4c;
+}
+
+/* Retro Pastel Pop - Dark theme */
+/* --gradient-base-bottom: Midnight Teal
      Use as: --gradient-base-bottom
      Readable with: --text-primary, --text-secondary, --accent, --accent-opposite, --accent-fun
      --gradient-base-top: Deep Sea Green
@@ -275,18 +275,18 @@
      --accent-unexpected: Radioactive Lime
      Use as: --accent-unexpected
      Readable with: --gradient-base-bottom, --gradient-base-top, --gradient-overlay */
-  [data-theme="pastel-pop"].dark-mode {
-    --gradient-base-bottom: #1A2F2F;
+[data-theme="pastel-pop"].dark-mode {
+    --gradient-base-bottom: #1a2f2f;
     --gradient-base-top: #234141;
-    --gradient-overlay: #2D5353;
-    --text-primary: #A8C7B5;
-    --text-secondary: #8EACB7;
-    --accent: #FF6B8B;
-    --accent-opposite: #4DEEEA;
-    --accent-fun: #FF9966;
-    --accent-unexpected: #AAFF00;
-  }
-  /* Retro Tech Vibes - Light theme */
+    --gradient-overlay: #2d5353;
+    --text-primary: #a8c7b5;
+    --text-secondary: #8eacb7;
+    --accent: #ff6b8b;
+    --accent-opposite: #4deeea;
+    --accent-fun: #ff9966;
+    --accent-unexpected: #aaff00;
+}
+/* Retro Tech Vibes - Light theme */
 /* --gradient-base-bottom: Bubblegum Wall
    Use as: --gradient-base-bottom
    Readable with: --text-primary, --text-secondary, --accent-unexpected
@@ -315,19 +315,19 @@
    Use as: --accent-unexpected
    Readable with: --gradient-base-bottom, --gradient-base-top, --gradient-overlay */
 [data-theme="vision-tech"] {
-    --gradient-base-bottom: #FFC0CB;
-    --gradient-base-top: #FFE4E1;
-    --gradient-overlay: #F3E5AB;
-    --text-primary: #2F4F4F;
+    --gradient-base-bottom: #ffc0cb;
+    --gradient-base-top: #ffe4e1;
+    --gradient-overlay: #f3e5ab;
+    --text-primary: #2f4f4f;
     --text-secondary: #708090;
-    --accent: #FFFF00;
-    --accent-opposite: #87CEEB;
-    --accent-fun: #FF6347;
+    --accent: #ffff00;
+    --accent-opposite: #87ceeb;
+    --accent-fun: #ff6347;
     --accent-unexpected: #008080;
-  }
-  
-  /* Retro Tech Vibes - Dark theme */
-  /* --gradient-base-bottom: Midnight Modem
+}
+
+/* Retro Tech Vibes - Dark theme */
+/* --gradient-base-bottom: Midnight Modem
      Use as: --gradient-base-bottom
      Readable with: --text-primary, --text-secondary, --accent, --accent-opposite
      --gradient-base-top: Cyber Indigo
@@ -354,18 +354,18 @@
      --accent-unexpected: Matrix Green
      Use as: --accent-unexpected
      Readable with: --gradient-base-bottom, --gradient-base-top, --gradient-overlay, --text-primary */
-  [data-theme="vision-tech"].dark-mode {
-    --gradient-base-bottom: #1A1A2E;
-    --gradient-base-top: #16213E;
-    --gradient-overlay: #0F3460;
-    --text-primary: #E0E0E0;
-    --text-secondary: #BFBFBF;
-    --accent: #FFFF66;
-    --accent-opposite: #4DD0E1;
-    --accent-fun: #FF00FF;
-    --accent-unexpected: #00FF00;
-  }
-  /* Retro Seaside Vibes - Light theme */
+[data-theme="vision-tech"].dark-mode {
+    --gradient-base-bottom: #1a1a2e;
+    --gradient-base-top: #16213e;
+    --gradient-overlay: #0f3460;
+    --text-primary: #e0e0e0;
+    --text-secondary: #bfbfbf;
+    --accent: #ffff66;
+    --accent-opposite: #4dd0e1;
+    --accent-fun: #ff00ff;
+    --accent-unexpected: #00ff00;
+}
+/* Retro Seaside Vibes - Light theme */
 /* --gradient-base-bottom: Mint Chip Green
    Use as: --gradient-base-bottom
    Readable with: --text-primary, --text-secondary, --accent-unexpected
@@ -394,19 +394,19 @@
    Use as: --accent-unexpected
    Readable with: --text-primary, --gradient-base-bottom */
 [data-theme="surfside-vibes"] {
-    --gradient-base-bottom: #A8E6B5;
-    --gradient-base-top: #F2F0E6;
-    --gradient-overlay: #FFFFFF;
-    --text-primary: #4A4A4A;
+    --gradient-base-bottom: #a8e6b5;
+    --gradient-base-top: #f2f0e6;
+    --gradient-overlay: #ffffff;
+    --text-primary: #4a4a4a;
     --text-secondary: #808080;
-    --accent: #FFD100;
-    --accent-opposite: #47B8E0;
-    --accent-fun: #FF6B6B;
-    --accent-unexpected: #FFB6C1;
-  }
-  
-  /* Retro Seaside Vibes - Dark theme */
-  /* --gradient-base-bottom: Midnight Surf
+    --accent: #ffd100;
+    --accent-opposite: #47b8e0;
+    --accent-fun: #ff6b6b;
+    --accent-unexpected: #ffb6c1;
+}
+
+/* Retro Seaside Vibes - Dark theme */
+/* --gradient-base-bottom: Midnight Surf
      Use as: --gradient-base-bottom
      Readable with: --text-primary, --text-secondary, --accent, --accent-opposite, --accent-fun
      --gradient-base-top: Deep Sea Teal
@@ -433,19 +433,19 @@
      --accent-unexpected: Sunset Orange
      Use as: --accent-unexpected
      Readable with: --gradient-base-bottom, --gradient-base-top, --gradient-overlay */
-  [data-theme="surfside-vibes"].dark-mode {
-    --gradient-base-bottom: #1A2F38;
+[data-theme="surfside-vibes"].dark-mode {
+    --gradient-base-bottom: #1a2f38;
     --gradient-base-top: #204051;
-    --gradient-overlay: #2C5364;
-    --text-primary: #E0E0E0;
-    --text-secondary: #A0A0A0;
-    --accent: #FFE66D;
-    --accent-opposite: #FF6B6B;
-    --accent-fun: #4ECDC4;
-    --accent-unexpected: #FF8C69;
-  }
+    --gradient-overlay: #2c5364;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent: #ffe66d;
+    --accent-opposite: #ff6b6b;
+    --accent-fun: #4ecdc4;
+    --accent-unexpected: #ff8c69;
+}
 
-  /* Mall Rat - Light theme */
+/* Mall Rat - Light theme */
 /* --gradient-base-bottom: Bubblegum Bliss
    Use as: --gradient-base-bottom
    Readable with: --text-primary, --text-secondary, --accent-unexpected
@@ -474,19 +474,19 @@
    Use as: --accent-unexpected
    Readable with: --gradient-base-bottom, --gradient-base-top, --gradient-overlay */
 [data-theme="mall-rat"] {
-    --gradient-base-bottom: #FFD1DC;
-    --gradient-base-top: #E0FFFF;
-    --gradient-overlay: #F0FFFF;
-    --text-primary: #20B2AA;
+    --gradient-base-bottom: #ffd1dc;
+    --gradient-base-top: #e0ffff;
+    --gradient-overlay: #f0ffff;
+    --text-primary: #20b2aa;
     --text-secondary: #708090;
-    --accent: #FF69B4;
-    --accent-opposite: #1E90FF;
-    --accent-fun: #FF00FF;
-    --accent-unexpected: #2F4F4F;
-  }
-  
-  /* Mall Rat - Dark theme */
-  /* --gradient-base-bottom: Midnight Mall
+    --accent: #ff69b4;
+    --accent-opposite: #1e90ff;
+    --accent-fun: #ff00ff;
+    --accent-unexpected: #2f4f4f;
+}
+
+/* Mall Rat - Dark theme */
+/* --gradient-base-bottom: Midnight Mall
      Use as: --gradient-base-bottom
      Readable with: --text-primary, --text-secondary, --accent, --accent-opposite, --accent-fun
      --gradient-base-top: Neon Nights
@@ -513,85 +513,104 @@
      --accent-unexpected: Glow Stick Green
      Use as: --accent-unexpected
      Readable with: --gradient-base-bottom, --gradient-base-top, --gradient-overlay */
-  [data-theme="mall-rat"].dark-mode {
-    --gradient-base-bottom: #1A1A2E;
-    --gradient-base-top: #16213E;
-    --gradient-overlay: #0F3460;
-    --text-primary: #E0E0E0;
-    --text-secondary: #A0A0A0;
-    --accent: #FFFF00;
-    --accent-opposite: #00FFFF;
-    --accent-fun: #FF1493;
-    --accent-unexpected: #39FF14;
-  }
+[data-theme="mall-rat"].dark-mode {
+    --gradient-base-bottom: #1a1a2e;
+    --gradient-base-top: #16213e;
+    --gradient-overlay: #0f3460;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent: #ffff00;
+    --accent-opposite: #00ffff;
+    --accent-fun: #ff1493;
+    --accent-unexpected: #39ff14;
+}
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Press Start 2P', cursive;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Press Start 2P", cursive;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  color: var(--text-primary);
-  overflow: hidden;
-  position: relative;
-  font-family: 'VT323', monospace;
-  transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    color: var(--text-primary);
+    overflow: hidden;
+    position: relative;
+    font-family: "VT323", monospace;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Gradient animations */
 .gradient-base {
-  background: linear-gradient(to bottom, var(--gradient-base-top) 20%, var(--gradient-base-bottom));
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -2;
-  transition: background 0.3s ease;
+    background: linear-gradient(
+        to bottom,
+        var(--gradient-base-top) 20%,
+        var(--gradient-base-bottom)
+    );
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    transition: background 0.3s ease;
 }
 
 .gradient-overlay {
-  background: radial-gradient(circle at 50% 100%, var(--gradient-base-bottom) 30%, transparent 50%);
-  background-size: 400% 400%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-  animation: breathe 22s ease-in-out infinite;
-  transition: background 0.3s ease;
+    background: radial-gradient(
+        circle at 50% 100%,
+        var(--accent-fun) 0%,
+        transparent 100%
+    );
+    background-size: 300% 300%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 400%;
+    z-index: -1;
+    animation: breathe 8s ease-in-out infinite;
+    will-change: background-position;
+    transition: background 0.3s ease;
 }
 
 @keyframes breathe {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 50% 75%; }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20%);
+    }
 }
 
 /* Theme controls styles */
 .theme-controls {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  display: flex;
-  gap: 10px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
 }
 
 .theme-controls button,
 .theme-controls select {
-  background: var(--gradient-overlay);
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+    background: var(--gradient-overlay);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
 }
 
 .theme-controls button:hover,
 .theme-controls select:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }

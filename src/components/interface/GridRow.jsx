@@ -16,16 +16,16 @@ const GridRow = (props) => {
     <div class={styles.nameRow} style={{"--name-length": props.name.length}}>
       <For each={props.name}>
         {(letterObj, letterIndex) => {
-          const accentVar = createMemo(() => 
+          const accentVar = createMemo(() =>
             letterObj.correctLetter === ' ' ? `--${getNextAccentVariable()}` : null
           );
 
           return (
-            <div 
-              class={`${styles.letterBox} 
-                      ${letterObj.isVowel ? styles.vowel : ''} 
-                      ${letterObj.matched ? styles.matched : ''} 
-                      ${props.isActiveName && letterIndex() === props.activeVowelIndex ? styles.active : ''} 
+            <div
+              class={`${styles.letterBox}
+                      ${letterObj.isVowel ? styles.vowel : ''}
+                      ${letterObj.matched ? styles.matched : ''}
+                      ${props.isActiveName && letterIndex() === props.activeVowelIndex ? styles.active : ''}
                       ${props.focusedPosition.row === props.rowIndex && letterIndex() === props.focusedPosition.col ? styles.focused : ''}
                       ${accentVar() ? styles.accentBackground : ''}`}
               style={accentVar() ? { '--accent-var': `var(${accentVar()})` } : {}}

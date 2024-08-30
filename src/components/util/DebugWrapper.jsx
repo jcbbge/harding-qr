@@ -1,9 +1,8 @@
-
 import { createEffect } from 'solid-js';
 
-const DebugWrapper = (props) => {
+const DebugWrapper = props => {
   createEffect(() => {
-    console.log("dbugger:", props.label, props.value);
+    console.log('dbugger:', props.label, props.value);
   });
 
   return <>{props.children}</>;

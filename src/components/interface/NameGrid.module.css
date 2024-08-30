@@ -1,116 +1,116 @@
 /* src/components/NameGrid.module.css */
 
 .nameGrid {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Left-align contents */
-    justify-content: flex-start;
-    width: auto; /* Allow width to be determined by content */
-    max-width: 100%; /* Prevent overflow */
-    margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Left-align contents */
+  justify-content: flex-start;
+  width: auto; /* Allow width to be determined by content */
+  max-width: 100%; /* Prevent overflow */
+  margin: 20px;
 }
 
 .nameRow {
-    display: flex;
-    margin-bottom: 20px;
-    justify-content: flex-start; /* Left-align letter boxes */
-    width: 100%;
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: flex-start; /* Left-align letter boxes */
+  width: 100%;
 }
 
 .letterBox {
-    width: 50px;
-    height: 50px;
-    border: 2px solid var(--text-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 25px;
-    font-weight: bold;
-    margin-right: 20px;
-    transition: all 0.3s ease;
-    font-family: "Press Start 2P", cursive;
-    border-radius: 5px;
-    box-shadow: 1px 1px 0px var(--accent-fun);
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: bold;
+  margin-right: 20px;
+  transition: all 0.3s ease;
+  font-family: 'Press Start 2P', cursive;
+  border-radius: 5px;
+  box-shadow: 1px 1px 0px var(--accent-fun);
 }
 
 .letterBox:last-child {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 @keyframes spin {
-    0% {
-        transform: rotateX(0deg);
-    }
-    100% {
-        transform: rotateX(360deg);
-    }
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(360deg);
+  }
 }
 
 .letterBox.changing {
-    animation: spin 0.5s linear;
+  animation: spin 0.5s linear;
 }
 
 .letterBox.vowel {
-    cursor: ns-resize;
-    background-color: var(--accent-opposite);
-    color: var(--gradient-base-bottom);
-    box-shadow: 2px 2px 0px var(--accent-fun);
+  cursor: ns-resize;
+  background-color: var(--accent-opposite);
+  color: var(--gradient-base-bottom);
+  box-shadow: 2px 2px 0px var(--accent-fun);
 }
 
 .letterBox.active {
-    border: 2px solid var(--gradient-base-bottom);
-    box-shadow: 3px 3px 0px var(--text-primary);
-    background-color: var(--accent);
+  border: 2px solid var(--gradient-base-bottom);
+  box-shadow: 3px 3px 0px var(--text-primary);
+  background-color: var(--accent);
 }
 
 .letterBox.vowel.matched {
-    border: 2px solid var(--text-primary);
-    background-color: var(--accent-unexpected);
-    color: var(--gradient-base-bottom);
+  border: 2px solid var(--text-primary);
+  background-color: var(--accent-unexpected);
+  color: var(--gradient-base-bottom);
 }
 
 .focused {
-    outline: 3px solid var(--complimentary-light);
-    z-index: 1;
+  outline: 3px solid var(--complimentary-light);
+  z-index: 1;
 }
 
 .timer {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 768px) {
-    .nameGrid {
-        margin: 0px 15px;
-    }
-    .letterBox {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-        margin-right: 15px;
-    }
-    .nameRow {
-        margin-bottom: 15px;
-    }
+  .nameGrid {
+    margin: 0px 15px;
+  }
+  .letterBox {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    margin-right: 15px;
+  }
+  .nameRow {
+    margin-bottom: 15px;
+  }
 }
 
 @media (max-width: 480px) {
-    .nameGrid {
-        margin: 0px 10px;
-    }
-    .letterBox {
-        width: 30px;
-        height: 30px;
-        font-size: 16px;
-        margin-right: 10px;
-    }
-    .nameRow {
-        margin-bottom: 10px;
-    }
+  .nameGrid {
+    margin: 0px 10px;
+  }
+  .letterBox {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  .nameRow {
+    margin-bottom: 10px;
+  }
 }
 
 .letterSpan {
-    font-family: "Lot-Regular", sans-serif;
+  font-family: 'Lot-Regular', sans-serif;
 }

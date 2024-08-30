@@ -7,10 +7,14 @@ const AppearanceToggle = () => {
 
   const displayText = createMemo(() => {
     switch (appearanceMode()) {
-      case 'light': return '☀️ Light';
-      case 'dark': return '🌙 Dark';
-      case 'system': return '🖥️ System';
-      default: return 'Unknown';
+      case 'light':
+        return '☀️ Light';
+      case 'dark':
+        return '🌙 Dark';
+      case 'system':
+        return '🖥️ System';
+      default:
+        return 'Unknown';
     }
   });
 

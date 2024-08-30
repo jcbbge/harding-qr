@@ -1,28 +1,20 @@
 import { For } from 'solid-js';
 import { useTheme } from '../../contexts/ThemeContext';
 
-const themes = [
-  'digital-dawn',
-  'cyber-punk',
-  'retro-wave',
-  'echo-sphere',
-  'rail-pop',
-  'charge-back',
-  'urban-pulse',
-  'neon-nostalgia',
-  'pastel-pop',
-  'vision-tech',
-  'surfside-vibes',
-  'mall-rat'
-];
-
 const ThemeSwitcher = () => {
-  const { currentTheme, changeTheme } = useTheme();
+  const { theme, changeTheme, themes } = useTheme();
 
   return (
-    <select value={currentTheme()} onChange={(e) => changeTheme(e.target.value)}>
+    <select value={theme()} onChange={e => changeTheme(e.target.value)}>
       <For each={themes}>
-        {(theme) => <option value={theme}>{theme.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</option>}
+        {themeObj => (
+          <option value={themeObj.name}>
+            {themeObj.name
+              .split('-')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ')}
+          </option>
+        )}
       </For>
     </select>
   );

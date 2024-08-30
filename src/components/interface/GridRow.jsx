@@ -1,10 +1,13 @@
 import { For, createMemo } from 'solid-js';
 import styles from './NameGrid.module.css';
+import { useTheme } from '../../contexts/ThemeContext';
+import { Dynamic } from 'solid-js/web';
 
 const accentVariables = ['accent-unexpected'];
 
-const GridRow = (props) => {
+const GridRow = props => {
   let colorIndex = 0;
+  const { themes } = useTheme();
 
   const getNextAccentVariable = () => {
     const variable = accentVariables[colorIndex];
@@ -12,8 +15,13 @@ const GridRow = (props) => {
     return variable;
   };
 
+  const ThemeIcon = createMemo(() => {
+    const currentThemeObj = themes.find(t => t.name === props.currentTheme);
+    return currentThemeObj ? currentThemeObj.icon : null;
+  });
+
   return (
-    <div class={styles.nameRow} style={{"--name-length": props.name.length}}>
+    <div class={styles.nameRow} style={{ '--name-length': props.name.length }}>
       <For each={props.name}>
         {(letterObj, letterIndex) => {
           const accentVar = createMemo(() =>
@@ -29,9 +37,14 @@ const GridRow = (props) => {
                       ${props.focusedPosition.row === props.rowIndex && letterIndex() === props.focusedPosition.col ? styles.focused : ''}
                       ${accentVar() ? styles.accentBackground : ''}`}
               style={accentVar() ? { '--accent-var': `var(${accentVar()})` } : {}}
-              tabIndex={props.focusedPosition.row === props.rowIndex && letterIndex() === props.focusedPosition.col ? 0 : -1}
+              tabIndex={
+                props.focusedPosition.row === props.rowIndex &&
+                letterIndex() === props.focusedPosition.col
+                  ? 0
+                  : -1
+              }
             >
-              <span>{letterObj.currentLetter}</span>
+              {<span>{letterObj.currentLetter}</span>}
             </div>
           );
         }}

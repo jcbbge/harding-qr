@@ -9,14 +9,14 @@ export default defineConfig({
     For more info see https://github.com/thetarnav/solid-devtools/tree/main/packages/extension#readme
     */
     devtools({
-        autoname: true
+      autoname: true
     }),
-    solidPlugin(),
+    solidPlugin()
   ],
   server: {
-    port: 3000,
+    port: 3000
   },
   build: {
-    target: 'esnext',
-  },
+    target: 'esnext'
+  }
 });

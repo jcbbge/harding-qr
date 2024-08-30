@@ -1,6 +1,0 @@
-Recent Changes:
-Install Solid router. Added some additional themes.
-
-Upcoming Tasks:
-Refactor board layout to be full screen at all widths while maintaining the aspect ratio and letterbox sizing. Should be fully responsive. and use css grid or flexbox.
-

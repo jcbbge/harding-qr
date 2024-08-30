@@ -1,82 +1,88 @@
 import { createSignal, onMount, onCleanup, ErrorBoundary } from 'solid-js';
-import { ThemeProvider } from './contexts/ThemeContext';
-
-import ThemeSwitcher from './components/interface/ThemeSwitcher';
-import AppearanceToggle from './components/interface/AppearanceToggle';
+import { useTheme } from './contexts/ThemeContext';
 import NameGrid from './components/interface/NameGrid';
-import "./App.css";
+import './App.css';
 
-const [company, setCompany] = createSignal('');
-const [role, setRole] = createSignal('');
-const [timeLeft, setTimeLeft] = createSignal(60); // 60 seconds = 1 minute
+console.log('App.jsx: Starting App component');
 
-function App(){
+function App() {
+  console.log('App: Component function called');
+  const [company, setCompany] = createSignal('');
+  const [role, setRole] = createSignal('');
+  const [timeLeft, setTimeLeft] = createSignal(60); // 60 seconds = 1 minute
+  const { theme, themes } = useTheme();
 
-    let timerInterval;
+  let timerInterval;
+  console.log('App: About to call useTheme');
 
-    onMount(() => {
-        const urlPath = window.location.pathname;
-        let pathSegments = urlPath.split('/').filter(Boolean);
-    
-        if( pathSegments.length >= 2 ){
-            console.log({urlPath, pathSegments});
-            setCompany(pathSegments[0]);
-            setRole(pathSegments[1]);
-        }
+  onMount(() => {
+    console.log('App: onMount called');
+    const urlPath = window.location.pathname;
+    let pathSegments = urlPath.split('/').filter(Boolean);
 
-        // Start the timer
-        timerInterval = setInterval(() => {
-            setTimeLeft(prev => {
-                if (prev <= 0) {
-                    clearInterval(timerInterval);
-                    return 0;
-                }
-                return prev - 1;
-            });
-        }, 1000);
-    });
-
-    onCleanup(() => {
-        // window.removeEventListener("wheel", handleScroll);
-        // window.removeEventListener("scroll", handleScroll);
-        // window.removeEventListener("keydown", handleScroll);
-        clearInterval(timerInterval); // Clear the timer interval
-    });
-
-    function handleLetterUnlock(){
-        console.log('letter unlocked - inside app.jsx');
+    if (pathSegments.length >= 2) {
+      console.log({ urlPath, pathSegments });
+      setCompany(pathSegments[0]);
+      setRole(pathSegments[1]);
     }
 
-    // Format time as MM:SS
-    const formattedTime = () => {
-        const minutes = Math.floor(timeLeft() / 60);
-        const seconds = timeLeft() % 60;
-        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    };
+    // Start the timer
+    timerInterval = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 0) {
+          clearInterval(timerInterval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  });
 
-    return (
-        <ThemeProvider>
-            <ErrorBoundary fallback={(err) => <div>Error: {err}</div>}>
-                <nav>
-                    <a href="/scrumble">Scrumble</a>
-                </nav>
-                <div class="theme-controls">
-                    <ThemeSwitcher></ThemeSwitcher>
-                    <AppearanceToggle></AppearanceToggle>
-                </div>
-                <div class="timer-container">
-                    <div id="timer">{formattedTime()}</div>
-                </div>
-                <div class="top-column">
-                    <NameGrid company={company()} role={role()} onLetterUnlock={handleLetterUnlock}></NameGrid>
-                </div>
-                <div class="bottom-column">
-                    <h1>Welcome to my portfolio</h1>
-                    <p>This is a portfolio for my work</p>
-                </div>
-            </ErrorBoundary>
-        </ThemeProvider>
-    );
+  onCleanup(() => {
+    console.log('App: onCleanup called');
+    // window.removeEventListener("wheel", handleScroll);
+    // window.removeEventListener("scroll", handleScroll);
+    // window.removeEventListener("keydown", handleScroll);
+    clearInterval(timerInterval); // Clear the timer interval
+  });
+
+  function handleLetterUnlock() {
+    console.log('App: letter unlocked');
+  }
+
+  // Format time as MM:SS
+  const formattedTime = () => {
+    const minutes = Math.floor(timeLeft() / 60);
+    const seconds = timeLeft() % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  console.log('App: About to return JSX');
+  return (
+    <ErrorBoundary
+      fallback={err => {
+        console.error('App: Error caught in ErrorBoundary:', err);
+        return <div>Error: {err.toString()}</div>;
+      }}
+    >
+      <div class="timer-container">
+        <div id="timer">{formattedTime()}</div>
+      </div>
+      <div class="top-column">
+        <NameGrid company={company()} role={role()} onLetterUnlock={handleLetterUnlock}></NameGrid>
+      </div>
+      <div class="bottom-column">
+        <p class="flex items-center space-x-2">
+          {/* Use dynamic import for the icon */}
+          <Dynamic
+            component={themes.find(t => t.name === theme())?.icon || themes[0].icon}
+            size={24}
+          />
+          <span>Current theme: {theme()}</span>
+        </p>
+      </div>
+    </ErrorBoundary>
+  );
 }
 
 export default App;

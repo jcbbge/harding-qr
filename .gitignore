@@ -26,3 +26,13 @@ config/*.pem
 # Build directories
 dist/
 build/
+
+# AI Digest
+.aidigestignore
+codebase.md
+
+# Cursor
+.cursorrules
+
+# Documentation
+docs/

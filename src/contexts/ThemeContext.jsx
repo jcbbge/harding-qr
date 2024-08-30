@@ -1,72 +1,50 @@
-import { createContext, createSignal, createEffect, useContext } from 'solid-js';
+import { createContext, useContext, createSignal } from 'solid-js';
+import {
+  Cpu,
+  Rocket,
+  Waves,
+  ShoppingCart,
+  Buildings,
+  GameController,
+  Faders,
+  Television,
+  Train,
+  Lightning,
+  FloppyDisk,
+  Eye
+} from 'phosphor-solid';
+
+const themes = [
+  { name: 'digital-dawn', icon: Cpu },
+  { name: 'cyber-punk', icon: Faders },
+  { name: 'retro-wave', icon: Television },
+  { name: 'echo-sphere', icon: Rocket },
+  { name: 'rail-pop', icon: Train },
+  { name: 'charge-back', icon: Lightning },
+  { name: 'urban-pulse', icon: Buildings },
+  { name: 'neon-nostalgia', icon: GameController },
+  { name: 'pastel-pop', icon: FloppyDisk },
+  { name: 'vision-tech', icon: Eye },
+  { name: 'surfside-vibes', icon: Waves },
+  { name: 'mall-rat', icon: ShoppingCart }
+];
 
 const ThemeContext = createContext();
 
 export function ThemeProvider(props) {
-  const [currentTheme, setCurrentTheme] = createSignal('digital-dawn');
-  const [appearanceMode, setAppearanceMode] = createSignal('system');
-  const [systemPreference, setSystemPreference] = createSignal(
-    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-  );
+  const [theme, setTheme] = createSignal(themes[0].name);
 
-  const applyThemeAndMode = () => {
-    document.body.setAttribute('data-theme', currentTheme());
-    
-    const effectiveMode = appearanceMode() === 'system' ? systemPreference() : appearanceMode();
-    document.body.classList.toggle('dark-mode', effectiveMode === 'dark');
-  };
-
-  createEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    const savedMode = localStorage.getItem('appearance-mode');
-    
-    if (savedTheme) setCurrentTheme(savedTheme);
-    if (savedMode) setAppearanceMode(savedMode);
-
-    applyThemeAndMode();
-  });
-
-  createEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e) => {
-      setSystemPreference(e.matches ? 'dark' : 'light');
-    };
-    
-    mediaQuery.addListener(handleChange);
-    return () => mediaQuery.removeListener(handleChange);
-  });
-
-  createEffect(() => {
-    // This effect will run whenever systemPreference or appearanceMode changes
-    applyThemeAndMode();
-  });
-
-  const toggleAppearanceMode = () => {
-    const modes = ['light', 'dark', 'system'];
-    const currentIndex = modes.indexOf(appearanceMode());
-    const nextIndex = (currentIndex + 1) % modes.length;
-    setAppearanceMode(modes[nextIndex]);
-  };
-
-  createEffect(() => {
-    localStorage.setItem('theme', currentTheme());
-    localStorage.setItem('appearance-mode', appearanceMode());
-  });
-
-  const changeTheme = (newTheme) => {
-    setCurrentTheme(newTheme);
-  };
-
-  const contextValue = {
-    currentTheme,
-    appearanceMode,
-    toggleAppearanceMode,
-    changeTheme,
-    systemPreference
+  const changeTheme = newTheme => {
+    const themeExists = themes.some(t => t.name === newTheme);
+    if (themeExists) {
+      setTheme(newTheme);
+    } else {
+      console.warn('Invalid theme:', newTheme);
+    }
   };
 
   return (
-    <ThemeContext.Provider value={contextValue}>
+    <ThemeContext.Provider value={{ theme, changeTheme, themes }}>
       {props.children}
     </ThemeContext.Provider>
   );
@@ -74,8 +52,8 @@ export function ThemeProvider(props) {
 
 export function useTheme() {
   const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
   }
   return context;
 }

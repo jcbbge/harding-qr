@@ -1,19 +1,35 @@
-Project Overview:
-Craft a beautifully designed portfolio website that is modern and interactive! This will help me in my transition from Senior Software Developer to Product Manager and aid in my job search.
+Upcoming Tasks:
+[ ] debug theme selector and dark mode selector. sometimes you have to click it more than once to get it to change.
+[ ] Add animation to the letterbox tile when the up and down arrow keys are used to change letter.
+[ ] add handler for card component for bottom col content.
+[ ] Add blank tile easter egg functionality. 3 blank tiles to every initial board. add keyboard nav handlers for theme selection, dark mode, and background pattern.
+[ ] refactor theme selection to blank letterbox tile. use key up and down handler to cycle through themes.
+[ ] use phosphor logos for each theme
+[ ] refactor Dark Mode selection to letterbox tile use key up and down handler to cycle through dark mode options of light, dark, system default.
+[ ] Add System Setting Display to footer for details such as sound on/off. theme name. light, dark, system default. Timer. Made by josh. instructions for naviagation. moves counter.
 
-Key Components and Processes:
-It will be a Solid JS [https://docs.solidjs.com] project using Solid Router to make it a multi page website. The unifying element to my website/app will be in interactive header that will be function as a word game that uses keyboard navigation and interaction. Each page will init a different version of the game for site visitors but everything will direct the user to me, and my personal brand to showcase my skills and qualification for my job hunt as a Product Manager.
-
-Current Focus and Next Steps:
-Need to install Solid Router using the docs from [https://docs.solidjs.com/solid-router]. Next steps after installing the router will be to customize 3 page views. 1 for landing page, one to handle page params from the url, and the other to be a dedicated page for Scrumble word game. I need to add interactive reveal card elements coinciding with gameplay for each page. I need to build a footer across all pages with page and game details, copyright and dev watermarks, etc. I need to refactor the grid layout to better utilize responsive space when viewed on mobile, and desktop. I need to add some custom detail elements to elevate UI such as letter box rim highlights and subtle glow effects. I need to install a modern and free icon set.
 
 Code Modification Instructions:
-Use Solid.js[https://docs.solidjs.com] conventions and best practices. Do not use any React or any 3rd party libraries/packages in the React ecosystem. Code blocks should be properly formatted with spaces:2 indentation.
+Use Solid.js conventions and best practices. Do not use any React or any 3rd party libraries/packages in the React ecosystem. When generating code, alway consider the following points:
 
-Points to Consider:
 - Performance optimization
 - Security best practices
 - Code maintainability
 - Scalability
-- Error handling and logging
+- Error handling and logging.
+
+Code blocks should be properly formatted with Spaces: 2 indentation.
+
+When I ask for help, I am providing the following information:
+- The error message
+- The code that is causing the error
+- The code that is calling the code that is causing the error
+- Any other relevant information
+Help me debug using solid.js conventions and best practices. do not make any code suggestions unless you have done the following two things: 1) you have verified your work against offical Solid.js documentation. 2) You are more than 90% sure this will solve the problem.
+
+Any and all output should only be additve to my current files. Do not remove any parts of the code that are not pertinent to debugging. If you have any questions, need clarification, or do not understand something, ask me. Do not make any assumptions.
+
+Do not output code blocks to explain what you will be doing. Just do it. Only show code blocks that I can 'Apply' to my code. For all code additions, add a line or two of comments to explain what is happening.
+
+
 

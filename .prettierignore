@@ -1,0 +1,10 @@
+node_modules/
+
+.aidigestignore
+
+.cursorrules
+
+docs/
+
+dist/
+build/

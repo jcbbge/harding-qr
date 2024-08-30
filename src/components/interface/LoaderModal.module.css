@@ -1,0 +1,89 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+}
+
+.modal {
+  background-color: var(--gradient-base-bottom);
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.textDisplay {
+  border: 1px solid var(--text-color);
+  margin-bottom: 5px;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.terminalLine {
+  white-space: pre-wrap;
+  line-height: 1.2;
+}
+
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background-color: var(--text-color);
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.progressContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.progressBar {
+  flex-grow: 1;
+  height: 15px;
+  background-color: var(--gradient-base-top);
+  border: 1px solid var(--text-color);
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.progressBarFill {
+  height: 100%;
+  background-color: var(--accent-fun);
+  transition: width 0.5s ease-out;
+}
+
+.progressText {
+  font-family: monospace;
+  color: var(--text-color);
+  min-width: 40px;
+  text-align: right;
+}
+
+.icon-align-bottom {
+  vertical-align: -0.25em; /* Adjust as needed */
+  height: 1em; /* Ensures the icon scales with text size */
+  display: inline-block;
+}

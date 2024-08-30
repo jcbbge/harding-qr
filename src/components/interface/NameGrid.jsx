@@ -15,7 +15,7 @@ import rightKeySound from '../../assets/sounds/button-6.wav';
 
 import DebugWrapper from '../util/DebugWrapper';
 
-const fullName = ['JOSHUA', 'RUSSELL', 'GANTT', 'NOTION', 'PRODUCT', 'MANAGER'];
+const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
 // const fullName = ['MVP', 'KPI', 'OKR'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 

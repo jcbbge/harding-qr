@@ -1,14 +1,3 @@
-Upcoming Tasks:
-[ ] debug theme selector and dark mode selector. sometimes you have to click it more than once to get it to change.
-[ ] Add animation to the letterbox tile when the up and down arrow keys are used to change letter.
-[ ] add handler for card component for bottom col content.
-[ ] Add blank tile easter egg functionality. 3 blank tiles to every initial board. add keyboard nav handlers for theme selection, dark mode, and background pattern.
-[ ] refactor theme selection to blank letterbox tile. use key up and down handler to cycle through themes.
-[ ] use phosphor logos for each theme
-[ ] refactor Dark Mode selection to letterbox tile use key up and down handler to cycle through dark mode options of light, dark, system default.
-[ ] Add System Setting Display to footer for details such as sound on/off. theme name. light, dark, system default. Timer. Made by josh. instructions for naviagation. moves counter.
-
-
 Code Modification Instructions:
 Use Solid.js conventions and best practices. Do not use any React or any 3rd party libraries/packages in the React ecosystem. When generating code, alway consider the following points:
 

@@ -15,8 +15,8 @@ import rightKeySound from '../../assets/sounds/button-6.wav';
 
 import DebugWrapper from '../util/DebugWrapper';
 
-// const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
-const fullName = ['MVP', 'KPI', 'OKR'];
+const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
+// const fullName = ['MVP', 'KPI', 'OKR'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 const isVowel = char => 'AEIOU'.includes(char.toUpperCase());
@@ -42,10 +42,7 @@ const padder = name => {
 };
 
 const NameGrid = ({ onLetterUnlock }) => {
-  const { theme, changeTheme, themes } = useTheme();
-  const [themeIndex, setThemeIndex] = createSignal(themes.findIndex(t => t.name === theme()));
-  const [mode, setMode] = createSignal('system');
-  const [background, setBackground] = createSignal('default');
+  const { appearance, updateTheme, updateMode, updateBackground, themes } = useTheme();
 
   let letterChangeAudio,
     letterChangeAudioDown,
@@ -85,8 +82,8 @@ const NameGrid = ({ onLetterUnlock }) => {
   );
 
   createEffect(() => {
-    const initialVowelIndex = names()[0].findIndex(char => char.isVowel);
-    setFocusedPosition({ row: 0, col: initialVowelIndex });
+    const initialVowelIndex = names()[activeNameIndex()].findIndex(char => char.isVowel);
+    setFocusedPosition({ row: activeNameIndex(), col: initialVowelIndex });
   });
 
   const findNextVowelOrBlank = (startRow, startCol, direction) => {
@@ -121,24 +118,23 @@ const NameGrid = ({ onLetterUnlock }) => {
   };
 
   const changeThemeSetting = delta => {
-    const newThemeIndex = (themeIndex() + delta + themes.length) % themes.length;
-    setThemeIndex(newThemeIndex);
-    changeTheme(themes[newThemeIndex].name);
+    const currentIndex = themes.findIndex(t => t.name === appearance.theme);
+    const newIndex = (currentIndex + delta + themes.length) % themes.length;
+    updateTheme(themes[newIndex].name);
   };
 
   const changeModeSetting = delta => {
     const modes = ['light', 'dark', 'system'];
-    const currentIndex = modes.indexOf(mode());
+    const currentIndex = modes.indexOf(appearance.mode);
     const newIndex = (currentIndex + delta + modes.length) % modes.length;
-    setMode(modes[newIndex]);
-    console.log('Mode changed to:', modes[newIndex]); // Debug log
+    updateMode(modes[newIndex]);
   };
 
   const changeBackgroundSetting = delta => {
     const backgrounds = ['default', 'gradient', 'solid'];
-    const currentIndex = backgrounds.indexOf(background());
+    const currentIndex = backgrounds.indexOf(appearance.background);
     const newIndex = (currentIndex + delta + backgrounds.length) % backgrounds.length;
-    setBackground(backgrounds[newIndex]);
+    updateBackground(backgrounds[newIndex]);
   };
 
   const changeSetting = (row, col, delta) => {
@@ -356,7 +352,7 @@ const NameGrid = ({ onLetterUnlock }) => {
 
               console.log('Rendering GridRow:', {
                 nameIndex: nameIndex(),
-                currentMode: mode(),
+                currentMode: appearance.mode,
                 emptyCountBeforeRow
               }); // Debug log
 
@@ -367,9 +363,9 @@ const NameGrid = ({ onLetterUnlock }) => {
                   activeVowelIndex={activeVowelIndex()}
                   focusedPosition={focusedPosition()}
                   rowIndex={nameIndex()}
-                  currentTheme={theme()}
-                  currentMode={mode} // Pass the mode signal directly
-                  currentBackground={background()}
+                  currentTheme={appearance.theme}
+                  currentMode={appearance.mode}
+                  currentBackground={appearance.background}
                   totalEmptyCount={totalEmptyCount()}
                   emptyCountBeforeRow={emptyCountBeforeRow}
                 />

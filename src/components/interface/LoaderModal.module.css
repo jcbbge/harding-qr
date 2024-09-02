@@ -28,7 +28,7 @@
   border: 1px solid var(--text-color);
   margin-bottom: 5px;
   width: 100%;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .terminalLine {

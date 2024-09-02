@@ -1,4 +1,4 @@
-import { For, createMemo } from 'solid-js';
+import { For, createMemo, Show } from 'solid-js';
 import styles from './NameGrid.module.css';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Dynamic } from 'solid-js/web';
@@ -47,7 +47,14 @@ const GridRow = props => {
                   : -1
               }
             >
-              {<span>{letterObj.currentLetter}</span>}
+              <Show
+                when={
+                  props.rowIndex === 0 && letterIndex() === 0 && letterObj.correctLetter === ' '
+                }
+                fallback={<span>{letterObj.currentLetter}</span>}
+              >
+                <Dynamic component={ThemeIcon()} />
+              </Show>
             </div>
           );
         }}

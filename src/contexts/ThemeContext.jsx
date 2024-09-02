@@ -1,4 +1,5 @@
-import { createContext, useContext, createSignal } from 'solid-js';
+import { createContext, useContext, createEffect, onCleanup } from 'solid-js';
+import { createStore } from 'solid-js/store';
 import {
   Cpu,
   Rocket,
@@ -32,22 +33,77 @@ const themes = [
 const ThemeContext = createContext();
 
 export function ThemeProvider(props) {
-  const [theme, setTheme] = createSignal(themes[0].name);
+  const [appearance, setAppearance] = createStore({
+    theme: localStorage.getItem('theme') || themes[0].name,
+    mode: localStorage.getItem('mode') || 'system',
+    background: localStorage.getItem('background') || 'default'
+  });
 
-  const changeTheme = newTheme => {
+  const updateTheme = newTheme => {
     const themeExists = themes.some(t => t.name === newTheme);
     if (themeExists) {
-      setTheme(newTheme);
+      setAppearance('theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      document.documentElement.setAttribute('data-theme', newTheme);
     } else {
       console.warn('Invalid theme:', newTheme);
     }
   };
 
-  return (
-    <ThemeContext.Provider value={{ theme, changeTheme, themes }}>
-      {props.children}
-    </ThemeContext.Provider>
-  );
+  const updateMode = newMode => {
+    if (['light', 'dark', 'system'].includes(newMode)) {
+      setAppearance('mode', newMode);
+      localStorage.setItem('mode', newMode);
+      updateAppearanceMode(newMode);
+    } else {
+      console.warn('Invalid mode:', newMode);
+    }
+  };
+
+  const updateBackground = newBackground => {
+    if (['default', 'gradient', 'solid'].includes(newBackground)) {
+      setAppearance('background', newBackground);
+      localStorage.setItem('background', newBackground);
+    } else {
+      console.warn('Invalid background:', newBackground);
+    }
+  };
+
+  const updateAppearanceMode = mode => {
+    if (mode === 'system') {
+      const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.classList.toggle('dark-mode', isDarkMode);
+    } else {
+      document.documentElement.classList.toggle('dark-mode', mode === 'dark');
+    }
+  };
+
+  const handleSystemThemeChange = e => {
+    if (appearance.mode === 'system') {
+      document.documentElement.classList.toggle('dark-mode', e.matches);
+    }
+  };
+
+  createEffect(() => {
+    updateAppearanceMode(appearance.mode);
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addListener(handleSystemThemeChange);
+
+    onCleanup(() => {
+      mediaQuery.removeListener(handleSystemThemeChange);
+    });
+  });
+
+  const contextValue = {
+    appearance,
+    updateTheme,
+    updateMode,
+    updateBackground,
+    themes
+  };
+
+  return <ThemeContext.Provider value={contextValue}>{props.children}</ThemeContext.Provider>;
 }
 
 export function useTheme() {

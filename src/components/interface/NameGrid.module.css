@@ -114,3 +114,7 @@
 .letterSpan {
   font-family: 'Lot-Regular', sans-serif;
 }
+
+.settingIcon {
+  color: var(--text-secondary);
+}

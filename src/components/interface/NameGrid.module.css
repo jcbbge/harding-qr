@@ -118,3 +118,13 @@
 .settingIcon {
   color: var(--text-secondary);
 }
+
+.desktopIcon {
+  transition: transform 0.3s ease;
+}
+
+@media (min-width: 769px) {
+  .desktopIcon {
+    transform: scale(1.2);
+  }
+}

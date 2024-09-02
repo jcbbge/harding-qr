@@ -1,4 +1,4 @@
-import { For, createMemo, Show } from 'solid-js';
+import { For, createMemo } from 'solid-js';
 import styles from './NameGrid.module.css';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Dynamic } from 'solid-js/web';
@@ -8,7 +8,7 @@ const accentVariables = ['accent-unexpected'];
 
 const GridRow = props => {
   let colorIndex = 0;
-  const { themes } = useTheme();
+  const { appearance, themes } = useTheme();
 
   const getNextAccentVariable = () => {
     const variable = accentVariables[colorIndex];
@@ -17,13 +17,13 @@ const GridRow = props => {
   };
 
   const ThemeIcon = createMemo(() => {
-    const currentThemeObj = themes.find(t => t.name === props.currentTheme);
+    const currentThemeObj = themes.find(t => t.name === appearance.theme);
     return currentThemeObj ? currentThemeObj.icon : null;
   });
 
   const ModeIcon = createMemo(() => {
-    console.log('Current mode:', props.currentMode()); // Debug log
-    switch (props.currentMode()) {
+    console.log('Current mode:', appearance.mode); // Debug log
+    switch (appearance.mode) {
       case 'light':
         return Sun;
       case 'dark':
@@ -48,8 +48,8 @@ const GridRow = props => {
             settingComponent = (
               <Dynamic
                 component={ThemeIcon()}
-                size={24}
-                class={styles.settingIcon}
+                size={28}
+                class={`${styles.settingIcon} ${styles.desktopIcon}`}
               />
             );
             break;
@@ -58,16 +58,16 @@ const GridRow = props => {
             console.log('Rendering mode icon:', CurrentModeIcon); // Debug log
             settingComponent = (
               <CurrentModeIcon
-                size={24}
-                class={styles.settingIcon}
+                size={28}
+                class={`${styles.settingIcon} ${styles.desktopIcon}`}
               />
             );
             break;
           case 3:
             settingComponent = (
               <SquareHalf
-                size={24}
-                class={styles.settingIcon}
+                size={28}
+                class={`${styles.settingIcon} ${styles.desktopIcon}`}
               />
             );
             break;

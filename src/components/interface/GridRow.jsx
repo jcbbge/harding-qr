@@ -21,7 +21,10 @@ const GridRow = props => {
   });
 
   return (
-    <div class={styles.nameRow} style={{ '--name-length': props.name.length }}>
+    <div
+      class={styles.nameRow}
+      style={{ '--name-length': props.gridSize }}
+    >
       <For each={props.name}>
         {(letterObj, letterIndex) => {
           const accentVar = createMemo(() =>

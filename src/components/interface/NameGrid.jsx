@@ -396,6 +396,7 @@ const NameGrid = ({ onLetterUnlock }) => {
                 focusedPosition={focusedPosition()}
                 rowIndex={nameIndex()}
                 currentTheme={theme()}
+                gridSize={name.length} // Pass the length of the row word
               />
             )}
           </For>

@@ -3,25 +3,19 @@ import { useTheme } from './contexts/ThemeContext';
 import NameGrid from './components/interface/NameGrid';
 import './App.css';
 
-console.log('App.jsx: Starting App component');
-
 function App() {
-  console.log('App: Component function called');
   const [company, setCompany] = createSignal('');
   const [role, setRole] = createSignal('');
   const [timeLeft, setTimeLeft] = createSignal(60); // 60 seconds = 1 minute
   const { theme, themes } = useTheme();
 
   let timerInterval;
-  console.log('App: About to call useTheme');
 
   onMount(() => {
-    console.log('App: onMount called');
     const urlPath = window.location.pathname;
     let pathSegments = urlPath.split('/').filter(Boolean);
 
     if (pathSegments.length >= 2) {
-      console.log({ urlPath, pathSegments });
       setCompany(pathSegments[0]);
       setRole(pathSegments[1]);
     }
@@ -39,15 +33,11 @@ function App() {
   });
 
   onCleanup(() => {
-    console.log('App: onCleanup called');
-    // window.removeEventListener("wheel", handleScroll);
-    // window.removeEventListener("scroll", handleScroll);
-    // window.removeEventListener("keydown", handleScroll);
     clearInterval(timerInterval); // Clear the timer interval
   });
 
   function handleLetterUnlock() {
-    console.log('App: letter unlocked');
+    // Handle letter unlock logic
   }
 
   // Format time as MM:SS
@@ -57,30 +47,28 @@ function App() {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  console.log('App: About to return JSX');
   return (
     <ErrorBoundary
       fallback={err => {
-        console.error('App: Error caught in ErrorBoundary:', err);
         return <div>Error: {err.toString()}</div>;
       }}
     >
-      <div class="timer-container">
-        <div id="timer">{formattedTime()}</div>
-      </div>
       <div class="top-column">
-        <NameGrid company={company()} role={role()} onLetterUnlock={handleLetterUnlock}></NameGrid>
+        <NameGrid
+          company={company()}
+          role={role()}
+          onLetterUnlock={handleLetterUnlock}
+        ></NameGrid>
       </div>
-      <div class="bottom-column">
+      {/* <div class="bottom-column">
         <p class="flex items-center space-x-2">
-          {/* Use dynamic import for the icon */}
           <Dynamic
             component={themes.find(t => t.name === theme())?.icon || themes[0].icon}
             size={24}
           />
           <span>Current theme: {theme()}</span>
         </p>
-      </div>
+      </div> */}
     </ErrorBoundary>
   );
 }

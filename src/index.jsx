@@ -13,6 +13,8 @@ import Roleco from './pages/Roleco';
 import Scrumble from './pages/Scrumble';
 import NotFound from './pages/NotFound';
 
+import Footer from './components/interface/Footer';
+
 console.log('index.jsx: Starting to render');
 
 const root = document.getElementById('root');
@@ -68,7 +70,12 @@ const RolecoWrapper = () => {
     return <Navigate href="/" />;
   }
 
-  return <Roleco role={parsedParams.role} company={parsedParams.company} />;
+  return (
+    <Roleco
+      role={parsedParams.role}
+      company={parsedParams.company}
+    />
+  );
 };
 
 // Render the app
@@ -80,20 +87,23 @@ const Layout = props => {
     <>
       <header>
         <nav class="navContainer">
-          <a href="/" class="navLink">
+          <a
+            href="/"
+            class="navLink"
+          >
             Home
           </a>
-          <a href="/pmnotion" class="navLink">
-            PM Notion
-          </a>
-          <a href="/scrumble" class="navLink">
-            Scrumble
+          <a
+            href="/scrumble"
+            class="navLink"
+          >
+            PlayScrumble
           </a>
         </nav>
       </header>
 
       {props.children}
-      <footer>Footer</footer>
+      <Footer></Footer>
     </>
   );
 };
@@ -103,10 +113,22 @@ render(
     <ThemeProvider>
       <Router root={Layout}>
         {console.log('index.jsx: Inside ThemeProvider')}
-        <Route path="/" component={App} />
-        <Route path="/:roleco" component={RolecoWrapper} />
-        <Route path="/scrumble" component={Scrumble} />
-        <Route path="*404" component={NotFound} />
+        <Route
+          path="/"
+          component={App}
+        />
+        <Route
+          path="/:roleco"
+          component={RolecoWrapper}
+        />
+        <Route
+          path="/scrumble"
+          component={Scrumble}
+        />
+        <Route
+          path="*404"
+          component={NotFound}
+        />
       </Router>
     </ThemeProvider>
   ),

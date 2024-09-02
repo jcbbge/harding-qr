@@ -1,5 +1,5 @@
 import { createSignal, onMount } from 'solid-js';
-import styles from './Footer.module.css';
+import '../../index.css';
 
 const Footer = () => {
   const [currentYear, setCurrentYear] = createSignal('');
@@ -9,12 +9,9 @@ const Footer = () => {
   });
 
   return (
-    <footer class={styles.footer}>
-      <div class={styles.gameDetails}>{/* Add game details here */}</div>
-      <div class={styles.copyright}>© {currentYear()} Your Name. All rights reserved.</div>
-      <div class={styles.devWatermark}>
-        👨🏾‍💻 by josh w/ <a href="https://www.solidjs.com">Solid.js</a>
-      </div>
+    <footer class="footerContainer">
+      👨🏾‍💻&nbsp;<a href="https://www.solidjs.com">solid.js</a>&nbsp;site by jrg &copy; {currentYear()}
+      . All rights reserved.
     </footer>
   );
 };

@@ -62,9 +62,9 @@ const Roleco = props => {
         />
       </div>
       <div class="bottom-column">
-        <p>This is the Roleco page</p>
+        {/* <p>This is the Roleco page</p>
         <h5>Role: {role()}</h5>
-        <h5>Company: {company()}</h5>
+        <h5>Company: {company()}</h5> */}
       </div>
     </>
   );

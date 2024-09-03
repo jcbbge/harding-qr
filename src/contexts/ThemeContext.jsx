@@ -71,7 +71,9 @@ export function ThemeProvider(props) {
 
   const updateAppearanceMode = mode => {
     if (mode === 'system') {
-      const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDarkMode = window.matchMedia
+        ? window.matchMedia('(prefers-color-scheme: dark)').matches
+        : false;
       document.documentElement.classList.toggle('dark-mode', isDarkMode);
     } else {
       document.documentElement.classList.toggle('dark-mode', mode === 'dark');

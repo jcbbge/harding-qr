@@ -69,9 +69,8 @@ const LoaderModal = props => {
 
   const processNextSentence = () => {
     if (currentIndex() < displayOutput.length && !isTyping()) {
-      setIsTyping(true); // Set typing flag to true
+      setIsTyping(true);
       const sentence = displayOutput[currentIndex()];
-      console.log(`Processing sentence: ${sentence}`); // Debug log
       let charIndex = 0;
 
       const typingInterval = setInterval(
@@ -79,41 +78,35 @@ const LoaderModal = props => {
           if (charIndex < sentence.length) {
             setDisplayLines(prev => {
               let newLines = [...prev];
-              // Always update the last line
               if (newLines.length === 0) {
                 newLines.push(sentence.substring(0, charIndex + 1));
               } else {
                 newLines[newLines.length - 1] = sentence.substring(0, charIndex + 1);
               }
-              console.log(`Current display lines: ${JSON.stringify(newLines)}`); // Debug log
-              return newLines.slice(-3); // Keep only last 3 lines
+              return newLines.slice(-3);
             });
             charIndex++;
           } else {
             clearInterval(typingInterval);
             setProgress(prev => {
               const newProgress = Math.min(100, prev + 100 / displayOutput.length);
-              console.log(`Progress updated: ${newProgress}%`); // Debug log
               return newProgress;
             });
 
-            // Move to the next sentence after a delay
             setTimeout(
               () => {
                 const nextIndex = currentIndex() + 1;
                 setCurrentIndex(nextIndex);
-                console.log(`Moving to next sentence. Index: ${nextIndex}`); // Debug log
 
                 if (nextIndex < displayOutput.length) {
                   setDisplayLines(prev => {
-                    let newLines = [...prev, '']; // Add a new empty line for the next sentence
-                    return newLines.slice(-3); // Keep only last 3 lines
+                    let newLines = [...prev, ''];
+                    return newLines.slice(-3);
                   });
-                  setIsTyping(false); // Reset typing flag
+                  setIsTyping(false);
                   processNextSentence();
                 } else {
-                  console.log('All sentences processed'); // Debug log
-                  setIsTyping(false); // Reset typing flag
+                  setIsTyping(false);
                 }
               },
               Math.random() * (MAX_LINE_DELAY - MIN_LINE_DELAY) + MIN_LINE_DELAY

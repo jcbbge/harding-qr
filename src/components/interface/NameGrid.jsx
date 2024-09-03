@@ -71,50 +71,48 @@ const NameGrid = ({ onLetterUnlock }) => {
 
   const [names, setNames] = createSignal(createInitialNames());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
-  const [activeVowelIndex, setActiveVowelIndex] = createSignal(
-    names()[0].findIndex(char => char.isVowel)
-  );
   const [gameCompleted, setGameCompleted] = createSignal(false);
-  const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 0 });
+  const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 1 });
 
   const totalEmptyCount = createMemo(() =>
     names().reduce((count, name) => count + name.filter(letter => letter.isEmpty).length, 0)
   );
 
   createEffect(() => {
-    const initialVowelIndex = names()[activeNameIndex()].findIndex(char => char.isVowel);
-    setFocusedPosition({ row: activeNameIndex(), col: initialVowelIndex });
+    const firstNonEmptyPosition = names().reduce((pos, row, rowIndex) => {
+      if (pos) return pos;
+      const colIndex = row.findIndex(letter => !letter.isEmpty);
+      return colIndex !== -1 ? { row: rowIndex, col: colIndex } : null;
+    }, null);
+
+    if (firstNonEmptyPosition) {
+      setFocusedPosition(firstNonEmptyPosition);
+    }
   });
 
-  const findNextVowelOrBlank = (startRow, startCol, direction) => {
-    let row = startRow;
-    let col = startCol;
+  const findNextLetterBox = (currentRow, currentCol, direction) => {
+    const totalRows = names().length;
+    const totalCols = names()[0].length; // Assuming all rows have the same length
 
-    while (true) {
-      col += direction;
+    let newRow = currentRow;
+    let newCol = currentCol;
 
-      if (col < 0 || col >= names()[row].length) {
-        row += direction;
-        if (row < 0) {
-          row = names().length - 1;
-          col = names()[row].length - 1;
-        } else if (row >= names().length) {
-          row = 0;
-          col = 0;
-        } else {
-          col = direction > 0 ? 0 : names()[row].length - 1;
-        }
-      }
-
-      const currentLetter = names()[row][col];
-      if (currentLetter.isVowel || currentLetter.isEmpty) {
-        return { row, col };
-      }
-
-      if (row === startRow && col === startCol) {
-        return { row: startRow, col: startCol };
-      }
+    switch (direction) {
+      case 'left':
+        newCol = (newCol - 1 + totalCols) % totalCols;
+        break;
+      case 'right':
+        newCol = (newCol + 1) % totalCols;
+        break;
+      case 'up':
+        newRow = (newRow - 1 + totalRows) % totalRows;
+        break;
+      case 'down':
+        newRow = (newRow + 1) % totalRows;
+        break;
     }
+
+    return { row: newRow, col: newCol };
   };
 
   const changeThemeSetting = delta => {
@@ -162,55 +160,59 @@ const NameGrid = ({ onLetterUnlock }) => {
   };
 
   const handleKeyDown = event => {
-    const { key } = event;
+    const { key, shiftKey } = event;
     const { row, col } = focusedPosition();
-    console.log('NameGrid: Key pressed:::::', key);
-    console.log('NameGrid: Focused position:::::', { row, col });
-
     let newPosition;
+    let direction;
 
     switch (key) {
       case 'ArrowLeft':
       case 'a':
-        newPosition = findNextVowelOrBlank(row, col, -1);
+        direction = 'left';
         playSound(leftKeyAudio);
         break;
       case 'ArrowRight':
       case 'd':
-        newPosition = findNextVowelOrBlank(row, col, 1);
+        direction = 'right';
         playSound(rightKeyAudio);
         break;
       case 'ArrowUp':
       case 'w':
-        changeLetter(row, col, 1);
+        direction = 'up';
         break;
       case 'ArrowDown':
       case 's':
-        changeLetter(row, col, -1);
+        direction = 'down';
         break;
       case 'Enter':
       case ' ':
-        changeLetter(row, col, 1);
+        handleLetterOrSettingChange(row, col, shiftKey ? -1 : 1);
         return;
       default:
         return;
     }
 
-    if (newPosition) {
-      console.log('NameGrid: New position:', newPosition);
+    if (direction) {
+      newPosition = findNextLetterBox(row, col, direction);
       setFocusedPosition(newPosition);
       setActiveNameIndex(newPosition.row);
-      setActiveVowelIndex(newPosition.col);
     }
     event.preventDefault();
+  };
+
+  const handleLetterOrSettingChange = (row, col, direction) => {
+    const letter = names()[row][col];
+    if (letter.isEmpty) {
+      changeSetting(row, col, direction);
+    } else {
+      changeLetter(row, col, direction);
+    }
   };
 
   const playSound = audio => {
     if (audio) {
       audio.currentTime = 0;
-      audio.play().catch(error => console.error('Error playing audio:', error));
-    } else {
-      console.warn('Audio object is not available.');
+      audio.play().catch(error => {});
     }
   };
 
@@ -223,18 +225,15 @@ const NameGrid = ({ onLetterUnlock }) => {
   };
 
   const handleCorrectLetter = () => {
-    console.log('Correct letter guessed!');
     playSound(correctLetterAudio);
   };
 
   const handleWordComplete = nameIndex => {
-    console.log(`Word ${nameIndex + 1} (${fullName[nameIndex]}) is complete!`);
     playSound(correctWordAudios[nameIndex]);
   };
 
   const handleAllWordsComplete = () => {
     if (!gameCompleted()) {
-      console.log('All words completed! Game over!');
       setTimeout(() => {
         playSound(allWordsCompleteAudio);
       }, 400);
@@ -285,7 +284,6 @@ const NameGrid = ({ onLetterUnlock }) => {
     // Update focusedPosition to maintain the current active letter
     setFocusedPosition({ row, col });
     setActiveNameIndex(row);
-    setActiveVowelIndex(col);
   };
 
   const [timerStarted, setTimerStarted] = createSignal(false);
@@ -350,17 +348,10 @@ const NameGrid = ({ onLetterUnlock }) => {
                 .flat()
                 .filter(letter => letter.isEmpty).length;
 
-              console.log('Rendering GridRow:', {
-                nameIndex: nameIndex(),
-                currentMode: appearance.mode,
-                emptyCountBeforeRow
-              }); // Debug log
-
               return (
                 <GridRow
                   name={name}
                   isActiveName={nameIndex() === activeNameIndex()}
-                  activeVowelIndex={activeVowelIndex()}
                   focusedPosition={focusedPosition()}
                   rowIndex={nameIndex()}
                   currentTheme={appearance.theme}

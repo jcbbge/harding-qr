@@ -15,8 +15,6 @@ import NotFound from './pages/NotFound';
 
 import Footer from './components/interface/Footer';
 
-console.log('index.jsx: Starting to render');
-
 const root = document.getElementById('root');
 
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
@@ -34,10 +32,7 @@ const gradientOverlay = document.createElement('div');
 gradientOverlay.className = 'gradient-overlay';
 document.body.insertBefore(gradientOverlay, root);
 
-console.log('index.jsx: Background elements created');
-
 const RolecoWrapper = () => {
-  console.log('RolecoWrapper: Component rendered');
   const params = useParams();
   const navigate = useNavigate();
 
@@ -78,11 +73,7 @@ const RolecoWrapper = () => {
   );
 };
 
-// Render the app
-console.log('index.jsx: About to render app');
-
 const Layout = props => {
-  console.log('Layout: Component rendered', props);
   return (
     <>
       <header>
@@ -112,7 +103,6 @@ render(
   () => (
     <ThemeProvider>
       <Router root={Layout}>
-        {console.log('index.jsx: Inside ThemeProvider')}
         <Route
           path="/"
           component={App}
@@ -134,5 +124,3 @@ render(
   ),
   root
 );
-
-console.log('index.jsx: Render complete');

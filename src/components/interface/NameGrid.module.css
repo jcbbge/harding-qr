@@ -30,7 +30,7 @@
   transition: all 0.3s ease;
   font-family: 'Press Start 2P', cursive;
   border-radius: 5px;
-  box-shadow: 1px 1px 0px var(--accent-fun);
+  box-shadow: 2px 2px 0px var(--accent-fun);
 }
 
 .letterBox:last-child {
@@ -57,13 +57,14 @@
   box-shadow: 2px 2px 0px var(--accent-fun);
 }
 
-.letterBox.active {
+.letterBox.active,
+.letterBox.focused {
   border: 2px solid var(--gradient-base-bottom);
   box-shadow: 3px 3px 0px var(--text-primary);
-  background-color: var(--accent);
+  background-color: var(--accent) !important;
 }
 
-.letterBox.vowel.matched {
+.letterBox.matched {
   border: 2px solid var(--text-primary);
   background-color: var(--accent-unexpected);
   color: var(--gradient-base-bottom);

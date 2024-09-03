@@ -22,7 +22,6 @@ const GridRow = props => {
   });
 
   const ModeIcon = createMemo(() => {
-    console.log('Current mode:', appearance.mode); // Debug log
     switch (appearance.mode) {
       case 'light':
         return Sun;
@@ -38,7 +37,6 @@ const GridRow = props => {
     if (letterObj.isEmpty) {
       const emptyIndexInRow = props.name.slice(0, letterIndex).filter(l => l.isEmpty).length + 1;
       const emptyIndexInGrid = props.emptyCountBeforeRow + emptyIndexInRow;
-      console.log('Empty box index:', emptyIndexInGrid, 'Row index:', emptyIndexInRow); // Debug log
 
       let displayContent = ' ';
       if (emptyIndexInGrid <= 3) {
@@ -55,7 +53,6 @@ const GridRow = props => {
             break;
           case 2:
             const CurrentModeIcon = ModeIcon();
-            console.log('Rendering mode icon:', CurrentModeIcon); // Debug log
             settingComponent = (
               <CurrentModeIcon
                 size={28}
@@ -96,12 +93,12 @@ const GridRow = props => {
     return (
       <div
         class={`${styles.letterBox}
-                ${letterObj.isVowel ? styles.vowel : ''}
                 ${letterObj.matched ? styles.matched : ''}
                 ${props.isActiveName && letterIndex === props.activeVowelIndex ? styles.active : ''}
                 ${props.focusedPosition.row === props.rowIndex && letterIndex === props.focusedPosition.col ? styles.focused : ''}
                 ${accentVar() ? styles.accentBackground : ''}`}
         style={accentVar() ? { '--accent-var': `var(${accentVar()})` } : {}}
+        role="button"
         tabIndex={
           props.focusedPosition.row === props.rowIndex && letterIndex === props.focusedPosition.col
             ? 0

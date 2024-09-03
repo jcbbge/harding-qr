@@ -179,10 +179,12 @@ const NameGrid = ({ onLetterUnlock }) => {
       case 'ArrowUp':
       case 'w':
         direction = 'up';
+        playSound(rightKeyAudio);
         break;
       case 'ArrowDown':
       case 's':
         direction = 'down';
+        playSound(rightKeyAudio);
         break;
       case 'Enter':
       case ' ':

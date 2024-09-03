@@ -1,35 +1,27 @@
-import { For, createMemo } from 'solid-js';
+import { For, createMemo, createEffect } from 'solid-js';
 import styles from './NameGrid.module.css';
 import { useTheme } from '../../contexts/ThemeContext';
-import { Dynamic } from 'solid-js/web';
-import { Sun, Moon, Gear, SquareHalf } from 'phosphor-solid';
+import { Icon } from '../util/Icon';
 
 const accentVariables = ['accent-unexpected'];
 
 const GridRow = props => {
-  let colorIndex = 0;
   const { appearance, themes } = useTheme();
 
-  const getNextAccentVariable = () => {
-    const variable = accentVariables[colorIndex];
-    colorIndex = (colorIndex + 1) % accentVariables.length;
-    return variable;
-  };
-
-  const ThemeIcon = createMemo(() => {
-    const currentThemeObj = themes.find(t => t.name === appearance.theme);
-    return currentThemeObj ? currentThemeObj.icon : null;
+  const ThemeIconName = createMemo(() => {
+    const iconName = themes.find(t => t.name === appearance.theme)?.icon || 'palette';
+    console.log('Theme icon name computed:', iconName);
+    return iconName;
   });
 
   const ModeIcon = createMemo(() => {
     switch (appearance.mode) {
       case 'light':
-        return Sun;
+        return 'sun';
       case 'dark':
-        return Moon;
-      case 'system':
+        return 'moon';
       default:
-        return Gear;
+        return 'sun-moon';
     }
   });
 
@@ -40,36 +32,26 @@ const GridRow = props => {
 
       let displayContent = ' ';
       if (emptyIndexInGrid <= 3) {
-        let settingComponent;
+        let iconName;
         switch (emptyIndexInGrid) {
           case 1:
-            settingComponent = (
-              <Dynamic
-                component={ThemeIcon()}
-                size={28}
-                class={`${styles.settingIcon} ${styles.desktopIcon}`}
-              />
-            );
+            iconName = ThemeIconName();
             break;
           case 2:
-            const CurrentModeIcon = ModeIcon();
-            settingComponent = (
-              <CurrentModeIcon
-                size={28}
-                class={`${styles.settingIcon} ${styles.desktopIcon}`}
-              />
-            );
+            iconName = ModeIcon();
             break;
           case 3:
-            settingComponent = (
-              <SquareHalf
-                size={28}
-                class={`${styles.settingIcon} ${styles.desktopIcon}`}
-              />
-            );
+            iconName = 'layout-dashboard';
             break;
         }
-        displayContent = settingComponent;
+        console.log(`Rendering icon for empty box ${emptyIndexInGrid}:`, iconName);
+        displayContent = (
+          <Icon
+            name={iconName}
+            size={28}
+            class={`${styles.settingIcon} ${styles.desktopIcon}`}
+          />
+        );
       }
 
       return (

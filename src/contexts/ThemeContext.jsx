@@ -27,11 +27,13 @@ export function ThemeProvider(props) {
   });
 
   const updateTheme = newTheme => {
+    console.log('updateTheme called with:', newTheme);
     const themeExists = themes.some(t => t.name === newTheme);
     if (themeExists) {
       setAppearance('theme', newTheme);
       localStorage.setItem('theme', newTheme);
       document.documentElement.setAttribute('data-theme', newTheme);
+      console.log('Theme updated to:', newTheme);
     } else {
       console.warn('Invalid theme:', newTheme);
     }
@@ -74,6 +76,7 @@ export function ThemeProvider(props) {
   };
 
   createEffect(() => {
+    console.log('ThemeProvider effect: Current appearance', appearance);
     updateAppearanceMode(appearance.mode);
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');

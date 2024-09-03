@@ -1,6 +1,6 @@
 # Custom Instructions for Solid.js Application Development
 
-When working on this Solid.js application, please follow these guidelines:
+When working on this Solid.js application, please note that this is not a Typescript project. It is Javascript only and please follow these guidelines:
 
 1. **Code Additions**: Unless explicitly requested for refactoring, all code changes should be additive in nature. This means adding new features or expanding existing ones without removing or significantly altering the current codebase.
 

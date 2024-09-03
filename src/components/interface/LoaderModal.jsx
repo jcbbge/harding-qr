@@ -1,6 +1,6 @@
 import { createSignal, createEffect } from 'solid-js';
 import styles from './LoaderModal.module.css';
-import { Robot, ArrowUp, ArrowRight, ArrowLeft, ArrowDown } from 'phosphor-solid';
+import { Icon } from '../util/Icon';
 import NavigationGuide from './NavigationGuide';
 
 const LoaderModal = props => {
@@ -148,7 +148,8 @@ const LoaderModal = props => {
           <div class={styles.textDisplay}>
             {displayLines().map((line, index) => (
               <div class={styles.terminalLine}>
-                <Robot
+                <Icon
+                  name="terminal-2"
                   size={16}
                   class="icon-align-bottom"
                   style={{

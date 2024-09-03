@@ -1,6 +1,7 @@
 import { createSignal, createEffect } from 'solid-js';
 import styles from './LoaderModal.module.css';
 import { Robot, ArrowUp, ArrowRight, ArrowLeft, ArrowDown } from 'phosphor-solid';
+import NavigationGuide from './NavigationGuide';
 
 const LoaderModal = props => {
   const [displayLines, setDisplayLines] = createSignal([]);
@@ -143,6 +144,7 @@ const LoaderModal = props => {
     >
       <div class={styles.modal}>
         <div class={styles.content}>
+          <NavigationGuide />
           <div class={styles.textDisplay}>
             {displayLines().map((line, index) => (
               <div class={styles.terminalLine}>

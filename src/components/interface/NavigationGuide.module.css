@@ -1,0 +1,33 @@
+.guideContainer {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.guideTitle {
+  color: var(--text-primary);
+  font-size: 1.2em;
+  margin-bottom: 12px;
+}
+
+.guideList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.guideItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.guideKey {
+  color: var(--accent-fun);
+  font-weight: bold;
+  margin-right: 16px;
+}
+
+.guideDescription {
+  color: var(--text-primary);
+}

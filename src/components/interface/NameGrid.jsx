@@ -99,16 +99,26 @@ const NameGrid = ({ onLetterUnlock }) => {
 
     switch (direction) {
       case 'left':
-        newCol = (newCol - 1 + totalCols) % totalCols;
+        if (currentCol === 0) {
+          newRow = (currentRow - 1 + totalRows) % totalRows;
+          newCol = totalCols - 1;
+        } else {
+          newCol = currentCol - 1;
+        }
         break;
       case 'right':
-        newCol = (newCol + 1) % totalCols;
+        if (currentCol === totalCols - 1) {
+          newRow = (currentRow + 1) % totalRows;
+          newCol = 0;
+        } else {
+          newCol = currentCol + 1;
+        }
         break;
       case 'up':
-        newRow = (newRow - 1 + totalRows) % totalRows;
+        newRow = (currentRow - 1 + totalRows) % totalRows;
         break;
       case 'down':
-        newRow = (newRow + 1) % totalRows;
+        newRow = (currentRow + 1) % totalRows;
         break;
     }
 
@@ -165,6 +175,11 @@ const NameGrid = ({ onLetterUnlock }) => {
     let newPosition;
     let direction;
 
+    // Prevent default behavior for space and tab keys
+    if (key === ' ' || key === 'Tab') {
+      event.preventDefault();
+    }
+
     switch (key) {
       case 'ArrowLeft':
       case 'a':
@@ -190,6 +205,10 @@ const NameGrid = ({ onLetterUnlock }) => {
       case ' ':
         handleLetterOrSettingChange(row, col, shiftKey ? -1 : 1);
         return;
+      case 'Tab':
+        direction = shiftKey ? 'left' : 'right';
+        playSound(shiftKey ? leftKeyAudio : rightKeyAudio);
+        break;
       default:
         return;
     }

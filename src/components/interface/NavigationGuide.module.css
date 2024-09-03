@@ -1,33 +1,65 @@
-.guideContainer {
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 8px;
-  padding: 16px;
-  margin-top: 16px;
+.section {
+  margin-bottom: 24px;
 }
 
-.guideTitle {
+.sectionTitle {
   color: var(--text-primary);
   font-size: 1.2em;
   margin-bottom: 12px;
 }
 
-.guideList {
-  list-style-type: none;
-  padding: 0;
+.keyLayouts {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 16px;
 }
 
-.guideItem {
+.keyLayoutTitle {
+  color: var(--text-primary);
+  font-size: 1em;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.wasdGrid,
+.arrowGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  width: 120px;
+}
+
+.wasdGrid .topKey,
+.arrowGrid .topKey {
+  grid-column: 2;
+}
+
+.keyColumns {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
 }
 
-.guideKey {
-  color: var(--accent-fun);
-  font-weight: bold;
-  margin-right: 16px;
+.keyColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.guideDescription {
-  color: var(--text-primary);
+.kbd {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.2),
+    0 0 0 2px #fff inset;
+  color: #333;
+  display: inline-block;
+  font-size: 0.85em;
+  font-weight: 700;
+  line-height: 1;
+  padding: 6px 8px;
+  white-space: nowrap;
+  outline: 2px solid var(--accent-fun);
+  outline-offset: 2px;
+  text-align: center;
 }

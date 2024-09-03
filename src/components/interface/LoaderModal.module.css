@@ -14,8 +14,7 @@
 .modal {
   background-color: var(--gradient-base-bottom);
   padding: 20px;
-  border-radius: 10px;
-  width: 80%;
+  border-radius: 15px;
   max-width: 500px;
 }
 

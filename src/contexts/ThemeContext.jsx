@@ -1,33 +1,20 @@
 import { createContext, useContext, createEffect, onCleanup } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import {
-  Cpu,
-  Rocket,
-  Waves,
-  ShoppingCart,
-  Buildings,
-  GameController,
-  Faders,
-  Television,
-  Train,
-  Lightning,
-  FloppyDisk,
-  Eye
-} from 'phosphor-solid';
+import { Icon } from '../components/util/Icon';
 
 const themes = [
-  { name: 'digital-dawn', icon: Cpu },
-  { name: 'cyber-punk', icon: Faders },
-  { name: 'retro-wave', icon: Television },
-  { name: 'echo-sphere', icon: Rocket },
-  { name: 'rail-pop', icon: Train },
-  { name: 'charge-back', icon: Lightning },
-  { name: 'urban-pulse', icon: Buildings },
-  { name: 'neon-nostalgia', icon: GameController },
-  { name: 'pastel-pop', icon: FloppyDisk },
-  { name: 'vision-tech', icon: Eye },
-  { name: 'surfside-vibes', icon: Waves },
-  { name: 'mall-rat', icon: ShoppingCart }
+  { name: 'digital-dawn', icon: 'cpu' },
+  { name: 'cyber-punk', icon: 'layers-difference' },
+  { name: 'retro-wave', icon: 'device-tv-old' },
+  { name: 'echo-sphere', icon: 'sphere' },
+  { name: 'rail-pop', icon: 'track' },
+  { name: 'charge-back', icon: 'recharging' },
+  { name: 'urban-pulse', icon: 'building-skyscraper' },
+  { name: 'neon-nostalgia', icon: 'brand-apple-arcade' },
+  { name: 'pastel-pop', icon: 'lollipop' },
+  { name: 'vision-tech', icon: 'device-vision-pro' },
+  { name: 'surfside-vibes', icon: 'wave-sine' },
+  { name: 'mall-rat', icon: 'shopping-bag' }
 ];
 
 const ThemeContext = createContext();

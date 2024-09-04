@@ -15,7 +15,7 @@ const requiredIcons = [
   'building-skyscraper',
   'brand-apple-arcade',
   'lollipop',
-  'device-vision-pro',
+  'stereo-glasses',
   'wave-sine',
   'shopping-bag',
   'sun',
@@ -30,7 +30,15 @@ const requiredIcons = [
   'space',
   'arrow-back',
   'arrow-big-up',
-  'terminal-2'
+  'terminal-2',
+  'help-square-rounded',
+  'moon-stars',
+  'texture',
+  'target',
+  'zodiac-aquarius',
+  'ice-cream',
+  'mug',
+  'polaroid'
 ];
 
 // Updated function to copy icons
@@ -42,22 +50,6 @@ function copyIcons() {
   console.log('Icon destination directory:', publicIconDir);
 
   fs.ensureDirSync(publicIconDir);
-
-  requiredIcons.forEach(iconName => {
-    const sourceFile = path.join(iconDir, `${iconName}.svg`);
-    const destFile = path.join(publicIconDir, `${iconName}.svg`);
-
-    if (fs.existsSync(sourceFile)) {
-      if (!fs.existsSync(destFile)) {
-        fs.copySync(sourceFile, destFile);
-        console.log(`Copied icon: ${iconName}.svg`);
-      } else {
-        console.log(`Skipped existing icon: ${iconName}.svg`);
-      }
-    } else {
-      console.warn(`Icon not found: ${iconName}.svg`);
-    }
-  });
 }
 
 // Run the copy function immediately

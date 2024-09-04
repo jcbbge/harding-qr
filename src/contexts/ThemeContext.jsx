@@ -22,7 +22,7 @@ const modeList = [
 ];
 
 const patternList = [
-  { name: 'wavy', class: 'bg-wavy', icon: 'radar' },
+  { name: 'wavy', class: 'bg-wavy', icon: 'radar-2' },
   { name: 'rhombus', class: 'bg-rhombus', icon: 'diamonds' },
   { name: 'zigzag', class: 'bg-zigzag', icon: 'zigzag' },
   { name: 'cross', class: 'bg-cross', icon: 'plus' },
@@ -45,6 +45,25 @@ export function ThemeProvider(props) {
   const [pattern, setPattern] = createSignal(
     localStorage.getItem('pattern') || patternList[0].name
   );
+
+  const getItemIcon = (type, name) => {
+    let list;
+    switch (type) {
+      case 'theme':
+        list = themeList;
+        break;
+      case 'mode':
+        list = modeList;
+        break;
+      case 'pattern':
+        list = patternList;
+        break;
+      default:
+        return '';
+    }
+    const item = list.find(item => item.name === name);
+    return item ? item.icon : '';
+  };
 
   const themeContext = [
     { theme, mode, pattern, themeList, modeList, patternList },
@@ -81,7 +100,8 @@ export function ThemeProvider(props) {
         setPattern(newPattern);
         localStorage.setItem('pattern', newPattern);
         document.body.className = patternList[newIndex].class;
-      }
+      },
+      getItemIcon // Add this new function to the context
     }
   ];
 

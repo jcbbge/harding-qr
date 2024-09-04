@@ -1,19 +1,21 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
+import { ErrorBoundary } from 'solid-js';
 import { Router, Route, useParams, useNavigate } from '@solidjs/router';
 import { Navigate } from '@solidjs/router';
 import 'solid-devtools';
 
 import { ThemeProvider } from './contexts/ThemeContext';
-
-import './index.css';
+import { ThemeDisplay } from './components/interface/ThemeDisplay';
+import BackgroundPattern from './components/interface/BackgroundPattern';
+import Footer from './components/interface/Footer';
 
 import App from './App';
 import Roleco from './pages/Roleco';
 import Scrumble from './pages/Scrumble';
 import NotFound from './pages/NotFound';
 
-import Footer from './components/interface/Footer';
+import './index.css';
 
 const root = document.getElementById('root');
 
@@ -76,6 +78,7 @@ const RolecoWrapper = () => {
 const Layout = props => {
   return (
     <>
+      <BackgroundPattern />
       <header>
         <nav class="navContainer">
           <a
@@ -94,6 +97,7 @@ const Layout = props => {
       </header>
 
       {props.children}
+      <ThemeDisplay></ThemeDisplay>
       <Footer></Footer>
     </>
   );
@@ -101,26 +105,32 @@ const Layout = props => {
 
 render(
   () => (
-    <ThemeProvider>
-      <Router root={Layout}>
-        <Route
-          path="/"
-          component={App}
-        />
-        <Route
-          path="/:roleco"
-          component={RolecoWrapper}
-        />
-        <Route
-          path="/scrumble"
-          component={Scrumble}
-        />
-        <Route
-          path="*404"
-          component={NotFound}
-        />
-      </Router>
-    </ThemeProvider>
+    <ErrorBoundary
+      fallback={err => {
+        return <div>Error: {err.toString()}</div>;
+      }}
+    >
+      <ThemeProvider>
+        <Router root={Layout}>
+          <Route
+            path="/"
+            component={App}
+          />
+          <Route
+            path="/:roleco"
+            component={RolecoWrapper}
+          />
+          <Route
+            path="/scrumble"
+            component={Scrumble}
+          />
+          <Route
+            path="*404"
+            component={NotFound}
+          />
+        </Router>
+      </ThemeProvider>
+    </ErrorBoundary>
   ),
   root
 );

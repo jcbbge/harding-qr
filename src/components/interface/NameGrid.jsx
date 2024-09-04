@@ -8,9 +8,9 @@ import {
   createMemo,
   createResource
 } from 'solid-js';
+import { createStore } from 'solid-js/store';
 import styles from './NameGrid.module.css';
 import GridRow from './GridRow';
-import { useTheme } from '../../contexts/ThemeContext';
 
 import letterChangeSound from '../../assets/sounds/natural-tap-1.wav';
 import letterChangeSoundDown from '../../assets/sounds/natural-tap-3.wav';
@@ -22,10 +22,7 @@ import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
 
-import DebugWrapper from '../util/DebugWrapper';
-
 const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
-// const fullName = ['MVP', 'KPI', 'OKR'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 const isVowel = char => 'AEIOU'.includes(char.toUpperCase());
@@ -51,9 +48,6 @@ const padder = name => {
 };
 
 const NameGrid = ({ onLetterUnlock }) => {
-  const { appearance, updateTheme, updateMode, updateBackground, themes } = useTheme();
-  const [currentThemeIcon, setCurrentThemeIcon] = createSignal('');
-
   let letterChangeAudio,
     letterChangeAudioDown,
     correctLetterAudio,
@@ -61,7 +55,6 @@ const NameGrid = ({ onLetterUnlock }) => {
     leftKeyAudio,
     rightKeyAudio;
   let correctWordAudios = [];
-  let lastTouchY = 0;
 
   const getMaxWordLength = () => Math.max(...fullName.map(name => name.length), 4);
 
@@ -79,17 +72,17 @@ const NameGrid = ({ onLetterUnlock }) => {
     });
   };
 
-  const [names, setNames] = createSignal(createInitialNames());
+  const [names, setNames] = createStore(createInitialNames());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
   const [gameCompleted, setGameCompleted] = createSignal(false);
   const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 1 });
 
   const totalEmptyCount = createMemo(() =>
-    names().reduce((count, name) => count + name.filter(letter => letter.isEmpty).length, 0)
+    names.reduce((count, name) => count + name.filter(letter => letter.isEmpty).length, 0)
   );
 
   createEffect(() => {
-    const firstNonEmptyPosition = names().reduce((pos, row, rowIndex) => {
+    const firstNonEmptyPosition = names.reduce((pos, row, rowIndex) => {
       if (pos) return pos;
       const colIndex = row.findIndex(letter => !letter.isEmpty);
       return colIndex !== -1 ? { row: rowIndex, col: colIndex } : null;
@@ -97,18 +90,13 @@ const NameGrid = ({ onLetterUnlock }) => {
 
     if (firstNonEmptyPosition) {
       setFocusedPosition(firstNonEmptyPosition);
+      setActiveNameIndex(firstNonEmptyPosition.row);
     }
   });
 
-  createEffect(() => {
-    const iconName = themes.find(t => t.name === appearance.theme)?.icon || 'palette';
-    setCurrentThemeIcon(iconName);
-    console.log('Theme changed, new icon:', iconName);
-  });
-
   const findNextLetterBox = (currentRow, currentCol, direction) => {
-    const totalRows = names().length;
-    const totalCols = names()[0].length; // Assuming all rows have the same length
+    const totalRows = names.length;
+    const totalCols = names[0].length;
 
     let newRow = currentRow;
     let newCol = currentCol;
@@ -141,57 +129,11 @@ const NameGrid = ({ onLetterUnlock }) => {
     return { row: newRow, col: newCol };
   };
 
-  const changeThemeSetting = delta => {
-    const currentIndex = themes.findIndex(t => t.name === appearance.theme);
-    const newIndex = (currentIndex + delta + themes.length) % themes.length;
-    updateTheme(themes[newIndex].name);
-  };
-
-  const changeModeSetting = delta => {
-    const modes = ['light', 'dark', 'system'];
-    const currentIndex = modes.indexOf(appearance.mode);
-    const newIndex = (currentIndex + delta + modes.length) % modes.length;
-    updateMode(modes[newIndex]);
-  };
-
-  const changeBackgroundSetting = delta => {
-    const backgrounds = ['default', 'gradient', 'solid'];
-    const currentIndex = backgrounds.indexOf(appearance.background);
-    const newIndex = (currentIndex + delta + backgrounds.length) % backgrounds.length;
-    updateBackground(backgrounds[newIndex]);
-  };
-
-  const changeSetting = (row, col, delta) => {
-    const emptyIndexInGrid =
-      names()
-        .slice(0, row)
-        .flat()
-        .filter(letter => letter.isEmpty).length +
-      names()
-        [row].slice(0, col)
-        .filter(letter => letter.isEmpty).length +
-      1;
-
-    switch (emptyIndexInGrid) {
-      case 1:
-        changeThemeSetting(delta);
-        break;
-      case 2:
-        changeModeSetting(delta);
-        break;
-      case 3:
-        changeBackgroundSetting(delta);
-        break;
-    }
-  };
-
   const handleKeyDown = event => {
     const { key, shiftKey } = event;
     const { row, col } = focusedPosition();
-    let newPosition;
     let direction;
 
-    // Prevent default behavior for space and tab keys
     if (key === ' ' || key === 'Tab') {
       event.preventDefault();
     }
@@ -219,8 +161,9 @@ const NameGrid = ({ onLetterUnlock }) => {
         break;
       case 'Enter':
       case ' ':
-        handleLetterOrSettingChange(row, col, shiftKey ? -1 : 1);
-        return;
+        handleLetterChange(row, col, shiftKey ? -1 : 1);
+        playSound(shiftKey ? letterChangeAudioDown : letterChangeAudio);
+        break;
       case 'Tab':
         direction = shiftKey ? 'left' : 'right';
         playSound(shiftKey ? leftKeyAudio : rightKeyAudio);
@@ -230,20 +173,12 @@ const NameGrid = ({ onLetterUnlock }) => {
     }
 
     if (direction) {
-      newPosition = findNextLetterBox(row, col, direction);
+      const newPosition = findNextLetterBox(row, col, direction);
       setFocusedPosition(newPosition);
       setActiveNameIndex(newPosition.row);
     }
-    event.preventDefault();
-  };
 
-  const handleLetterOrSettingChange = (row, col, direction) => {
-    const letter = names()[row][col];
-    if (letter.isEmpty) {
-      changeSetting(row, col, direction);
-    } else {
-      changeLetter(row, col, direction);
-    }
+    direction = undefined;
   };
 
   const playSound = audio => {
@@ -253,103 +188,36 @@ const NameGrid = ({ onLetterUnlock }) => {
     }
   };
 
-  const handleLetterChange = direction => {
-    if (direction > 0) {
-      playSound(letterChangeAudio);
-    } else {
-      playSound(letterChangeAudioDown);
+  const handleLetterChange = (row, col, direction) => {
+    setNames(row, col, letter => {
+      if (!letter.isEmpty && letter.isVowel && !letter.matched) {
+        const newLetter = getNextLetter(letter.currentLetter, direction);
+
+        if (newLetter === letter.correctLetter) {
+          onLetterUnlock(row, col);
+          playSound(correctLetterAudio);
+          return { ...letter, currentLetter: newLetter, matched: true };
+        } else {
+          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
+          return { ...letter, currentLetter: newLetter };
+        }
+      }
+      return letter;
+    });
+
+    if (names[row].every(l => l.matched || l.isEmpty)) {
+      playSound(correctWordAudios[row]);
     }
-  };
 
-  const handleCorrectLetter = () => {
-    playSound(correctLetterAudio);
-  };
-
-  const handleWordComplete = nameIndex => {
-    playSound(correctWordAudios[nameIndex]);
-  };
-
-  const handleAllWordsComplete = () => {
-    if (!gameCompleted()) {
+    if (areAllWordsComplete(names)) {
       setTimeout(() => {
         playSound(allWordsCompleteAudio);
-      }, 400);
+      }, 600);
       setGameCompleted(true);
     }
   };
 
-  const changeLetter = (row, col, delta) => {
-    setNames(prevNames => {
-      const newNames = prevNames.map((name, nameIndex) => {
-        if (nameIndex === row) {
-          return name.map((letter, letterIndex) => {
-            if (letterIndex === col) {
-              if (letter.isEmpty) {
-                changeSetting(row, col, delta);
-                return letter; // Return unchanged for empty boxes
-              } else if (letter.isVowel && !letter.matched) {
-                const newLetter = getNextLetter(letter.currentLetter, delta);
-                if (newLetter === letter.correctLetter) {
-                  onLetterUnlock(row, col);
-                  handleCorrectLetter();
-                  return { ...letter, currentLetter: newLetter, matched: true };
-                } else {
-                  handleLetterChange(delta);
-                  return { ...letter, currentLetter: newLetter };
-                }
-              }
-            }
-            return letter;
-          });
-        }
-        return name;
-      });
-
-      // Check if the word is complete after changing the letter
-      if (newNames[row].every(letter => letter.matched || letter.isEmpty)) {
-        handleWordComplete(row);
-      }
-
-      // Check if all words are complete
-      if (areAllWordsComplete(newNames)) {
-        handleAllWordsComplete();
-      }
-
-      return newNames;
-    });
-
-    // Update focusedPosition to maintain the current active letter
-    setFocusedPosition({ row, col });
-    setActiveNameIndex(row);
-  };
-
-  const [timerStarted, setTimerStarted] = createSignal(false);
-  const [timeRemaining, setTimeRemaining] = createSignal(300); // 5 minutes in seconds
-
-  const startTimer = () => {
-    if (!timerStarted()) {
-      setTimerStarted(true);
-      const timer = setInterval(() => {
-        setTimeRemaining(time => {
-          if (time <= 0) {
-            clearInterval(timer);
-            return 0;
-          }
-          return time - 1;
-        });
-      }, 1000);
-
-      onCleanup(() => clearInterval(timer));
-    }
-  };
-
-  const formatTime = seconds => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  };
-
-  onMount(async () => {
+  onMount(() => {
     window.addEventListener('keydown', handleKeyDown);
     letterChangeAudio = new Audio(letterChangeSound);
     letterChangeAudioDown = new Audio(letterChangeSoundDown);
@@ -369,41 +237,30 @@ const NameGrid = ({ onLetterUnlock }) => {
   });
 
   return (
-    <div>
-      <DebugWrapper
-        label="createInitialNames"
-        value={createInitialNames()}
-      >
-        <Show when={timerStarted()}>
-          <div class={styles.timer}>Time remaining: {formatTime(timeRemaining())}</div>
-        </Show>
-        <div class={styles.nameGrid}>
-          <For each={names()}>
-            {(name, nameIndex) => {
-              const emptyCountBeforeRow = names()
-                .slice(0, nameIndex())
-                .flat()
-                .filter(letter => letter.isEmpty).length;
+    <>
+      <div class={styles.nameGrid}>
+        <For each={names}>
+          {(name, nameIndex) => {
+            const emptyCountBeforeRow = names
+              .slice(0, nameIndex)
+              .flat()
+              .filter(letter => letter.isEmpty).length;
 
-              return (
-                <GridRow
-                  name={name}
-                  isActiveName={nameIndex() === activeNameIndex()}
-                  focusedPosition={focusedPosition()}
-                  rowIndex={nameIndex()}
-                  currentTheme={appearance.theme}
-                  currentMode={appearance.mode}
-                  currentBackground={appearance.background}
-                  totalEmptyCount={totalEmptyCount()}
-                  emptyCountBeforeRow={emptyCountBeforeRow}
-                  currentThemeIcon={currentThemeIcon()}
-                />
-              );
-            }}
-          </For>
-        </div>
-      </DebugWrapper>
-    </div>
+            return (
+              <GridRow
+                name={name}
+                isActiveName={nameIndex() === activeNameIndex()}
+                focusedPosition={focusedPosition()}
+                rowIndex={nameIndex()}
+                totalEmptyCount={totalEmptyCount()}
+                emptyCountBeforeRow={emptyCountBeforeRow}
+                onLetterChange={handleLetterChange}
+              />
+            );
+          }}
+        </For>
+      </div>
+    </>
   );
 };
 

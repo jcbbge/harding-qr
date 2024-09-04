@@ -1,8 +1,12 @@
-import { createEffect } from 'solid-js';
+import { createEffect, onError } from 'solid-js';
 
 const DebugWrapper = props => {
   createEffect(() => {
-    console.log('dbugger:', props.label, props.value);
+    console.log('Debug:', props.label, props.value);
+  });
+
+  onError(err => {
+    console.error(`Error in ${props.label}:`, err);
   });
 
   return <>{props.children}</>;

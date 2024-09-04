@@ -2,53 +2,52 @@ import { For, createMemo } from 'solid-js';
 import styles from './NameGrid.module.css';
 import { useTheme } from '../../contexts/ThemeContext';
 
-const accentVariables = ['accent-unexpected'];
-
 const GridRow = props => {
-  const { appearance, themes } = useTheme();
+  const [
+    { theme, mode, pattern, themeList, modeList, patternList },
+    { updateTheme, updateMode, updatePattern }
+  ] = useTheme();
 
-  const ThemeIconName = createMemo(() => {
-    return props.currentThemeIcon;
+  const currentThemeInfo = createMemo(() => {
+    return themeList.find(t => t.name === theme()) || { name: 'default', icon: 'palette' };
   });
 
-  const ModeIcon = createMemo(() => {
-    switch (appearance.mode) {
-      case 'light':
-        return 'sun';
-      case 'dark':
-        return 'moon';
-      default:
-        return 'sun-moon';
-    }
+  const currentModeInfo = createMemo(() => {
+    return modeList.find(m => m.name === mode()) || { name: 'system', icon: 'sun-moon' };
   });
+
+  const currentPatternInfo = createMemo(() => {
+    return (
+      patternList.find(p => p.name === pattern()) || { name: 'default', icon: 'layout-dashboard' }
+    );
+  });
+
+  const handleSettingChange = (letterIndex, delta) => {
+    props.onChangeSetting(props.rowIndex, letterIndex, delta);
+  };
 
   const renderLetterBox = (letterObj, letterIndex) => {
     if (letterObj.isEmpty) {
-      const emptyIndexInRow = props.name.slice(0, letterIndex).filter(l => l.isEmpty).length + 1;
-      const emptyIndexInGrid = props.emptyCountBeforeRow + emptyIndexInRow;
+      const emptyIndexInRow = props.name.slice(0, letterIndex).filter(l => l.isEmpty).length;
+      const emptyIndexInGrid = props.emptyCountBeforeRow + emptyIndexInRow + 1;
 
-      let displayContent = ' ';
-      if (emptyIndexInGrid <= 3) {
-        let iconName;
-        switch (emptyIndexInGrid) {
-          case 1:
-            iconName = ThemeIconName();
-            break;
-          case 2:
-            iconName = ModeIcon();
-            break;
-          case 3:
-            iconName = 'layout-dashboard';
-            break;
-        }
-        console.log(`Rendering icon for empty box ${emptyIndexInGrid}:`, iconName);
-        displayContent = (
-          <svg
-            src={`/src/assets/icons/${iconName}.svg`}
-            size={28}
-            class={`${styles.settingIcon} ${styles.desktopIcon}`}
-          />
-        );
+      let iconName, currentSetting, updateFunction;
+      switch (emptyIndexInGrid) {
+        case 1:
+          iconName = currentThemeInfo().icon;
+          currentSetting = theme;
+          updateFunction = updateTheme;
+          break;
+        case 2:
+          iconName = currentModeInfo().icon;
+          currentSetting = mode;
+          updateFunction = updateMode;
+          break;
+        case 3:
+          iconName = currentPatternInfo().icon;
+          currentSetting = pattern;
+          updateFunction = updatePattern;
+          break;
       }
 
       return (
@@ -60,7 +59,11 @@ const GridRow = props => {
               : ''
           }`}
         >
-          {displayContent}
+          <svg
+            src={`/src/assets/icons/${iconName}.svg`}
+            size={28}
+            class={`${styles.settingIcon} ${styles.desktopIcon}`}
+          />
         </div>
       );
     }

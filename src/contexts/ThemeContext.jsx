@@ -1,7 +1,6 @@
-import { createContext, useContext, createEffect, onCleanup } from 'solid-js';
-import { createStore } from 'solid-js/store';
+import { createSignal, createContext, useContext, createEffect, onCleanup } from 'solid-js';
 
-const themes = [
+const themeList = [
   { name: 'digital-dawn', icon: 'cpu' },
   { name: 'cyber-punk', icon: 'layers-difference' },
   { name: 'retro-wave', icon: 'device-tv-old' },
@@ -16,46 +15,75 @@ const themes = [
   { name: 'mall-rat', icon: 'shopping-bag' }
 ];
 
+const modeList = [
+  { name: 'light', icon: 'sun' },
+  { name: 'dark', icon: 'moon-stars' },
+  { name: 'system', icon: 'sun-moon' }
+];
+
+const patternList = [
+  { name: 'wavy', class: 'bg-wavy', icon: 'radar' },
+  { name: 'rhombus', class: 'bg-rhombus', icon: 'diamonds' },
+  { name: 'zigzag', class: 'bg-zigzag', icon: 'zigzag' },
+  { name: 'cross', class: 'bg-cross', icon: 'plus' },
+  { name: 'rectangles', class: 'bg-rectangles', icon: 'rectangle' },
+  { name: 'boxes', class: 'bg-boxes', icon: 'box' },
+  { name: 'polka', class: 'bg-polka', icon: 'dots' },
+  { name: 'coffee', class: 'bg-coffee', icon: 'coffee' },
+  { name: 'polaroid', class: 'bg-polaroid', icon: 'camera' },
+  { name: 'icecream', class: 'bg-icecream', icon: 'ice-cream' }
+];
+
 const ThemeContext = createContext();
 
-export const ThemeProvider = props => {
-  const [appearance, setAppearance] = createStore({
-    theme: localStorage.getItem('theme') || themes[0].name,
-    mode: localStorage.getItem('mode') || 'system',
-    background: localStorage.getItem('background') || 'default'
-  });
+export function ThemeProvider(props) {
+  const initialTheme = localStorage.getItem('theme') || themeList[0].name;
+  console.log('Initial theme:', initialTheme); // Debug log
 
-  const updateTheme = newTheme => {
-    console.log('updateTheme called with:', newTheme);
-    const themeExists = themes.some(t => t.name === newTheme);
-    if (themeExists) {
-      setAppearance('theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      document.documentElement.setAttribute('data-theme', newTheme);
-      console.log('Theme updated to:', newTheme);
-    } else {
-      console.warn('Invalid theme:', newTheme);
-    }
-  };
+  const [theme, setTheme] = createSignal(initialTheme);
+  const [mode, setMode] = createSignal(localStorage.getItem('mode') || 'system');
+  const [pattern, setPattern] = createSignal(
+    localStorage.getItem('pattern') || patternList[0].name
+  );
 
-  const updateMode = newMode => {
-    if (['light', 'dark', 'system'].includes(newMode)) {
-      setAppearance('mode', newMode);
-      localStorage.setItem('mode', newMode);
-      updateAppearanceMode(newMode);
-    } else {
-      console.warn('Invalid mode:', newMode);
+  const themeContext = [
+    { theme, mode, pattern, themeList, modeList, patternList },
+    {
+      updateTheme(delta) {
+        console.log('Updating theme. Current theme:', theme()); // Debug log
+        const currentIndex = themeList.findIndex(t => t.name === theme());
+        console.log('Current theme index:', currentIndex); // Debug log
+        if (currentIndex === -1) {
+          console.warn('Current theme not found in themeList. Resetting to first theme.');
+          setTheme(themeList[0].name);
+          return;
+        }
+        const newIndex = (currentIndex + delta + themeList.length) % themeList.length;
+        const newTheme = themeList[newIndex].name;
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+        document.documentElement.setAttribute('data-theme', newTheme);
+        console.log('Theme updated to:', newTheme);
+      },
+      updateMode(delta) {
+        const modes = ['light', 'dark', 'system'];
+        const currentIndex = modes.indexOf(mode());
+        const newIndex = (currentIndex + delta + modes.length) % modes.length;
+        const newMode = modes[newIndex];
+        setMode(newMode);
+        localStorage.setItem('mode', newMode);
+        updateAppearanceMode(newMode);
+      },
+      updatePattern(delta) {
+        const currentIndex = patternList.findIndex(p => p.name === pattern());
+        const newIndex = (currentIndex + delta + patternList.length) % patternList.length;
+        const newPattern = patternList[newIndex].name;
+        setPattern(newPattern);
+        localStorage.setItem('pattern', newPattern);
+        document.body.className = patternList[newIndex].class;
+      }
     }
-  };
-
-  const updateBackground = newBackground => {
-    if (['default', 'gradient', 'solid'].includes(newBackground)) {
-      setAppearance('background', newBackground);
-      localStorage.setItem('background', newBackground);
-    } else {
-      console.warn('Invalid background:', newBackground);
-    }
-  };
+  ];
 
   const updateAppearanceMode = mode => {
     if (mode === 'system') {
@@ -69,14 +97,25 @@ export const ThemeProvider = props => {
   };
 
   const handleSystemThemeChange = e => {
-    if (appearance.mode === 'system') {
+    if (mode() === 'system') {
       document.documentElement.classList.toggle('dark-mode', e.matches);
     }
   };
 
   createEffect(() => {
-    console.log('ThemeProvider effect: Current appearance', appearance);
-    updateAppearanceMode(appearance.mode);
+    console.log('ThemeProvider effect: Current appearance', {
+      theme: theme(),
+      mode: mode(),
+      pattern: pattern()
+    });
+    if (theme()) {
+      themeContext[1].updateTheme(0); // This will trigger the updateTheme function without changing the theme
+    } else {
+      console.warn('Theme is undefined. Setting to default theme.');
+      setTheme(themeList[0].name);
+    }
+    updateAppearanceMode(mode());
+    themeContext[1].updatePattern(0);
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     mediaQuery.addListener(handleSystemThemeChange);
@@ -86,16 +125,8 @@ export const ThemeProvider = props => {
     });
   });
 
-  const contextValue = {
-    appearance,
-    updateTheme,
-    updateMode,
-    updateBackground,
-    themes
-  };
-
-  return <ThemeContext.Provider value={contextValue}>{props.children}</ThemeContext.Provider>;
-};
+  return <ThemeContext.Provider value={themeContext}>{props.children}</ThemeContext.Provider>;
+}
 
 export function useTheme() {
   const context = useContext(ThemeContext);

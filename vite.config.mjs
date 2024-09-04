@@ -33,7 +33,7 @@ const requiredIcons = [
   'terminal-2'
 ];
 
-// Function to copy icons
+// Updated function to copy icons
 function copyIcons() {
   const iconDir = path.resolve(__dirname, 'node_modules/@tabler/icons/icons/outline');
   const publicIconDir = path.resolve(__dirname, 'src/assets/icons');
@@ -46,9 +46,14 @@ function copyIcons() {
   requiredIcons.forEach(iconName => {
     const sourceFile = path.join(iconDir, `${iconName}.svg`);
     const destFile = path.join(publicIconDir, `${iconName}.svg`);
+
     if (fs.existsSync(sourceFile)) {
-      fs.copySync(sourceFile, destFile);
-      console.log(`Copied icon: ${iconName}.svg`);
+      if (!fs.existsSync(destFile)) {
+        fs.copySync(sourceFile, destFile);
+        console.log(`Copied icon: ${iconName}.svg`);
+      } else {
+        console.log(`Skipped existing icon: ${iconName}.svg`);
+      }
     } else {
       console.warn(`Icon not found: ${iconName}.svg`);
     }

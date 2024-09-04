@@ -1,0 +1,38 @@
+.themeDisplay {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.themeDisplay p {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  vertical-align: middle;
+  filter: invert(1) brightness(100%); /* This will make the icon white */
+}
+
+.iconFallback {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  color: black;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: bold;
+}

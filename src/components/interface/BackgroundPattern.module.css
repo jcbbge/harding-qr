@@ -15,7 +15,7 @@
   background-color: var(--gradient-base-top);
   opacity: 0.9;
   background-image: repeating-radial-gradient(
-      circle at 0 100%,
+      circle at center,
       transparent 0,
       var(--gradient-base-top) 10px
     ),

@@ -1,4 +1,4 @@
-import { createSignal, onMount, onCleanup, ErrorBoundary } from 'solid-js';
+import { createSignal, onMount, onCleanup } from 'solid-js';
 import NameGrid from './components/interface/NameGrid';
 import './App.css';
 
@@ -22,11 +22,7 @@ function App() {
   }
 
   return (
-    <ErrorBoundary
-      fallback={err => {
-        return <div>Error: {err.toString()}</div>;
-      }}
-    >
+    <>
       <div class="top-column">
         <NameGrid
           company={company()}
@@ -37,7 +33,7 @@ function App() {
       <div class="bottom-column">
         <p>Unlock Letters</p>
       </div>
-    </ErrorBoundary>
+    </>
   );
 }
 

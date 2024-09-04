@@ -1,4 +1,13 @@
-import { createSignal, createEffect, For, onMount, onCleanup, Show, createMemo } from 'solid-js';
+import {
+  createSignal,
+  createEffect,
+  For,
+  onMount,
+  onCleanup,
+  Show,
+  createMemo,
+  createResource
+} from 'solid-js';
 import styles from './NameGrid.module.css';
 import GridRow from './GridRow';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -43,6 +52,7 @@ const padder = name => {
 
 const NameGrid = ({ onLetterUnlock }) => {
   const { appearance, updateTheme, updateMode, updateBackground, themes } = useTheme();
+  const [currentThemeIcon, setCurrentThemeIcon] = createSignal('');
 
   let letterChangeAudio,
     letterChangeAudioDown,
@@ -88,6 +98,12 @@ const NameGrid = ({ onLetterUnlock }) => {
     if (firstNonEmptyPosition) {
       setFocusedPosition(firstNonEmptyPosition);
     }
+  });
+
+  createEffect(() => {
+    const iconName = themes.find(t => t.name === appearance.theme)?.icon || 'palette';
+    setCurrentThemeIcon(iconName);
+    console.log('Theme changed, new icon:', iconName);
   });
 
   const findNextLetterBox = (currentRow, currentCol, direction) => {
@@ -380,6 +396,7 @@ const NameGrid = ({ onLetterUnlock }) => {
                   currentBackground={appearance.background}
                   totalEmptyCount={totalEmptyCount()}
                   emptyCountBeforeRow={emptyCountBeforeRow}
+                  currentThemeIcon={currentThemeIcon()}
                 />
               );
             }}

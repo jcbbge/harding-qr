@@ -1,7 +1,6 @@
 module.exports = {
   transform: {
-    '^.+\\.jsx?$': 'babel-jest',
-    '.+\\.(css|styl|less|sass|scss)$': 'jest-css-modules-transform'
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest'
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jsdom',

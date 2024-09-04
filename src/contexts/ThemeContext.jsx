@@ -1,6 +1,5 @@
 import { createContext, useContext, createEffect, onCleanup } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import { Icon } from '../components/util/Icon';
 
 const themes = [
   { name: 'digital-dawn', icon: 'cpu' },
@@ -19,7 +18,7 @@ const themes = [
 
 const ThemeContext = createContext();
 
-export function ThemeProvider(props) {
+export const ThemeProvider = props => {
   const [appearance, setAppearance] = createStore({
     theme: localStorage.getItem('theme') || themes[0].name,
     mode: localStorage.getItem('mode') || 'system',
@@ -96,7 +95,7 @@ export function ThemeProvider(props) {
   };
 
   return <ThemeContext.Provider value={contextValue}>{props.children}</ThemeContext.Provider>;
-}
+};
 
 export function useTheme() {
   const context = useContext(ThemeContext);

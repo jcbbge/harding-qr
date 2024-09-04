@@ -1,7 +1,6 @@
-import { For, createMemo, createEffect } from 'solid-js';
+import { For, createMemo } from 'solid-js';
 import styles from './NameGrid.module.css';
 import { useTheme } from '../../contexts/ThemeContext';
-import { Icon } from '../util/Icon';
 
 const accentVariables = ['accent-unexpected'];
 
@@ -9,9 +8,7 @@ const GridRow = props => {
   const { appearance, themes } = useTheme();
 
   const ThemeIconName = createMemo(() => {
-    const iconName = themes.find(t => t.name === appearance.theme)?.icon || 'palette';
-    console.log('Theme icon name computed:', iconName);
-    return iconName;
+    return props.currentThemeIcon;
   });
 
   const ModeIcon = createMemo(() => {
@@ -46,8 +43,8 @@ const GridRow = props => {
         }
         console.log(`Rendering icon for empty box ${emptyIndexInGrid}:`, iconName);
         displayContent = (
-          <Icon
-            name={iconName}
+          <svg
+            src={`/src/assets/icons/${iconName}.svg`}
             size={28}
             class={`${styles.settingIcon} ${styles.desktopIcon}`}
           />

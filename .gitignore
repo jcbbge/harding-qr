@@ -29,7 +29,7 @@ build/
 
 # AI Digest
 .aidigestignore
-codebase.md
+project_codebase.md
 
 # Cursor
 .cursorrules

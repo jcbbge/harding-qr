@@ -60,15 +60,6 @@ function App() {
           onLetterUnlock={handleLetterUnlock}
         ></NameGrid>
       </div>
-      {/* <div class="bottom-column">
-        <p class="flex items-center space-x-2">
-          <Dynamic
-            component={themes.find(t => t.name === theme())?.icon || themes[0].icon}
-            size={24}
-          />
-          <span>Current theme: {theme()}</span>
-        </p>
-      </div> */}
     </ErrorBoundary>
   );
 }

@@ -33,6 +33,31 @@ const requiredIcons = [
   'terminal-2'
 ];
 
+// Function to copy icons
+function copyIcons() {
+  const iconDir = path.resolve(__dirname, 'node_modules/@tabler/icons/icons/outline');
+  const publicIconDir = path.resolve(__dirname, 'src/assets/icons');
+
+  console.log('Icon source directory:', iconDir);
+  console.log('Icon destination directory:', publicIconDir);
+
+  fs.ensureDirSync(publicIconDir);
+
+  requiredIcons.forEach(iconName => {
+    const sourceFile = path.join(iconDir, `${iconName}.svg`);
+    const destFile = path.join(publicIconDir, `${iconName}.svg`);
+    if (fs.existsSync(sourceFile)) {
+      fs.copySync(sourceFile, destFile);
+      console.log(`Copied icon: ${iconName}.svg`);
+    } else {
+      console.warn(`Icon not found: ${iconName}.svg`);
+    }
+  });
+}
+
+// Run the copy function immediately
+copyIcons();
+
 export default defineConfig({
   plugins: [
     devtools({
@@ -42,20 +67,7 @@ export default defineConfig({
     {
       name: 'copy-selected-tabler-icons',
       buildStart() {
-        const iconDir = path.resolve(__dirname, 'node_modules/@tabler/icons/icons');
-        const publicIconDir = path.resolve(__dirname, 'public/icons');
-        fs.ensureDirSync(publicIconDir);
-
-        requiredIcons.forEach(iconName => {
-          const sourceFile = path.join(iconDir, `${iconName}.svg`);
-          const destFile = path.join(publicIconDir, `${iconName}.svg`);
-          if (fs.existsSync(sourceFile)) {
-            fs.copySync(sourceFile, destFile);
-            console.log(`Copied icon: ${iconName}.svg`);
-          } else {
-            console.warn(`Icon not found: ${iconName}.svg`);
-          }
-        });
+        copyIcons();
       }
     }
   ],
@@ -69,9 +81,6 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src')
     }
-  },
-  optimizeDeps: {
-    exclude: ['@tabler/icons']
   },
   assetsInclude: ['**/*.svg']
 });

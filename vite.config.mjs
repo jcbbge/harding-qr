@@ -97,5 +97,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
-  assetsInclude: ['**/*.svg']
+  assetsInclude: ['**/*.svg', '**/*.woff', '**/*.woff2', '**/*.ttf', '**/*.eot']
 });

@@ -1,4 +1,322 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import url('@/assets/fonts/Array/css/array.css');
+@import url('@/assets/fonts/DepartureMono/css/departure-mono.css');
+
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  /*margin: 0;*/
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* monospace design system*/
+@font-face {
+  font-family: 'Departure Mono';
+  src: url('path-to-departure-mono-font-file.woff2') format('woff2');
+  /* Add additional src lines for other font formats if available */
+}
+
+:root {
+  --font-family: 'Departure Mono', monospace;
+  --base-font-size: 11px;
+  --line-height: 1.5;
+  --border-thickness: 2px;
+  --text-color: #000;
+  --text-color-alt: #666;
+  --background-color: #fff;
+  --background-color-alt: #eee;
+
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  font-family: var(--font-family);
+  font-size: var(--base-font-size);
+  line-height: var(--line-height);
+}
+
+/* Typography */
+.text-md {
+  font-size: 22px;
+}
+.text-lg {
+  font-size: 33px;
+}
+.text-xl {
+  font-size: 44px;
+}
+.text-xxl {
+  font-size: 55px;
+}
+
+.font-normal {
+  font-weight: var(--font-weight-normal);
+}
+.font-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.spacing-tighter {
+  letter-spacing: -0.05em;
+}
+.spacing-tight {
+  letter-spacing: -0.025em;
+}
+.spacing-normal {
+  letter-spacing: 0;
+}
+.spacing-wide {
+  letter-spacing: 0.025em;
+}
+.spacing-wider {
+  letter-spacing: 0.05em;
+}
+.spacing-widest {
+  letter-spacing: 0.1em;
+}
+
+/* Layout */
+.container {
+  width: 100%;
+  max-width: 80ch;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2ch;
+  padding-right: 2ch;
+}
+
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+
+.grid {
+  display: grid;
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.gap-1 {
+  gap: 11px;
+}
+.gap-2 {
+  gap: 22px;
+}
+
+/* Spacing */
+.m-1 {
+  margin: 11px;
+}
+.m-2 {
+  margin: 22px;
+}
+.mt-1 {
+  margin-top: 11px;
+}
+.mb-1 {
+  margin-bottom: 11px;
+}
+.my-1 {
+  margin-top: 11px;
+  margin-bottom: 11px;
+}
+
+.p-1 {
+  padding: 11px;
+}
+.p-2 {
+  padding: 22px;
+}
+.pt-1 {
+  padding-top: 11px;
+}
+.pb-1 {
+  padding-bottom: 11px;
+}
+.py-1 {
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+
+/* Borders */
+.border {
+  border: var(--border-thickness) solid var(--text-primary);
+}
+.border-t {
+  border-top: var(--border-thickness) solid var(--text-primary);
+}
+.border-b {
+  border-bottom: var(--border-thickness) solid var(--text-primary);
+}
+
+/* Components */
+.btn {
+  display: inline-block;
+  padding: 11px 22px;
+  border: var(--border-thickness) solid var(--text-color);
+  background-color: var(--accent-opposite);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--accent-fun);
+}
+
+.input {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  border: var(--border-thickness) solid var(--text-secondary);
+  background-color: var(--gradient-base-top);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Utilities */
+.uppercase {
+  text-transform: uppercase;
+}
+.list-none {
+  list-style-type: none;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
 
 :root {
   --gradient-base-bottom: #ffd1dc;
@@ -288,15 +606,6 @@
   --accent-unexpected: #39ff14;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Press Start 2P', cursive;
-}
-
 body {
   margin: 0;
   padding: 0;
@@ -304,7 +613,7 @@ body {
   color: var(--text-primary);
   overflow: hidden;
   position: relative;
-  font-family: 'VT323', monospace;
+  font-family: 'DepartureMono-Regular', monospace !important;
   transition:
     background-color 0.3s ease,
     color 0.3s ease;

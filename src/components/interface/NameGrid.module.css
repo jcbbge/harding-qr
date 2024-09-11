@@ -10,110 +10,11 @@
   margin: 20px auto; /* Center the grid */
 }
 
-.nameRow {
-  display: flex;
-  margin-bottom: 20px;
-  justify-content: flex-start; /* Left-align letter boxes */
-  width: 100%;
-}
-
-.letterBox {
-  width: 70px; /* Increase width */
-  height: 70px; /* Increase height */
-  border: 2px solid var(--text-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px; /* Increase font size */
-  font-weight: bold;
-  margin-right: 25px; /* Adjust margin */
-  transition: all 0.3s ease;
-  font-family: 'Press Start 2P', cursive;
-  border-radius: 5px;
-  box-shadow: 2px 2px 0px var(--accent-fun);
-}
-
-.letterBox:last-child {
-  margin-right: 0;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotateX(0deg);
-  }
-  100% {
-    transform: rotateX(360deg);
-  }
-}
-
-.letterBox.changing {
-  animation: spin 0.5s linear;
-}
-
-.letterBox.vowel {
-  cursor: ns-resize;
-  background-color: var(--accent-opposite);
-  color: var(--gradient-base-bottom);
-  box-shadow: 2px 2px 0px var(--accent-fun);
-}
-
-.letterBox.active,
-.letterBox.focused {
-  border: 2px solid var(--gradient-base-bottom);
-  box-shadow: 3px 3px 0px var(--text-primary);
-  background-color: var(--accent) !important;
-}
-
-.letterBox.matched {
-  border: 2px solid var(--text-primary);
-  background-color: var(--accent-unexpected);
-  color: var(--gradient-base-bottom);
-}
-
-.focused {
-  outline: 3px solid var(--complimentary-light);
-  z-index: 1;
-}
-
 .timer {
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
   margin-bottom: 1rem;
-}
-
-@media (max-width: 768px) {
-  .nameGrid {
-    margin: 0px 15px;
-  }
-  .letterBox {
-    width: 50px; /* Adjust width for smaller screens */
-    height: 50px; /* Adjust height for smaller screens */
-    font-size: 25px; /* Adjust font size */
-    margin-right: 20px; /* Adjust margin */
-  }
-  .nameRow {
-    margin-bottom: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .nameGrid {
-    margin: 0px 10px;
-  }
-  .letterBox {
-    width: 40px; /* Adjust width for smallest screens */
-    height: 40px; /* Adjust height for smallest screens */
-    font-size: 20px; /* Adjust font size */
-    margin-right: 15px; /* Adjust margin */
-  }
-  .nameRow {
-    margin-bottom: 10px;
-  }
-}
-
-.letterSpan {
-  font-family: 'Lot-Regular', sans-serif;
 }
 
 .settingIcon {
@@ -127,5 +28,17 @@
 @media (min-width: 769px) {
   .desktopIcon {
     transform: scale(1.2);
+  }
+}
+
+@media (max-width: 768px) {
+  .nameGrid {
+    margin: 0px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nameGrid {
+    margin: 0px 10px;
   }
 }

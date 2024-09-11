@@ -38,7 +38,6 @@ const ThemeContext = createContext();
 
 export function ThemeProvider(props) {
   const initialTheme = localStorage.getItem('theme') || themeList[0].name;
-  console.log('Initial theme:', initialTheme); // Debug log
 
   const [theme, setTheme] = createSignal(initialTheme);
   const [mode, setMode] = createSignal(localStorage.getItem('mode') || 'system');
@@ -69,9 +68,7 @@ export function ThemeProvider(props) {
     { theme, mode, pattern, themeList, modeList, patternList },
     {
       updateTheme(delta) {
-        console.log('Updating theme. Current theme:', theme()); // Debug log
         const currentIndex = themeList.findIndex(t => t.name === theme());
-        console.log('Current theme index:', currentIndex); // Debug log
         if (currentIndex === -1) {
           console.warn('Current theme not found in themeList. Resetting to first theme.');
           setTheme(themeList[0].name);
@@ -82,7 +79,6 @@ export function ThemeProvider(props) {
         setTheme(newTheme);
         localStorage.setItem('theme', newTheme);
         document.documentElement.setAttribute('data-theme', newTheme);
-        console.log('Theme updated to:', newTheme);
       },
       updateMode(delta) {
         const modes = ['light', 'dark', 'system'];
@@ -123,11 +119,6 @@ export function ThemeProvider(props) {
   };
 
   createEffect(() => {
-    console.log('ThemeProvider effect: Current appearance', {
-      theme: theme(),
-      mode: mode(),
-      pattern: pattern()
-    });
     if (theme()) {
       themeContext[1].updateTheme(0); // This will trigger the updateTheme function without changing the theme
     } else {

@@ -17,16 +17,7 @@ const iconComponents = {
 export function ThemeDisplay() {
   const [theme, { getItemIcon }] = useTheme();
 
-  createEffect(() => {
-    console.log('ThemeDisplay: Current theme state', {
-      theme: theme.theme(),
-      mode: theme.mode(),
-      pattern: theme.pattern()
-    });
-  });
-
   const getIconImg = iconName => {
-    console.log('Rendering icon:', iconName);
     const [error, setError] = createSignal(false);
 
     return (
@@ -45,7 +36,6 @@ export function ThemeDisplay() {
 
   const logAndRenderIcon = (type, name) => {
     const iconName = getItemIcon(type, name());
-    console.log(`Icon for ${type} '${name()}':`, iconName);
     return getIconImg(iconName);
   };
 

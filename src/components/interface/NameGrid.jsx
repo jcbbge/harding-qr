@@ -1,16 +1,6 @@
-import {
-  createSignal,
-  createEffect,
-  For,
-  onMount,
-  onCleanup,
-  Show,
-  createMemo,
-  createResource
-} from 'solid-js';
+import { createSignal, createEffect, For, onMount, onCleanup, createMemo } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import styles from './NameGrid.module.css';
-import GridRow from './GridRow';
 
 import letterChangeSound from '../../assets/sounds/natural-tap-1.wav';
 import letterChangeSoundDown from '../../assets/sounds/natural-tap-3.wav';
@@ -22,78 +12,48 @@ import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
 
-// const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
-const fullName = ['PRD', 'KPI', 'OKR'];
+const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
+// const fullName = ['PRD', 'KPI', 'OKR'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+let letterChangeAudio,
+  letterChangeAudioDown,
+  correctLetterAudio,
+  allWordsCompleteAudio,
+  leftKeyAudio,
+  rightKeyAudio;
+let correctWordAudios = [];
 
-const isVowel = char => 'AEIOU'.includes(char.toUpperCase());
-const getRandomLetter = () => alphabet[Math.floor(Math.random() * 26)];
-const getNextLetter = (current, direction) => {
-  const currentIndex = alphabet.indexOf(current.toUpperCase());
-  return alphabet[(currentIndex + direction + 26) % 26];
-};
+const initializeWordList = () => {
+  const maxLength = Math.max(...fullName.map(name => name.length), 4);
+  const isVowel = char => 'AEIOU'.includes(char.toUpperCase());
+  const getRandomLetter = () => alphabet[Math.floor(Math.random() * 26)];
+  const padder = name => {
+    const maxLength = Math.max(...fullName.map(name => name.length));
+    const lengthPos = maxLength === 3 ? 4 : maxLength;
 
-const areAllWordsComplete = names => {
-  return names.every(name => name.every(letter => letter.matched || letter.isEmpty));
-};
+    if (lengthPos === 4 && fullName.indexOf(name) === 1) {
+      return name.padEnd(lengthPos, ' ');
+    } else {
+      return name.padStart(lengthPos, ' ');
+    }
+  };
 
-const padder = name => {
-  const maxLength = Math.max(...fullName.map(name => name.length));
-  const lengthPos = maxLength === 3 ? 4 : maxLength;
-
-  if (lengthPos === 4 && fullName.indexOf(name) === 1) {
-    return name.padEnd(lengthPos, ' ');
-  } else {
-    return name.padStart(lengthPos, ' ');
-  }
+  return fullName.map((name, index) => {
+    const paddedName = padder(name).padEnd(maxLength, ' ');
+    return paddedName.split('').map(char => ({
+      correctLetter: char,
+      currentLetter: isVowel(char) ? getRandomLetter() : char,
+      isVowel: isVowel(char),
+      matched: (!isVowel(char) && char !== ' ') || (index > 0 && char !== ' '),
+      isEmpty: char === ' '
+    }));
+  });
 };
 
 const NameGrid = ({ onLetterUnlock }) => {
-  let letterChangeAudio,
-    letterChangeAudioDown,
-    correctLetterAudio,
-    allWordsCompleteAudio,
-    leftKeyAudio,
-    rightKeyAudio;
-  let correctWordAudios = [];
-
-  const getMaxWordLength = () => Math.max(...fullName.map(name => name.length), 4);
-
-  const createInitialNames = () => {
-    const maxLength = getMaxWordLength();
-    return fullName.map((name, index) => {
-      const paddedName = padder(name).padEnd(maxLength, ' ');
-      return paddedName.split('').map(char => ({
-        correctLetter: char,
-        currentLetter: isVowel(char) ? getRandomLetter() : char,
-        isVowel: isVowel(char),
-        matched: (!isVowel(char) && char !== ' ') || (index > 0 && char !== ' '),
-        isEmpty: char === ' '
-      }));
-    });
-  };
-
-  const [names, setNames] = createStore(createInitialNames());
+  const [names, setNames] = createStore(initializeWordList());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
   const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 1 });
-
-  const totalEmptyCount = createMemo(() =>
-    names.reduce((count, name) => count + name.filter(letter => letter.isEmpty).length, 0)
-  );
-
-  createEffect(() => {
-    console.log('Focused position updated:', focusedPosition());
-    const firstNonEmptyPosition = names.reduce((pos, row, rowIndex) => {
-      if (pos) return pos;
-      const colIndex = row.findIndex(letter => !letter.isEmpty);
-      return colIndex !== -1 ? { row: rowIndex, col: colIndex } : null;
-    }, null);
-
-    if (firstNonEmptyPosition) {
-      setFocusedPosition(firstNonEmptyPosition);
-      setActiveNameIndex(firstNonEmptyPosition.row);
-    }
-  });
 
   const findNextLetterBox = (currentRow, currentCol, direction) => {
     const totalRows = names.length;
@@ -130,7 +90,7 @@ const NameGrid = ({ onLetterUnlock }) => {
     return { row: newRow, col: newCol };
   };
 
-  const handleKeyDown = event => {
+  const gridNavigate = event => {
     const { key, shiftKey } = event;
     const { row, col } = focusedPosition();
     let direction;
@@ -162,9 +122,9 @@ const NameGrid = ({ onLetterUnlock }) => {
         break;
       case 'Enter':
       case ' ':
-        handleLetterChange(row, col, shiftKey ? -1 : 1);
+        updateLetterBox(row, col, shiftKey ? -1 : 1);
         playSound(shiftKey ? letterChangeAudioDown : letterChangeAudio);
-        break;
+        return; // Exit the function early as we don't need to update focus for these keys
       case 'Tab':
         direction = shiftKey ? 'left' : 'right';
         playSound(shiftKey ? leftKeyAudio : rightKeyAudio);
@@ -175,9 +135,22 @@ const NameGrid = ({ onLetterUnlock }) => {
 
     if (direction) {
       const newPosition = findNextLetterBox(row, col, direction);
-      console.log('New position:', newPosition);
-      setFocusedPosition(newPosition);
+      console.log('newPosition', newPosition);
+      console.log('beforeSetFocusedPosition', focusedPosition());
+
+      setFocusedPosition({ row: newPosition.row, col: newPosition.col });
       setActiveNameIndex(newPosition.row);
+
+      console.log('after setFocusedPosition', focusedPosition());
+
+      // Log the current row, current index, and current letter
+      const currentLetter = names[newPosition.row][newPosition.col];
+      console.log('Navigation:', {
+        row: newPosition.row,
+        col: newPosition.col,
+        letter: currentLetter.isEmpty ? 'Empty' : currentLetter.currentLetter,
+        focusedPosition: focusedPosition()
+      });
     }
 
     direction = undefined;
@@ -189,8 +162,16 @@ const NameGrid = ({ onLetterUnlock }) => {
       audio.play().catch(error => {});
     }
   };
+  const updateLetterBox = (row, col, direction) => {
+    const getNextLetter = (current, direction) => {
+      const currentIndex = alphabet.indexOf(current.toUpperCase());
+      return alphabet[(currentIndex + direction + 26) % 26];
+    };
 
-  const handleLetterChange = (row, col, direction) => {
+    const areAllWordsComplete = names => {
+      return names.every(name => name.every(letter => letter.matched || letter.isEmpty));
+    };
+
     setNames(row, col, letter => {
       if (!letter.isEmpty && letter.isVowel && !letter.matched) {
         const newLetter = getNextLetter(letter.currentLetter, direction);
@@ -208,19 +189,21 @@ const NameGrid = ({ onLetterUnlock }) => {
     });
 
     if (names[row].every(l => l.matched || l.isEmpty)) {
-      playSound(correctWordAudios[row]);
+      setTimeout(() => {
+        playSound(correctWordAudios[row]);
+      }, 900);
     }
 
     if (areAllWordsComplete(names)) {
       setTimeout(() => {
         playSound(allWordsCompleteAudio);
-      }, 600);
+      }, 900);
       setGameCompleted(true);
     }
   };
 
   onMount(() => {
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', gridNavigate);
     letterChangeAudio = new Audio(letterChangeSound);
     letterChangeAudioDown = new Audio(letterChangeSoundDown);
     correctLetterAudio = new Audio(correctLetterSound);
@@ -235,32 +218,90 @@ const NameGrid = ({ onLetterUnlock }) => {
   });
 
   onCleanup(() => {
-    window.removeEventListener('keydown', handleKeyDown);
+    window.removeEventListener('keydown', gridNavigate);
   });
 
-  const renderGridRow = (name, rowIndex) => {
-    const emptyCountBeforeRow = names
-      .slice(0, rowIndex)
-      .reduce((count, row) => count + row.filter(l => l.isEmpty).length, 0);
-
-    return (
-      <GridRow
-        name={name}
-        rowIndex={rowIndex}
-        isActiveName={rowIndex === activeNameIndex()}
-        focusedPosition={focusedPosition()}
-        emptyCountBeforeRow={emptyCountBeforeRow}
-        totalEmptyCount={totalEmptyCount()}
-      />
-    );
-  };
-
   return (
-    <>
-      <div class={styles.nameGrid}>
-        <For each={names}>{(name, nameIndex) => renderGridRow(name, nameIndex())}</For>
-      </div>
-    </>
+    <div class={styles.nameGrid}>
+      <For each={names}>
+        {(name, nameIndex) => (
+          <div
+            class={styles.nameRow}
+            style={{ '--name-length': props.name.length }}
+          >
+            <For each={props.name}>
+              {(letterObj, letterIndex) => {
+                console.log('Rendering letter:', letterObj, 'at index:', letterIndex());
+
+                const isFocused = createMemo(() => props.isFocused(letterIndex()));
+                const letterBoxClass = createMemo(() => {
+                  const classes = [styles.letterBox];
+                  if (letterObj.isEmpty) {
+                    classes.push(styles.emptyBox, styles.accentUnexpected);
+                  } else {
+                    if (letterObj.matched) classes.push(styles.matched);
+                    if (letterObj.isVowel) classes.push(styles.vowel);
+                    if (letterObj.isVowel && letterObj.matched) {
+                      classes.push(styles.accentBackground);
+                    } else if (letterObj.isVowel && !letterObj.matched) {
+                      classes.push(styles.accentOpposite);
+                    }
+                  }
+                  if (isFocused()) classes.push(styles.focused);
+                  return classes.join(' ');
+                });
+
+                if (letterObj.isEmpty) {
+                  const emptyIndexInRow = props.name
+                    .slice(0, letterIndex())
+                    .filter(l => l && l.isEmpty).length;
+                  const emptyIndexInGrid = props.emptyCountBeforeRow + emptyIndexInRow + 1;
+
+                  console.log('Empty box:', { emptyIndexInRow, emptyIndexInGrid });
+
+                  let iconName;
+                  switch (emptyIndexInGrid) {
+                    case 1:
+                      iconName = getItemIcon('theme', themeState.theme());
+                      break;
+                    case 2:
+                      iconName = getItemIcon('mode', themeState.mode());
+                      break;
+                    case 3:
+                      iconName = getItemIcon('pattern', themeState.pattern());
+                      break;
+                    default:
+                      console.warn(`Unexpected empty index: ${emptyIndexInGrid}`);
+                      return null;
+                  }
+
+                  console.log('Icon for empty box:', iconName);
+
+                  return (
+                    <div
+                      class={letterBoxClass()}
+                      onClick={() => handleSettingChange(letterIndex(), 1)}
+                    >
+                      {iconName && getIconImg(iconName)}
+                    </div>
+                  );
+                }
+
+                return (
+                  <div
+                    class={letterBoxClass()}
+                    role="button"
+                    tabIndex={isFocused() ? 0 : -1}
+                  >
+                    <span>{letterObj.currentLetter}</span>
+                  </div>
+                );
+              }}
+            </For>
+          </div>
+        )}
+      </For>
+    </div>
   );
 };
 

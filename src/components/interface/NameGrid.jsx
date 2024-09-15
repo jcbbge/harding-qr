@@ -57,7 +57,9 @@ const initializeWordList = () => {
 };
 
 const NameGrid = ({ onLetterUnlock }) => {
-  const [themeState, { getItemIcon }] = useTheme();
+  const [themeState, themeActions] = useTheme();
+  const { theme, mode, pattern, themeList, modeList, patternList } = themeState;
+  const { updateTheme, updateMode, updatePattern, getItemIcon } = themeActions;
   const [names, setNames] = createStore(initializeWordList());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
   const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 1 });
@@ -69,6 +71,10 @@ const NameGrid = ({ onLetterUnlock }) => {
       focusedPosition: focusedPosition(),
       names: names
     });
+  });
+
+  createEffect(() => {
+    console.log('Theme changed:', theme());
   });
 
   const findNextLetterBox = (currentRow, currentCol, direction) => {
@@ -179,6 +185,36 @@ const NameGrid = ({ onLetterUnlock }) => {
     }
   };
   const updateLetterBox = (row, col, direction) => {
+    const letterObj = names[row][col];
+
+    if (letterObj.isEmpty) {
+      // Handle empty settings box
+      const emptyIndexInRow = names[row].slice(0, col).filter(l => l.isEmpty).length;
+      const emptyIndexInGrid =
+        names.slice(0, row).reduce((count, r) => count + r.filter(l => l.isEmpty).length, 0) +
+        emptyIndexInRow;
+
+      switch (emptyIndexInGrid) {
+        case 0:
+          // Update theme
+          console.log('Updating theme with direction:', direction);
+          updateTheme(direction);
+          console.log('New theme:', theme());
+          break;
+        case 1:
+          // Update mode
+          updateMode(direction);
+          break;
+        case 2:
+          // Update pattern
+          updatePattern(direction);
+          break;
+      }
+      // Play sound for settings change
+      playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
+      return;
+    }
+
     const getNextLetter = (current, direction) => {
       const currentIndex = alphabet.indexOf(current.toUpperCase());
       return alphabet[(currentIndex + direction + 26) % 26];
@@ -207,14 +243,13 @@ const NameGrid = ({ onLetterUnlock }) => {
     if (names[row].every(l => l.matched || l.isEmpty)) {
       setTimeout(() => {
         playSound(correctWordAudios[row]);
-      }, 900);
+      }, 500);
     }
 
     if (areAllWordsComplete(names)) {
       setTimeout(() => {
         playSound(allWordsCompleteAudio);
-      }, 900);
-      setGameCompleted(true);
+      }, 500);
     }
   };
 
@@ -297,13 +332,14 @@ const NameGrid = ({ onLetterUnlock }) => {
                   let iconName;
                   switch (emptyIndexInGrid) {
                     case 0:
-                      iconName = getItemIcon('theme', themeState.theme());
+                      iconName = getItemIcon('theme', theme());
+                      console.log('Theme icon:', iconName);
                       break;
                     case 1:
-                      iconName = getItemIcon('mode', themeState.mode());
+                      iconName = getItemIcon('mode', mode());
                       break;
                     case 2:
-                      iconName = getItemIcon('pattern', themeState.pattern());
+                      iconName = getItemIcon('pattern', pattern());
                       break;
                     default:
                       console.warn(`Unexpected empty index: ${emptyIndexInGrid}`);

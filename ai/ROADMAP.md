@@ -11,14 +11,25 @@ Active Goals:
 
 - create a Scrumble Word Game that can be loaded on each page
 
+Refactor Goals:
+
+- Consider using createMemo for complex computations that are used in the render function, such as emptyIndexInGrid.
+- The updateLetterBox function is quite long and complex. Consider breaking it down into smaller, more focused functions for better maintainability.
+- Instead of using setTimeout for playing sounds after state updates, consider using Solid.js's createEffect to react to state changes and play sounds accordingly.
+- The getIconImg function could be memoized if it's called frequently with the same arguments.
+- Consider using Solid.js's batch function when making multiple related state updates to optimize performance.
+- Overall, the component follows Solid.js conventions well, but there's always room for further optimization and refinement.
+
 Stretch Goals:
 
 - add party kit for visitors to have live interactions while visiting my site.
 - add a blog page
 
 ## Session Summary (2024-09-15, 09:06)
+
 Start of Session
 Task Overview:
+
 - [ ] Re-wire functionality for Settings letterboxes
   - [ ] can display settings icons for Theme, Mode, and Patter
   - [ ] can update Theme, change Mode, and pick Pattern
@@ -27,4 +38,4 @@ Task Overview:
   - [ ] each setting is laid out in grid space. Theme first, Mode second, Pattern third
   - [ ] select options are cycled through with upward and downward nav
   - [ ] settings change and update on Return key and Space bar
- ...
+        ...

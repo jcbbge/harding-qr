@@ -1,13 +1,13 @@
-/* src/components/NameGrid.module.css */
-
 .nameGrid {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Left-align contents */
+  align-items: flex-start;
   justify-content: flex-start;
-  width: auto; /* Allow width to be determined by content */
-  max-width: 100%; /* Prevent overflow */
-  margin: 20px auto; /* Center the grid */
+  width: auto;
+  max-width: 100%;
+  margin: 20px auto;
+  position: relative;
+  z-index: 10;
 }
 
 .timer {
@@ -46,25 +46,26 @@
 .nameRow {
   display: flex;
   margin-bottom: 20px;
-  justify-content: flex-start; /* Left-align letter boxes */
+  justify-content: flex-start;
   width: 100%;
 }
 
 .letterBox {
-  width: 70px; /* Increase width */
-  height: 70px; /* Increase height */
+  width: 70px;
+  height: 70px;
   border: 2px solid var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 60px; /* Increase font size */
+  font-size: 60px;
   font-weight: bold;
-  margin-right: 25px; /* Adjust margin */
+  margin-right: 25px;
   transition: all 0.3s ease;
   font-family: 'Array-BoldWide', sans-serif;
   border-radius: 5px;
   position: relative;
-  z-index: 1;
+  z-index: 11;
+  background-color: var(--gradient-base-bottom);
 }
 
 .letterBox:last-child {
@@ -98,26 +99,15 @@
 .letterBox.focused {
   border: 2px solid var(--gradient-base-bottom);
   box-shadow: 0 0 15px var(--accent);
-  z-index: 2;
-}
-
-.letterBox::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: inherit;
-  z-index: -1;
+  z-index: 12;
 }
 
 @media (max-width: 768px) {
   .letterBox {
-    width: 50px; /* Adjust width for smaller screens */
-    height: 50px; /* Adjust height for smaller screens */
-    font-size: 35px; /* Adjust font size */
-    margin-right: 20px; /* Adjust margin */
+    width: 50px;
+    height: 50px;
+    font-size: 35px;
+    margin-right: 20px;
   }
   .nameRow {
     margin-bottom: 15px;
@@ -126,10 +116,10 @@
 
 @media (max-width: 480px) {
   .letterBox {
-    width: 40px; /* Adjust width for smallest screens */
-    height: 40px; /* Adjust height for smallest screens */
-    font-size: 30px; /* Adjust font size */
-    margin-right: 15px; /* Adjust margin */
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    margin-right: 15px;
   }
   .nameRow {
     margin-bottom: 10px;

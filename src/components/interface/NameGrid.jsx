@@ -1,5 +1,6 @@
-import { createSignal, createEffect, For, onMount, onCleanup, createMemo } from 'solid-js';
+import { createSignal, createEffect, For, onMount, onCleanup, createMemo, batch } from 'solid-js';
 import { createStore } from 'solid-js/store';
+import { useTheme } from '../../contexts/ThemeContext';
 import styles from './NameGrid.module.css';
 
 import letterChangeSound from '../../assets/sounds/natural-tap-1.wav';
@@ -12,8 +13,8 @@ import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
 
-const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
-// const fullName = ['PRD', 'KPI', 'OKR'];
+// const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
+const fullName = ['PRD', 'KPI', 'OKR'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
   letterChangeAudioDown,
@@ -28,7 +29,6 @@ const initializeWordList = () => {
   const isVowel = char => 'AEIOU'.includes(char.toUpperCase());
   const getRandomLetter = () => alphabet[Math.floor(Math.random() * 26)];
   const padder = name => {
-    const maxLength = Math.max(...fullName.map(name => name.length));
     const lengthPos = maxLength === 3 ? 4 : maxLength;
 
     if (lengthPos === 4 && fullName.indexOf(name) === 1) {
@@ -38,9 +38,15 @@ const initializeWordList = () => {
     }
   };
 
-  return fullName.map((name, index) => {
-    const paddedName = padder(name).padEnd(maxLength, ' ');
-    return paddedName.split('').map(char => ({
+  const paddedNames = fullName.map(padder);
+
+  createEffect(() => {
+    console.log('Debug: Padded names', paddedNames);
+    console.log('Debug: Max length', maxLength);
+  });
+
+  return paddedNames.map((name, index) => {
+    return name.split('').map(char => ({
       correctLetter: char,
       currentLetter: isVowel(char) ? getRandomLetter() : char,
       isVowel: isVowel(char),
@@ -51,9 +57,19 @@ const initializeWordList = () => {
 };
 
 const NameGrid = ({ onLetterUnlock }) => {
+  const [themeState, { getItemIcon }] = useTheme();
   const [names, setNames] = createStore(initializeWordList());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
   const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 1 });
+
+  // Debug effect to log state changes
+  createEffect(() => {
+    console.log('Debug: State changed', {
+      activeNameIndex: activeNameIndex(),
+      focusedPosition: focusedPosition(),
+      names: names
+    });
+  });
 
   const findNextLetterBox = (currentRow, currentCol, direction) => {
     const totalRows = names.length;
@@ -221,19 +237,37 @@ const NameGrid = ({ onLetterUnlock }) => {
     window.removeEventListener('keydown', gridNavigate);
   });
 
+  const getIconImg = iconName => {
+    return (
+      <img
+        src={`/src/assets/icons/${iconName}.svg`}
+        alt={`${iconName} icon`}
+        class={styles.icon}
+        style={{
+          'vertical-align': 'text-top',
+          'margin-left': '2px'
+        }}
+      />
+    );
+  };
+
   return (
     <div class={styles.nameGrid}>
       <For each={names}>
         {(name, nameIndex) => (
           <div
             class={styles.nameRow}
-            style={{ '--name-length': props.name.length }}
+            style={{ '--name-length': name.length }}
           >
-            <For each={props.name}>
+            <For each={name}>
               {(letterObj, letterIndex) => {
                 console.log('Rendering letter:', letterObj, 'at index:', letterIndex());
 
-                const isFocused = createMemo(() => props.isFocused(letterIndex()));
+                const isFocused = createMemo(
+                  () =>
+                    nameIndex() === focusedPosition().row && letterIndex() === focusedPosition().col
+                );
+
                 const letterBoxClass = createMemo(() => {
                   const classes = [styles.letterBox];
                   if (letterObj.isEmpty) {
@@ -252,22 +286,23 @@ const NameGrid = ({ onLetterUnlock }) => {
                 });
 
                 if (letterObj.isEmpty) {
-                  const emptyIndexInRow = props.name
+                  const emptyIndexInRow = name
                     .slice(0, letterIndex())
                     .filter(l => l && l.isEmpty).length;
-                  const emptyIndexInGrid = props.emptyCountBeforeRow + emptyIndexInRow + 1;
-
-                  console.log('Empty box:', { emptyIndexInRow, emptyIndexInGrid });
+                  const emptyIndexInGrid =
+                    names.slice(0, nameIndex()).reduce((count, row) => {
+                      return count + row.filter(l => l.isEmpty).length;
+                    }, 0) + emptyIndexInRow;
 
                   let iconName;
                   switch (emptyIndexInGrid) {
-                    case 1:
+                    case 0:
                       iconName = getItemIcon('theme', themeState.theme());
                       break;
-                    case 2:
+                    case 1:
                       iconName = getItemIcon('mode', themeState.mode());
                       break;
-                    case 3:
+                    case 2:
                       iconName = getItemIcon('pattern', themeState.pattern());
                       break;
                     default:
@@ -275,16 +310,7 @@ const NameGrid = ({ onLetterUnlock }) => {
                       return null;
                   }
 
-                  console.log('Icon for empty box:', iconName);
-
-                  return (
-                    <div
-                      class={letterBoxClass()}
-                      onClick={() => handleSettingChange(letterIndex(), 1)}
-                    >
-                      {iconName && getIconImg(iconName)}
-                    </div>
-                  );
+                  return <div class={letterBoxClass()}>{iconName && getIconImg(iconName)}</div>;
                 }
 
                 return (

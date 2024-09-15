@@ -95,7 +95,6 @@ export function ThemeProvider(props) {
         const newPattern = patternList[newIndex].name;
         setPattern(newPattern);
         localStorage.setItem('pattern', newPattern);
-        document.body.className = patternList[newIndex].class;
       },
       getItemIcon // Add this new function to the context
     }

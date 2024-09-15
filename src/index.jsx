@@ -34,6 +34,10 @@ const gradientOverlay = document.createElement('div');
 gradientOverlay.className = 'gradient-overlay';
 document.body.insertBefore(gradientOverlay, root);
 
+const patternLayer = document.createElement('div');
+patternLayer.className = 'pattern-layer';
+document.body.insertBefore(patternLayer, root);
+
 const RolecoWrapper = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -78,7 +82,6 @@ const RolecoWrapper = () => {
 const Layout = props => {
   return (
     <>
-      <BackgroundPattern />
       <header>
         <nav class="navContainer">
           <a
@@ -105,12 +108,9 @@ const Layout = props => {
 
 render(
   () => (
-    <ErrorBoundary
-      fallback={err => {
-        return <div>Error: {err.toString()}</div>;
-      }}
-    >
+    <ErrorBoundary fallback={err => <div>Error: {err.toString()}</div>}>
       <ThemeProvider>
+        <BackgroundPattern />
         <Router root={Layout}>
           <Route
             path="/"

@@ -13,7 +13,7 @@
 /* Wavy pattern */
 :global(.bg-wavy) {
   background-color: var(--gradient-base-top);
-  opacity: 0.9;
+  opacity: 0.1;
   background-image: repeating-radial-gradient(
       circle at center,
       transparent 0,

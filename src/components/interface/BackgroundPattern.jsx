@@ -3,23 +3,29 @@ import { useTheme } from '../../contexts/ThemeContext';
 import styles from './BackgroundPattern.module.css';
 
 const BackgroundPattern = () => {
-  const { appearance, patterns } = useTheme();
+  const [themeState] = useTheme();
 
   createEffect(() => {
-    if (patterns && appearance.pattern) {
-      const currentPattern = patterns.find(p => p.name === appearance.pattern);
+    const patternLayer = document.querySelector('.pattern-layer');
+
+    if (patternLayer && themeState.pattern) {
+      const currentPattern = themeState.patternList.find(p => p.name === themeState.pattern());
       if (currentPattern) {
-        document.body.className = currentPattern.cssClass;
+        // Remove all existing pattern classes
+        patternLayer.classList.forEach(className => {
+          if (className.startsWith('bg-')) {
+            patternLayer.classList.remove(className);
+          }
+        });
+        // Add the new pattern class
+        patternLayer.classList.add(currentPattern.class);
       }
+    } else {
+      console.warn('Pattern layer not found or theme state is missing pattern information');
     }
   });
 
-  return (
-    <div
-      class={styles.backgroundOverlay}
-      style={{ 'pointer-events': 'none' }}
-    />
-  );
+  return null; // This component doesn't render anything visible
 };
 
 export default BackgroundPattern;

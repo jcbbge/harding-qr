@@ -32,3 +32,33 @@ Your app is ready to be deployed!
 ## Deployment
 
 You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+
+### AI
+
+Use ai/start-session.js to start a new session. `node ai/start-session.js`
+This will create a current_session.md file in the ai/context directory.
+Update the tasks.md file with the current tasks.
+Update the roadmap.md file with the current roadmap.
+Also generate the context files for the current task. - codebase_instructions.md - tasks.md - tech_stack.md
+
+Use ai/end-session.js to end the current session. `node ai/end-session.js`
+This will create a new archive directory with the current_session.md file.
+It will also update the roadmap.md file with the current roadmap.
+
+Here is sample prompt to start a new session:
+
+```
+# Project Context
+[Insert content from project_structure.md]
+[Insert content from dependencies.md]
+[Insert content from instructions.md]
+
+# Current Task
+Implement user authentication feature as per the roadmap.
+
+# Instructions
+- Use existing files in the `src` directory.
+- Follow code formatting guidelines.
+- Ensure the feature integrates with current routing setup.
+
+```

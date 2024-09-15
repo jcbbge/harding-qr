@@ -1,0 +1,52 @@
+[
+  {
+    "description": "Re-wire functionality for Settings letterboxes",
+    "done": false,
+    "subtasks": [
+      {
+        "description": "can display settings icons for Theme, Mode, and Patter",
+        "done": false,
+        "subtasks": [],
+        "id": "1.1"
+      },
+      {
+        "description": "can update Theme, change Mode, and pick Pattern",
+        "done": false,
+        "subtasks": [],
+        "id": "1.2"
+      },
+      {
+        "description": "does save to localstorage",
+        "done": false,
+        "subtasks": [],
+        "id": "1.3"
+      }
+    ],
+    "id": "1"
+  },
+  {
+    "description": "Add tests for Settings",
+    "done": false,
+    "subtasks": [
+      {
+        "description": "each setting is laid out in grid space. Theme first, Mode second, Pattern third",
+        "done": false,
+        "subtasks": [],
+        "id": "2.1"
+      },
+      {
+        "description": "select options are cycled through with upward and downward nav",
+        "done": false,
+        "subtasks": [],
+        "id": "2.2"
+      },
+      {
+        "description": "settings change and update on Return key and Space bar",
+        "done": false,
+        "subtasks": [],
+        "id": "2.3"
+      }
+    ],
+    "id": "2"
+  }
+]

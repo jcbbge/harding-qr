@@ -22,7 +22,8 @@ import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
 
-const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
+// const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
+const fullName = ['PRD', 'KPI', 'OKR'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 const isVowel = char => 'AEIOU'.includes(char.toUpperCase());
@@ -60,13 +61,13 @@ const NameGrid = ({ onLetterUnlock }) => {
 
   const createInitialNames = () => {
     const maxLength = getMaxWordLength();
-    return fullName.map(name => {
+    return fullName.map((name, index) => {
       const paddedName = padder(name).padEnd(maxLength, ' ');
       return paddedName.split('').map(char => ({
         correctLetter: char,
         currentLetter: isVowel(char) ? getRandomLetter() : char,
         isVowel: isVowel(char),
-        matched: !isVowel(char) && char !== ' ',
+        matched: (!isVowel(char) && char !== ' ') || (index > 0 && char !== ' '),
         isEmpty: char === ' '
       }));
     });
@@ -74,7 +75,6 @@ const NameGrid = ({ onLetterUnlock }) => {
 
   const [names, setNames] = createStore(createInitialNames());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
-  const [gameCompleted, setGameCompleted] = createSignal(false);
   const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 1 });
 
   const totalEmptyCount = createMemo(() =>
@@ -82,6 +82,7 @@ const NameGrid = ({ onLetterUnlock }) => {
   );
 
   createEffect(() => {
+    console.log('Focused position updated:', focusedPosition());
     const firstNonEmptyPosition = names.reduce((pos, row, rowIndex) => {
       if (pos) return pos;
       const colIndex = row.findIndex(letter => !letter.isEmpty);
@@ -174,6 +175,7 @@ const NameGrid = ({ onLetterUnlock }) => {
 
     if (direction) {
       const newPosition = findNextLetterBox(row, col, direction);
+      console.log('New position:', newPosition);
       setFocusedPosition(newPosition);
       setActiveNameIndex(newPosition.row);
     }
@@ -236,29 +238,27 @@ const NameGrid = ({ onLetterUnlock }) => {
     window.removeEventListener('keydown', handleKeyDown);
   });
 
+  const renderGridRow = (name, rowIndex) => {
+    const emptyCountBeforeRow = names
+      .slice(0, rowIndex)
+      .reduce((count, row) => count + row.filter(l => l.isEmpty).length, 0);
+
+    return (
+      <GridRow
+        name={name}
+        rowIndex={rowIndex}
+        isActiveName={rowIndex === activeNameIndex()}
+        focusedPosition={focusedPosition()}
+        emptyCountBeforeRow={emptyCountBeforeRow}
+        totalEmptyCount={totalEmptyCount()}
+      />
+    );
+  };
+
   return (
     <>
       <div class={styles.nameGrid}>
-        <For each={names}>
-          {(name, nameIndex) => {
-            const emptyCountBeforeRow = names
-              .slice(0, nameIndex)
-              .flat()
-              .filter(letter => letter.isEmpty).length;
-
-            return (
-              <GridRow
-                name={name}
-                isActiveName={nameIndex() === activeNameIndex()}
-                focusedPosition={focusedPosition()}
-                rowIndex={nameIndex()}
-                totalEmptyCount={totalEmptyCount()}
-                emptyCountBeforeRow={emptyCountBeforeRow}
-                onLetterChange={handleLetterChange}
-              />
-            );
-          }}
-        </For>
+        <For each={names}>{(name, nameIndex) => renderGridRow(name, nameIndex())}</For>
       </div>
     </>
   );

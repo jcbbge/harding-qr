@@ -159,13 +159,24 @@ const NameGrid = ({ onLetterUnlock }) => {
   };
 
   const playSound = audio => {
+    console.log(`Attempting to play sound: ${audio.src}`);
     if (audio) {
       audio.currentTime = 0;
-      audio.play().catch(error => {});
+      audio.play().catch(error => {
+        console.error('Error playing audio:', error);
+      });
+    } else {
+      console.error('Audio not found');
     }
   };
+
   const updateLetterBox = (row, col, direction) => {
     const letterObj = names[row][col];
+
+    // Debug log to show the current state of the word
+    createEffect(() => {
+      console.log(`Updating word in row ${row}:`, names[row].map(l => l.currentLetter).join(''));
+    });
 
     if (letterObj.isEmpty) {
       const emptyIndexInRow = names[row].slice(0, col).filter(l => l.isEmpty).length;
@@ -199,7 +210,38 @@ const NameGrid = ({ onLetterUnlock }) => {
 
         if (newLetter === letter.correctLetter) {
           onLetterUnlock(row, col);
-          playSound(correctLetterAudio);
+
+          // Check if this is the last unmatched vowel in the word
+          const isLastVowel = names[row].filter(l => l.isVowel && !l.matched).length === 1;
+
+          // Check if this is the last word with unmatched vowels
+          const isLastWord = names.every(
+            (word, index) => index === row || word.every(l => !l.isVowel || l.matched)
+          );
+
+          createEffect(() => {
+            console.log(`Row ${row}, Col ${col}: Letter matched`);
+            console.log(`Is last vowel in word: ${isLastVowel}`);
+            console.log(`Is last word: ${isLastWord}`);
+          });
+
+          if (isLastWord && isLastVowel) {
+            createEffect(() => {
+              console.log('All words complete - playing allWordsCompleteAudio');
+            });
+            playSound(allWordsCompleteAudio);
+          } else if (isLastVowel) {
+            createEffect(() => {
+              console.log(`Word in row ${row} complete - playing correctWordAudio`);
+            });
+            playSound(correctWordAudios[row]);
+          } else {
+            createEffect(() => {
+              console.log('Correct letter - playing correctLetterAudio');
+            });
+            playSound(correctLetterAudio);
+          }
+
           return { ...letter, currentLetter: newLetter, matched: true };
         }
         playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
@@ -207,20 +249,6 @@ const NameGrid = ({ onLetterUnlock }) => {
       }
       return letter;
     });
-
-    // Check if the current word is complete
-    if (names[row].every(l => !l.isVowel || l.matched)) {
-      setTimeout(() => {
-        playSound(correctWordAudios[row]);
-      }, 700);
-    }
-
-    // Check if all words are complete (all vowels matched)
-    if (names.every(word => word.every(l => !l.isVowel || l.matched))) {
-      setTimeout(() => {
-        playSound(allWordsCompleteAudio);
-      }, 800);
-    }
   };
 
   onMount(() => {
@@ -236,6 +264,19 @@ const NameGrid = ({ onLetterUnlock }) => {
     allWordsCompleteAudio = new Audio(allWordsCompleteSound);
     leftKeyAudio = new Audio(leftKeySound);
     rightKeyAudio = new Audio(rightKeySound);
+
+    // Debug logging for audio loading
+    console.log('Audio files loaded:');
+    console.log('letterChangeAudio:', letterChangeAudio.src);
+    console.log('letterChangeAudioDown:', letterChangeAudioDown.src);
+    console.log('correctLetterAudio:', correctLetterAudio.src);
+    console.log(
+      'correctWordAudios:',
+      correctWordAudios.map(audio => audio.src)
+    );
+    console.log('allWordsCompleteAudio:', allWordsCompleteAudio.src);
+    console.log('leftKeyAudio:', leftKeyAudio.src);
+    console.log('rightKeyAudio:', rightKeyAudio.src);
   });
 
   onCleanup(() => {
@@ -267,6 +308,19 @@ const NameGrid = ({ onLetterUnlock }) => {
   const getThemeIcon = () => {
     const iconName = getItemIcon('theme', theme.theme());
     return iconName;
+  };
+
+  // Add this function at the top level of your component
+  const logWordState = row => {
+    console.log(
+      'Word state:',
+      names[row].map(l => ({
+        letter: l.currentLetter,
+        isVowel: l.isVowel,
+        matched: l.matched,
+        isEmpty: l.isEmpty
+      }))
+    );
   };
 
   return (

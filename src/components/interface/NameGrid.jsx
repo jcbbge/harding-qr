@@ -1,4 +1,4 @@
-import { createSignal, createEffect, For, onMount, onCleanup, createMemo, batch } from 'solid-js';
+import { createSignal, createEffect, For, onMount, onCleanup, createMemo } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { useTheme } from '../../contexts/ThemeContext';
 import styles from './NameGrid.module.css';
@@ -13,8 +13,8 @@ import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
 
-// const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
-const fullName = ['PRD', 'KPI', 'OKR'];
+const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
+// const fullName = ['PRD', 'KPI', 'OKR'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
   letterChangeAudioDown,
@@ -40,11 +40,6 @@ const initializeWordList = () => {
 
   const paddedNames = fullName.map(padder);
 
-  createEffect(() => {
-    console.log('Debug: Padded names', paddedNames);
-    console.log('Debug: Max length', maxLength);
-  });
-
   return paddedNames.map((name, index) => {
     return name.split('').map(char => ({
       correctLetter: char,
@@ -57,24 +52,23 @@ const initializeWordList = () => {
 };
 
 const NameGrid = ({ onLetterUnlock }) => {
-  const [themeState, themeActions] = useTheme();
-  const { theme, mode, pattern, themeList, modeList, patternList } = themeState;
-  const { updateTheme, updateMode, updatePattern, getItemIcon } = themeActions;
+  const [theme, { updateTheme, updateMode, updatePattern, getItemIcon }] = useTheme();
   const [names, setNames] = createStore(initializeWordList());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
   const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 1 });
 
-  // Debug effect to log state changes
-  createEffect(() => {
-    console.log('Debug: State changed', {
-      activeNameIndex: activeNameIndex(),
-      focusedPosition: focusedPosition(),
-      names: names
-    });
+  // Load theme from local storage on mount
+  onMount(() => {
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) {
+      updateTheme(0, storedTheme);
+    }
   });
 
+  // Log theme changes and update local storage
   createEffect(() => {
-    console.log('Theme changed:', theme());
+    const currentTheme = theme.theme();
+    localStorage.setItem('theme', currentTheme);
   });
 
   const findNextLetterBox = (currentRow, currentCol, direction) => {
@@ -146,7 +140,7 @@ const NameGrid = ({ onLetterUnlock }) => {
       case ' ':
         updateLetterBox(row, col, shiftKey ? -1 : 1);
         playSound(shiftKey ? letterChangeAudioDown : letterChangeAudio);
-        return; // Exit the function early as we don't need to update focus for these keys
+        return;
       case 'Tab':
         direction = shiftKey ? 'left' : 'right';
         playSound(shiftKey ? leftKeyAudio : rightKeyAudio);
@@ -157,22 +151,8 @@ const NameGrid = ({ onLetterUnlock }) => {
 
     if (direction) {
       const newPosition = findNextLetterBox(row, col, direction);
-      console.log('newPosition', newPosition);
-      console.log('beforeSetFocusedPosition', focusedPosition());
-
       setFocusedPosition({ row: newPosition.row, col: newPosition.col });
       setActiveNameIndex(newPosition.row);
-
-      console.log('after setFocusedPosition', focusedPosition());
-
-      // Log the current row, current index, and current letter
-      const currentLetter = names[newPosition.row][newPosition.col];
-      console.log('Navigation:', {
-        row: newPosition.row,
-        col: newPosition.col,
-        letter: currentLetter.isEmpty ? 'Empty' : currentLetter.currentLetter,
-        focusedPosition: focusedPosition()
-      });
     }
 
     direction = undefined;
@@ -188,7 +168,6 @@ const NameGrid = ({ onLetterUnlock }) => {
     const letterObj = names[row][col];
 
     if (letterObj.isEmpty) {
-      // Handle empty settings box
       const emptyIndexInRow = names[row].slice(0, col).filter(l => l.isEmpty).length;
       const emptyIndexInGrid =
         names.slice(0, row).reduce((count, r) => count + r.filter(l => l.isEmpty).length, 0) +
@@ -196,21 +175,15 @@ const NameGrid = ({ onLetterUnlock }) => {
 
       switch (emptyIndexInGrid) {
         case 0:
-          // Update theme
-          console.log('Updating theme with direction:', direction);
           updateTheme(direction);
-          console.log('New theme:', theme());
           break;
         case 1:
-          // Update mode
           updateMode(direction);
           break;
         case 2:
-          // Update pattern
           updatePattern(direction);
           break;
       }
-      // Play sound for settings change
       playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
       return;
     }
@@ -273,17 +246,30 @@ const NameGrid = ({ onLetterUnlock }) => {
   });
 
   const getIconImg = iconName => {
+    const [error, setError] = createSignal(false);
+
     return (
-      <img
-        src={`/src/assets/icons/${iconName}.svg`}
-        alt={`${iconName} icon`}
-        class={styles.icon}
-        style={{
-          'vertical-align': 'text-top',
-          'margin-left': '2px'
-        }}
-      />
+      <>
+        <img
+          src={`/src/assets/icons/${iconName}.svg`}
+          alt={`${iconName} icon`}
+          class={styles.icon}
+          onError={() => setError(true)}
+          style={{ display: error() ? 'none' : 'inline' }}
+        />
+        {error() && <span class={styles.iconFallback}>{iconName.charAt(0).toUpperCase()}</span>}
+      </>
     );
+  };
+
+  const logAndRenderIcon = (type, name) => {
+    const iconName = getItemIcon(type, name());
+    return getIconImg(iconName);
+  };
+
+  const getThemeIcon = () => {
+    const iconName = getItemIcon('theme', theme.theme());
+    return iconName;
   };
 
   return (
@@ -296,8 +282,6 @@ const NameGrid = ({ onLetterUnlock }) => {
           >
             <For each={name}>
               {(letterObj, letterIndex) => {
-                console.log('Rendering letter:', letterObj, 'at index:', letterIndex());
-
                 const isFocused = createMemo(
                   () =>
                     nameIndex() === focusedPosition().row && letterIndex() === focusedPosition().col
@@ -329,24 +313,30 @@ const NameGrid = ({ onLetterUnlock }) => {
                       return count + row.filter(l => l.isEmpty).length;
                     }, 0) + emptyIndexInRow;
 
-                  let iconName;
+                  let iconElement;
                   switch (emptyIndexInGrid) {
                     case 0:
-                      iconName = getItemIcon('theme', theme());
-                      console.log('Theme icon:', iconName);
+                      iconElement = (
+                        <div class={letterBoxClass()}>{getIconImg(getThemeIcon())}</div>
+                      );
                       break;
                     case 1:
-                      iconName = getItemIcon('mode', mode());
+                      iconElement = (
+                        <div class={letterBoxClass()}>{logAndRenderIcon('mode', theme.mode)}</div>
+                      );
                       break;
                     case 2:
-                      iconName = getItemIcon('pattern', pattern());
+                      iconElement = (
+                        <div class={letterBoxClass()}>
+                          {logAndRenderIcon('pattern', theme.pattern)}
+                        </div>
+                      );
                       break;
                     default:
-                      console.warn(`Unexpected empty index: ${emptyIndexInGrid}`);
                       return null;
                   }
 
-                  return <div class={letterBoxClass()}>{iconName && getIconImg(iconName)}</div>;
+                  return iconElement;
                 }
 
                 return (

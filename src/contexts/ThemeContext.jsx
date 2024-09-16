@@ -67,18 +67,23 @@ export function ThemeProvider(props) {
   const themeContext = [
     { theme, mode, pattern, themeList, modeList, patternList },
     {
-      updateTheme(delta) {
-        const currentIndex = themeList.findIndex(t => t.name === theme());
-        if (currentIndex === -1) {
-          console.warn('Current theme not found in themeList. Resetting to first theme.');
-          setTheme(themeList[0].name);
-          return;
+      updateTheme(delta, forcedTheme = null) {
+        if (forcedTheme) {
+          setTheme(forcedTheme);
+        } else {
+          const currentIndex = themeList.findIndex(t => t.name === theme());
+          if (currentIndex === -1) {
+            console.warn('Current theme not found in themeList. Resetting to first theme.');
+            setTheme(themeList[0].name);
+            return;
+          }
+          const newIndex = (currentIndex + delta + themeList.length) % themeList.length;
+          const newTheme = themeList[newIndex].name;
+          setTheme(newTheme);
         }
-        const newIndex = (currentIndex + delta + themeList.length) % themeList.length;
-        const newTheme = themeList[newIndex].name;
-        setTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
+        const updatedTheme = theme();
+        localStorage.setItem('theme', updatedTheme);
+        document.documentElement.setAttribute('data-theme', updatedTheme);
       },
       updateMode(delta) {
         const modes = ['light', 'dark', 'system'];

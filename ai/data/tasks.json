@@ -1,23 +1,23 @@
 [
   {
     "description": "Re-wire functionality for Settings letterboxes",
-    "done": false,
+    "done": true,
     "subtasks": [
       {
         "description": "can display settings icons for Theme, Mode, and Patter",
-        "done": false,
+        "done": true,
         "subtasks": [],
         "id": "1.1"
       },
       {
         "description": "can update Theme, change Mode, and pick Pattern",
-        "done": false,
+        "done": true,
         "subtasks": [],
         "id": "1.2"
       },
       {
         "description": "does save to localstorage",
-        "done": false,
+        "done": true,
         "subtasks": [],
         "id": "1.3"
       }
@@ -48,5 +48,11 @@
       }
     ],
     "id": "2"
+  },
+  {
+    "description": "Bug fix for changeing letterbox",
+    "done": false,
+    "subtasks": [],
+    "id": "3"
   }
 ]

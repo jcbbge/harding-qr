@@ -40,12 +40,12 @@ const initializeWordList = () => {
 
   const paddedNames = fullName.map(padder);
 
-  return paddedNames.map((name, index) => {
+  return paddedNames.map(name => {
     return name.split('').map(char => ({
       correctLetter: char,
       currentLetter: isVowel(char) ? getRandomLetter() : char,
       isVowel: isVowel(char),
-      matched: (!isVowel(char) && char !== ' ') || (index > 0 && char !== ' '),
+      matched: !isVowel(char) && char !== ' ',
       isEmpty: char === ' '
     }));
   });
@@ -193,10 +193,6 @@ const NameGrid = ({ onLetterUnlock }) => {
       return alphabet[(currentIndex + direction + 26) % 26];
     };
 
-    const areAllWordsComplete = names => {
-      return names.every(name => name.every(letter => letter.matched || letter.isEmpty));
-    };
-
     setNames(row, col, letter => {
       if (!letter.isEmpty && letter.isVowel && !letter.matched) {
         const newLetter = getNextLetter(letter.currentLetter, direction);
@@ -205,24 +201,25 @@ const NameGrid = ({ onLetterUnlock }) => {
           onLetterUnlock(row, col);
           playSound(correctLetterAudio);
           return { ...letter, currentLetter: newLetter, matched: true };
-        } else {
-          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
-          return { ...letter, currentLetter: newLetter };
         }
+        playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
+        return { ...letter, currentLetter: newLetter };
       }
       return letter;
     });
 
-    if (names[row].every(l => l.matched || l.isEmpty)) {
+    // Check if the current word is complete
+    if (names[row].every(l => !l.isVowel || l.matched)) {
       setTimeout(() => {
         playSound(correctWordAudios[row]);
-      }, 500);
+      }, 700);
     }
 
-    if (areAllWordsComplete(names)) {
+    // Check if all words are complete (all vowels matched)
+    if (names.every(word => word.every(l => !l.isVowel || l.matched))) {
       setTimeout(() => {
         playSound(allWordsCompleteAudio);
-      }, 500);
+      }, 800);
     }
   };
 

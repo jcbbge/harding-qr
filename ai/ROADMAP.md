@@ -39,3 +39,38 @@ Task Overview:
   - [ ] select options are cycled through with upward and downward nav
   - [ ] settings change and update on Return key and Space bar
         ...
+
+## Session Summary (2024-09-15, 20:13)
+## Session Updated (2024-09-15, 09:06)
+Task Overview:
+- [ ] Re-wire functionality for Settings letterboxes
+  - [ ] can display settings icons for Theme, Mode, and Patter
+  - [ ] can update Theme, change Mode, and pick Pattern
+...
+
+
+## End of Session Updates
+Task Overview:
+- [x] Re-wire functionality for Settings letterboxes
+  - [x] can display settings icons for Theme, Mode, and Patter
+  - [x] can update Theme, change Mode, and pick Pattern
+  - [x] does save to localstorage
+- [ ] Add tests for Settings
+  - [ ] each setting is laid out in grid space. Theme first, Mode second, Pattern third
+  - [ ] select options are cycled through with upward and downward nav
+  - [ ] settings change and update on Return key and Space bar
+ ...
+
+## Session Summary (2024-09-16, 09:42)
+Start of Session
+Task Overview:
+- [x] Re-wire functionality for Settings letterboxes
+  - [x] can display settings icons for Theme, Mode, and Patter
+  - [x] can update Theme, change Mode, and pick Pattern
+  - [x] does save to localstorage
+- [ ] Add tests for Settings
+  - [ ] each setting is laid out in grid space. Theme first, Mode second, Pattern third
+  - [ ] select options are cycled through with upward and downward nav
+  - [ ] settings change and update on Return key and Space bar
+- [ ] Bug fix for changeing letterbox
+ ...

@@ -5,6 +5,7 @@
   - 📄 __mocks__/fileMock.js
   - 📄 babel.config.js
 - 📁 docs/
+  - 📄 docs/debug.md
   - 📄 docs/solidjs-documentation.md
   - 📄 index.html
   - 📄 jest.config.js
@@ -14,8 +15,8 @@
   - 📄 package.json
   - 📄 pnpm-lock.yaml
 - 📁 src/
-  - 📄 src/App.css
   - 📄 src/App.jsx
+  - 📄 src/App.module.css
 - 📁 src/assets/
   - 📄 src/assets/apple-touch-icon.png
   - 📄 src/assets/favicon.ico
@@ -46,6 +47,8 @@
   - 📄 src/assets/icons/cpu.svg
   - 📄 src/assets/icons/device-tv-old.svg
   - 📄 src/assets/icons/device-vision-pro.svg
+  - 📄 src/assets/icons/grid-3x3.svg
+  - 📄 src/assets/icons/grid-dots.svg
   - 📄 src/assets/icons/help-square-rounded.svg
   - 📄 src/assets/icons/ice-cream.svg
   - 📄 src/assets/icons/layers-difference.svg
@@ -55,18 +58,21 @@
   - 📄 src/assets/icons/moon.svg
   - 📄 src/assets/icons/mug.svg
   - 📄 src/assets/icons/palette.svg
+  - 📄 src/assets/icons/plus.svg
   - 📄 src/assets/icons/polaroid.svg
   - 📄 src/assets/icons/radar-2.svg
   - 📄 src/assets/icons/recharging.svg
   - 📄 src/assets/icons/shopping-bag.svg
   - 📄 src/assets/icons/space.svg
   - 📄 src/assets/icons/sphere.svg
+  - 📄 src/assets/icons/square.svg
   - 📄 src/assets/icons/stereo-glasses.svg
   - 📄 src/assets/icons/sun-moon.svg
   - 📄 src/assets/icons/sun.svg
   - 📄 src/assets/icons/target.svg
   - 📄 src/assets/icons/terminal-2.svg
   - 📄 src/assets/icons/texture.svg
+  - 📄 src/assets/icons/timeline.svg
   - 📄 src/assets/icons/track.svg
   - 📄 src/assets/icons/wave-sine.svg
   - 📄 src/assets/icons/zodiac-aquarius.svg
@@ -93,7 +99,6 @@
   - 📄 src/components/interface/Card.module.css
   - 📄 src/components/interface/Footer.jsx
   - 📄 src/components/interface/GridRow.jsx
-  - 📄 src/components/interface/GridRow.module.css
   - 📄 src/components/interface/LoaderModal.jsx
   - 📄 src/components/interface/LoaderModal.module.css
   - 📄 src/components/interface/NameGrid.jsx

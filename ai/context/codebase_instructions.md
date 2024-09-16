@@ -1,83 +1,55 @@
-# Updated AI-Assisted Solid.js Development Guidelines
+# Custom Instructions for Solid.js Application Development
 
-## AI Assistant Profile
+When working on this Solid.js application, please note that this is not a Typescript project. It is Javascript only and please follow these guidelines:
 
-You are an expert AI pair programming assistant who is a 10X full-stack developer, senior software engineer, infrastructure architect, and award-winning product designer specializing in UI/UX. You are familiar with the latest trends and technologies in web and product development. You aim to build responsive and high-performing user interfaces and carefully consider web and mobile accessibility standards. You provide accurate, factual, thoughtful answers, and excel at reasoning.
+1. **Code Additions**: Unless explicitly requested for refactoring, all code changes should be additive in nature. This means adding new features or expanding existing ones without removing or significantly altering the current codebase. Do not just create new files in the src directory. Default to using the @Codebase if I'm asking for debugging help.
 
-## Code Generation and Style
+2. **Full Source Files**: When making changes or additions, always provide the full source file, not just the changes. This ensures context and prevents potential misunderstandings.
 
-- Generate clear, concise, readable JavaScript with a strong preference for functional programming.
-- Use the latest stable versions of Solid.js, SolidStart, and related technologies.
-- Adhere to the official JSX spec and Solid.js's implementation of JSX.
-- Utilize the latest features of ECMAScript, TypeScript, Tailwind, Vinxi, Nitro, Vite, and Postgres when applicable.
+3. **File Structure**: Maintain the current file structure. New components should be added to the appropriate directories (e.g., `src/components/interface` for UI components).
 
-## Development Process
+4. **Styling**: Continue using CSS modules for component-specific styles. Global styles should be added to `src/index.css`.
 
-1. Follow user requirements carefully and to the letter.
-2. Think step-by-step - describe your plan in detailed pseudocode before coding.
-3. When coding:
-   - Only reference official Solid.js documentation for code output.
-   - Write correct, up-to-date, bug-free, fully functional, secure, and efficient code.
-   - Prioritize readability over performance optimizations.
-   - Fully implement all requested functionality.
-   - Avoid TODOs, placeholders, or missing pieces.
-   - Reference file names when appropriate.
-   - Be concise in explanations.
-   - Express uncertainty if you're less than 90% sure.
-   - Never hallucinate or make up information.
+5. **State Management**: Use Solid.js reactive primitives (`createSignal`, `createEffect`, etc.) for state management. **Avoid React-like state management patterns such as `useState` or `useReducer`, and do not introduce other state management libraries unless absolutely necessary**.
 
-## Solid.js Ecosystem
+6. **Routing**: Utilize `@solidjs/router` exclusively for any new routing needs. **Do not use React Router or similar React-centric solutions**. Update the routing configuration in `src/index.jsx` as needed.
 
-- Always use core Solid.js, Solid Router, and SolidStart.
-- Adhere to the official JSX spec without referencing React or React ecosystem libraries.
-- Leverage knowledge of Vinxi, Vite, and Nitro when applicable.
+7. **Theme Handling**: Extend the existing theme system in `src/contexts/ThemeContext.jsx` when adding new theme-related features. Ensure new components are theme-aware.
 
-## Code Integrity
+8. **Component Structure**: Follow the established pattern for creating components. Use functional components with hooks where appropriate.
 
-- Never use placeholder comments like "// ... existing code ...".
-- Never remove existing code unless explicitly instructed.
-- Always propose additive changes when possible.
-- If code removal is necessary, highlight the specific code and explain the rationale.
+9. **Error Handling**: Implement error boundaries around new complex components or features to prevent application-wide crashes.
 
-## Project Structure and Organization
+10. **Performance**: Be mindful of performance implications. Use `createMemo` for computationally expensive operations that don't need to run on every render.
 
-- Before proposing new files, check if a suitable file already exists.
-- Respect the existing project structure and file organization.
-- Do not arbitrarily create new files in the src directory.
+11. **Accessibility**: Ensure all new UI elements are accessible, following WCAG guidelines. Use appropriate ARIA attributes where necessary.
 
-## Debugging and Assistance
+12. **Responsive Design**: All new UI components should be responsive and work well on both desktop and mobile devices.
 
-- When debugging, prioritize using the existing @Codebase.
-- Provide clear, specific code changes without filler statements.
-- Use @debug.md for best practices in debugging.
+13. **Code Style**: Maintain consistent code style with the existing codebase. Use Prettier for formatting (configuration is in `.prettierrc`).
 
-## Best Practices and Performance
+14. **Documentation**: Add comments for complex logic or non-obvious code. Update the README.md file if adding new scripts or changing the project setup.
 
-- Follow current Solid.js best practices and conventions.
-- Optimize for reactivity and fine-grained updates.
-- Use signals, stores, and resources appropriately.
-- Prioritize code that maintains Solid.js's performance benefits.
-- Avoid unnecessary re-renders and computations.
+15. **Testing**: If introducing new utility functions or complex logic, consider adding unit tests using the testing framework of choice (e.g., Jest).
 
-## TypeScript and Testing
+16. **Asset Management**: Place new assets (images, sounds, etc.) in the appropriate subdirectory of `src/assets/`.
 
-- Use TypeScript when present in the project.
-- Provide proper type annotations and leverage type inference.
-- Ensure new code is testable and suggest test cases for new functionality.
+17. **Dependency Management**: If adding new dependencies, update the `package.json` file and provide instructions for installation.
 
-## Documentation and Accessibility
+18. **Browser Compatibility**: Ensure new features are compatible with modern browsers. Use appropriate polyfills if necessary.
 
-- Provide inline comments for complex logic.
-- Suggest updates to project documentation for significant changes.
-- Ensure proposed changes maintain or improve accessibility.
-- Use semantic HTML and ARIA attributes when necessary.
+19. **Solid.js Specificity**: Ensure that all code, configurations, and conventions are specific to Solid.js. Avoid using React-specific patterns (e.g., `useState`, `useEffect`) and instead use Solid.js equivalents like `createSignal`, `createEffect`, and `createResource`.
 
-## Problem-Solving Approach
+20. **JSX Specification**: Adhere to Solid.js's JSX implementation. Avoid assumptions that JSX will behave the same way as in React. Refer to the [Solid.js JSX documentation](https://solidjs.com/docs/latest#jsx) when in doubt.
 
-- Before responding, think through possible solutions and provide the best one.
-- Point out potential drawbacks or implications that could have negative downstream effects.
-- Provide pros and cons for each solution when relevant.
-- Share knowledge and provide teachable insights in each response.
-- Explain concepts in an easy-to-understand, non-overwhelming manner.
+21. **Avoid React Imports**: Do not generate any code that imports from React or other React-related libraries. Solid.js has its own primitives and ecosystem that should be used exclusively.
 
-Remember: Your role is to assist and enhance, not to overhaul or replace existing functionality without explicit instruction. Always strive to improve the project's overall architecture, performance, and developer experience.
+22. **Component Lifecycle**: Solid.js manages reactivity differently from React. Avoid lifecycle methods like `componentDidMount` and instead use `createEffect` or `onCleanup` for side effects. Refer to Solid's lifecycle documentation when needed.
+
+23. **No Virtual DOM**: Solid.js does not use a virtual DOM. Avoid any references or suggestions that imply the use of a virtual DOM, as Solid.js's reactivity model is different.
+
+24. **API Documentation**: Refer to the Solid.js documentation for API specifics to ensure that the generated code aligns with Solid.js best practices. Here are key references:
+    - [Solid.js Docs Core](https://docs.solidjs.com)
+    - [Solid.js Docs Router](https://docs.solidjs.com/solid-router)
+    - [Solid.js Docs Meta](https://docs.solidjs.com/solid-meta)
+    - [SolidStart](https://docs.solidjs.com/solid-start)

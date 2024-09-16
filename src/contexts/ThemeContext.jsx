@@ -23,15 +23,14 @@ const modeList = [
 
 const patternList = [
   { name: 'wavy', class: 'bg-wavy', icon: 'radar-2' },
-  { name: 'rhombus', class: 'bg-rhombus', icon: 'diamonds' },
-  { name: 'zigzag', class: 'bg-zigzag', icon: 'zigzag' },
+  { name: 'zigzag', class: 'bg-zigzag', icon: 'timeline' },
   { name: 'cross', class: 'bg-cross', icon: 'plus' },
-  { name: 'rectangles', class: 'bg-rectangles', icon: 'rectangle' },
-  { name: 'boxes', class: 'bg-boxes', icon: 'box' },
-  { name: 'polka', class: 'bg-polka', icon: 'dots' },
-  { name: 'coffee', class: 'bg-coffee', icon: 'coffee' },
-  { name: 'polaroid', class: 'bg-polaroid', icon: 'camera' },
-  { name: 'icecream', class: 'bg-icecream', icon: 'ice-cream' }
+  { name: 'rectangles', class: 'bg-rectangles', icon: 'square' },
+  { name: 'boxes', class: 'bg-boxes', icon: 'grid-3x3' },
+  { name: 'polka', class: 'bg-polka', icon: 'grid-dots' }
+  // { name: 'coffee', class: 'bg-coffee', icon: 'coffee' },
+  // { name: 'polaroid', class: 'bg-polaroid', icon: 'camera' },
+  // { name: 'icecream', class: 'bg-icecream', icon: 'ice-cream' }
 ];
 
 const ThemeContext = createContext();

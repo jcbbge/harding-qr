@@ -40,7 +40,12 @@ const requiredIcons = [
   'mug',
   'polaroid',
   'radar-2',
-  'device-vision-pro'
+  'device-vision-pro',
+  'timeline',
+  'plus',
+  'square',
+  'grid-3x3',
+  'grid-dots'
 ];
 
 // Updated function to copy icons

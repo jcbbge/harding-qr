@@ -1,87 +1,110 @@
-# Instructions
+# Instruction Feature Development
+
+## **Purpose**
+
+This template guides the development of new features, ensuring they align with project goals and standards while facilitating effective collaboration.
+
+---
 
 ## **Key Principles**
 
-- **Preserve Existing Code**: Do not remove or alter existing code unless explicitly instructed.
-- **No Placeholders**: Avoid using placeholder comments like `// ... existing code ...`.
-- **Additive Changes**: Propose additive changes to fix the bug.
-- **Specific Scope**: Modify only the specified files or components.
-- **Best Practices**: Follow project-specific guidelines and coding standards.
-- **Accessibility**: Ensure the fix maintains or improves accessibility.
+- **Clear Objectives**: Define the feature's purpose and expected outcomes.
+- **User-Centric Design**: Consider user experience and accessibility.
+- **Preserve Existing Functionality**: Ensure new features do not break existing code.
+- **Best Practices**: Follow coding standards and project guidelines.
+- **Modular Development**: Build reusable and maintainable components.
 
 ---
 
 ## **Session Workflow**
 
-### **1. Establish Bug Context**
+### **1. Define Feature Requirements**
 
-- **Bug Description**: Clearly describe the bug and its symptoms.
-- **Affected Files**: List the files or components where the bug occurs.
-- **Environment Details**: Note the environments where the bug is observed (e.g., browsers, devices).
-- **Steps to Reproduce**: Provide a step-by-step guide to reproduce the bug.
+- **Feature Description**: Provide a clear and concise description of the feature.
+- **User Stories**: Outline scenarios demonstrating how users will interact with the feature.
+- **Acceptance Criteria**: List specific conditions that must be met for the feature to be considered complete.
+- **Affected Areas**: Identify which parts of the codebase will be involved.
 
 _Example:_
 
-- **Bug Description**: The login button does nothing when clicked on mobile devices.
-- **Affected Files**: `src/components/LoginButton.jsx`
-- **Environment**: Mobile browsers (Chrome on Android, Safari on iOS)
-- **Steps to Reproduce**:
-  1. Open the app on a mobile device.
-  2. Navigate to the login page.
-  3. Click the login button.
+- **Feature Description**: Implement a user profile page where users can view and edit their information.
+- **User Stories**:
+  1. As a user, I want to view my profile information.
+  2. As a user, I want to edit my profile details.
+- **Acceptance Criteria**:
+  - Users can access the profile page from the navigation menu.
+  - Users can see their current profile information.
+  - Users can update their name, email, and password.
+- **Affected Areas**: `src/pages/ProfilePage.jsx`, `src/components/ProfileForm.jsx`
 
 ---
 
 ### **2. Confirm Understanding**
 
-- **AI Assistant**: Summarize the bug and confirm understanding before proceeding.
-- **Clarifications**: Ask for additional information if needed.
+- **AI Assistant**: Summarize the feature and confirm understanding.
+- **Clarifications**: Ask for additional details if necessary.
 
 ---
 
-### **3. Planning and Analysis**
+### **3. Planning and Design**
 
-- **Identify Potential Causes**: Analyze possible reasons for the bug.
-- **Outline a Fix Plan**: Provide a step-by-step plan to fix the bug.
+- **Outline the Implementation Plan**:
+  - Break down the feature into smaller tasks.
+  - Consider data flow and state management.
+  - Design UI components and interactions.
+- **Wireframes or Mockups**: Reference any design assets if available.
 
 ---
 
 ### **4. Implementation**
 
-- **Code Changes**:
-  - Reference only official documentation and project guidelines.
-  - Ensure changes are correct, secure, and efficient.
-  - Prioritize readability and maintainability.
+- **Code Development**:
+  - Follow project coding standards.
+  - Use appropriate state management techniques.
+  - Ensure code is modular and reusable.
 - **Annotations**:
-  - Add comments to explain complex logic.
-  - Use `// Comments here...` on a new line above the code block.
+  - Add comments for complex logic.
+  - Use clear naming conventions.
+- **Accessibility**:
+  - Implement semantic HTML.
+  - Ensure keyboard navigation and screen reader compatibility.
 
 ---
 
 ### **5. Testing**
 
-- **Verify the Fix**: Test the changes to ensure the bug is resolved.
-- **Cross-Environment Testing**: Confirm the fix works across all affected environments.
-- **Regression Testing**: Ensure existing functionality is not broken.
+- **Unit Tests**: Write tests for individual components and functions.
+- **Integration Tests**: Test interactions between components.
+- **User Testing**: Simulate user interactions to verify functionality.
 
 ---
 
 ### **6. Review and Summary**
 
-- **Provide a Summary**: Detail the changes made and their impacts.
-- **Potential Side Effects**: Mention any potential downstream effects.
-- **Await Confirmation**: Wait for approval before finalizing.
+- **Provide a Summary**: Outline the implemented features and any deviations from the plan.
+- **Potential Impacts**: Note any side effects or areas that may require further attention.
+- **Await Feedback**: Seek input before finalizing.
 
 ---
 
 ### **7. Documentation Updates**
 
-- **Update Documentation**: If necessary, suggest updates to documentation or comments.
-- **Version Control**: Prepare changes for commit with clear messages.
+- **Update Documentation**: Add or modify documentation to reflect the new feature.
+- **User Guides**: Update user-facing documentation if applicable.
+- **Version Control**: Prepare commits with descriptive messages.
 
 ---
 
-## **Best Practices for Bug Fixing**
+## **Best Practices for Feature Development**
+
+- **Incremental Development**: Implement features in small, manageable increments.
+- **Code Reviews**: Encourage peer reviews to maintain code quality.
+- **Performance Considerations**: Optimize for performance where necessary.
+- **Reusability**: Build components that can be reused in other parts of the application.
+
+---
+
+## **Best Practices for Debugging new features**
 
 - **Use Debugging Tools**: Leverage tools like `console.log`, breakpoints, or `createEffect` in Solid.js.
 - **Isolate the Issue**: Reproduce the bug in a controlled environment.

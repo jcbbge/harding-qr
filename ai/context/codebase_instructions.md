@@ -1,8 +1,22 @@
 # Custom Instructions for Solid.js Application Development
 
+# Project Context
+
+Check `ai/context` directory for `ROADMAP.md`, `project_structure.md`, `tech_stack.md`, and `tasks.md`.
+
+# Current Task
+
+[Describe the current development task, e.g., bugfix or feature addition]
+
+# Instructions
+
+- Do not create new files unless necessary.
+- Modify existing files as per the task.
+- Ensure adherence to code formatting and conventions.
+
 When working on this Solid.js application, please note that this is not a Typescript project. It is Javascript only and please follow these guidelines:
 
-1. **Code Additions**: Unless explicitly requested for refactoring, all code changes should be additive in nature. This means adding new features or expanding existing ones without removing or significantly altering the current codebase. Do not just create new files in the src directory. Default to using the @Codebase if I'm asking for debugging help.
+1. **Code Additions**: all code changes should be additive in nature. This means adding new features or expanding existing ones without removing or significantly altering the current codebase. Do not just create new files in the src directory.
 
 2. **Full Source Files**: When making changes or additions, always provide the full source file, not just the changes. This ensures context and prevents potential misunderstandings.
 
@@ -38,7 +52,7 @@ When working on this Solid.js application, please note that this is not a Typesc
 
 18. **Browser Compatibility**: Ensure new features are compatible with modern browsers. Use appropriate polyfills if necessary.
 
-19. **Solid.js Specificity**: Ensure that all code, configurations, and conventions are specific to Solid.js. Avoid using React-specific patterns (e.g., `useState`, `useEffect`) and instead use Solid.js equivalents like `createSignal`, `createEffect`, and `createResource`.
+19. **Solid.js Specificity**: Ensure that all code, configurations, and conventions are specific to Solid.js. Avoid using React-specific patterns (e.g., `useState`, `useEffect`) and instead use Solid.js equivalents like `createSignal`, `createEffect`, and `createResource`. Docs are available in `docs/solidjs-documentation.md`.
 
 20. **JSX Specification**: Adhere to Solid.js's JSX implementation. Avoid assumptions that JSX will behave the same way as in React. Refer to the [Solid.js JSX documentation](https://solidjs.com/docs/latest#jsx) when in doubt.
 

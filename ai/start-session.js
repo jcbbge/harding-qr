@@ -15,13 +15,12 @@ const { execSync } = require('child_process');
 const aiDir = __dirname;
 const projectRoot = path.resolve(aiDir, '../');
 const outputDir = path.join(aiDir, 'context');
-const configFilePath = path.join(aiDir, 'config.json');
+const configFilePath = path.join(aiDir, 'ai-config.json');
 const tasksFilePath = path.join(aiDir, 'data', 'tasks.json');
 
 // New session management paths
 const sessionDir = path.join(aiDir, 'ai_sessions');
 const sessionFile = path.relative(projectRoot, path.join(sessionDir, 'current_session.md'));
-const roadmapFile = path.join(aiDir, 'ROADMAP.md');
 
 // Ensure all necessary directories exist
 [outputDir, path.join(aiDir, 'data'), sessionDir].forEach(dir => {
@@ -44,7 +43,7 @@ if (fs.existsSync(configFilePath)) {
   projectConfig.techStack = 'Specify your tech stack here.';
   projectConfig.codebaseInstructions = 'Specify your codebase instructions here.';
   fs.writeFileSync(configFilePath, JSON.stringify(projectConfig, null, 2));
-  console.log('Created default config.json. Please update it with your project details.');
+  console.log('Created default ai-config.json. Please update it with your project details.');
 }
 
 // Create a single readline interface
@@ -306,7 +305,7 @@ function deleteAllTasks() {
 
 function displayHelp() {
   console.log('\nHelp Guide:');
-  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   console.log('Main Interface:');
   console.log('  "a" - Add new tasks');
   console.log('  "e #" - Edit a specific task (replace # with task ID)');
@@ -314,7 +313,7 @@ function displayHelp() {
   console.log('  "t #" - Toggle status of a specific task (replace # with task ID)');
   console.log('  "d all" - Delete all tasks');
   console.log('  "?" - Display this help guide');
-  console.log('  "x" - Finish the session and generate context files');
+  console.log('  "s #" - Select task and finish the session (replace # with task ID)');
   console.log('\nAdding/Editing Tasks:');
   console.log('  • Main tasks start at the beginning of the line');
   console.log('  • Subtasks are created by adding two spaces before the task description');
@@ -342,17 +341,19 @@ function toggleTaskCompletion(taskIds) {
 function manageTasksInterface() {
   displayRoadmap();
   rl.question(
-    'Enter command (a:add, e #:edit, d #:delete, t #:toggle status, d all:delete all, ?:help, x:exit, or press Enter to exit): ',
+    'Enter command (a:add, e #:edit, d #:delete, t #:toggle status, d all:delete all, s #:select task, ?:help): ',
     answer => {
       const [command, ...args] = answer.trim().split(/\s+/);
       const taskId = args.join('.');
 
       switch (command.toLowerCase()) {
-        case '':
-        case 'x':
-          updateRoadmapOnExit();
-          generateContextFiles();
-          rl.close();
+        case 's':
+          if (taskId) {
+            selectTaskAndFinishSession(taskId);
+          } else {
+            console.log('Please provide a task ID to select. Example: s 2.1');
+            manageTasksInterface();
+          }
           break;
         case 'a':
           addOrEditTask();
@@ -396,6 +397,19 @@ function manageTasksInterface() {
       }
     }
   );
+}
+
+function selectTaskAndFinishSession(taskId) {
+  const selectedTask = findTask(taskId);
+  if (selectedTask) {
+    generateContextFiles();
+    updateSession(selectedTask);
+    console.log(`\nSelected task: ${selectedTask.description}`);
+    rl.close();
+  } else {
+    console.log(`Task ${taskId} not found. Please try again.`);
+    manageTasksInterface();
+  }
 }
 
 function addOrEditTask(taskId = null) {
@@ -473,47 +487,14 @@ function generateTaskOverview(taskList, indent = '') {
     .join('');
 }
 
-function initializeSession() {
-  const timestamp = new Date()
-    .toLocaleString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    })
-    .replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2');
-
-  const taskOverview = generateFormattedTaskList(tasks);
-  const sessionContent = `## Start of Session (${timestamp})\nTask Overview:\n${taskOverview}\n ... `;
-  fs.writeFileSync(sessionFile, sessionContent);
-
-  console.log(`Session initialized. Current session file: ${sessionFile}`);
-}
-
-function updateRoadmapOnExit() {
-  const timestamp = new Date()
-    .toLocaleString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    })
-    .replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2');
-
-  const taskOverview = generateFormattedTaskList(tasks);
-  const roadmapUpdate = `
-## Session Summary (${timestamp})
-Start of Session
-Task Overview:
-${taskOverview}
- ...
-`;
-  fs.appendFileSync(roadmapFile, roadmapUpdate);
-  console.log(`ROADMAP.md updated with session information.`);
+function generateSelectedTaskOverview(task, indent = '') {
+  let overview = `${indent}- ${task.done ? '[x]' : '[ ]'} ${task.description}`;
+  if (task.subtasks && task.subtasks.length > 0) {
+    overview +=
+      '\n' +
+      task.subtasks.map(subtask => generateSelectedTaskOverview(subtask, indent + '  ')).join('\n');
+  }
+  return overview;
 }
 
 function generateContextFiles() {
@@ -521,9 +502,8 @@ function generateContextFiles() {
 
   function writeFile(filePath, content) {
     const relativePath = path.relative(projectRoot, filePath);
-    const action = fs.existsSync(filePath) ? 'Updated' : 'Added';
     fs.writeFileSync(filePath, content);
-    updatedFiles.push(`${action}: ${relativePath}`);
+    updatedFiles.push(relativePath);
   }
 
   writeFile(
@@ -545,43 +525,8 @@ function generateContextFiles() {
 
   updateSession();
 
-  console.log('\nContext files:');
+  console.log('\nUpdated files:');
   updatedFiles.forEach(file => console.log(file));
-
-  displayTaskStatus();
-}
-
-function displayTaskStatus() {
-  let totalTasks = 0;
-  let completedTasks = 0;
-
-  function countTasks(taskList) {
-    taskList.forEach(task => {
-      totalTasks++;
-      if (task.done) completedTasks++;
-      if (task.subtasks && task.subtasks.length > 0) {
-        countTasks(task.subtasks);
-      }
-    });
-  }
-
-  countTasks(tasks);
-
-  const incompleteTasks = totalTasks - completedTasks;
-
-  console.log('Overview:');
-  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  console.log(`Total Tasks:     ${totalTasks}`);
-  console.log(`Completed:       ${completedTasks}`);
-  console.log(`Incomplete:      ${incompleteTasks}`);
-  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-
-  const completionPercentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
-  const progressBar =
-    '█'.repeat(Math.floor(completionPercentage / 5)) +
-    '░'.repeat(20 - Math.floor(completionPercentage / 5));
-
-  console.log(`Progress: [${progressBar}] ${completionPercentage.toFixed(1)}%\n`);
 }
 
 function generateProjectStructure(dir, relativePath = '') {
@@ -615,7 +560,7 @@ function generateFormattedTaskList(taskList, indent = '') {
     .join('\n');
 }
 
-function updateSession() {
+function updateSession(selectedTask) {
   const timestamp = new Date()
     .toLocaleString('en-US', {
       year: 'numeric',
@@ -623,14 +568,21 @@ function updateSession() {
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
+      second: '2-digit',
       hour12: false
     })
     .replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2');
 
   const taskOverview = generateTaskOverview(tasks);
-  const sessionContent = `## Session Updated (${timestamp})\nTask Overview:${taskOverview}\n ... `;
+  let sessionContent = `## Session Started (${timestamp})\nTask Overview:${taskOverview}\n`;
+
+  if (selectedTask) {
+    sessionContent += `\nCurrent Selected Task:\n${generateSelectedTaskOverview(selectedTask)}\n`;
+  }
+
+  sessionContent += ' ... ';
   fs.writeFileSync(sessionFile, sessionContent);
-  console.log(`Session updated: ${sessionFile}`);
+  console.log(`Session started at ${timestamp}`);
 }
 
 // Modify the runScript function to initialize the session
@@ -638,13 +590,11 @@ function runScript() {
   if (tasks.length === 0) {
     console.log("No tasks found. Let's add some tasks.");
     addTasks().then(() => {
-      initializeSession();
       manageTasksInterface();
     });
   } else {
     taskCounter = 0;
     assignTaskIds(tasks);
-    initializeSession();
     manageTasksInterface();
   }
 }

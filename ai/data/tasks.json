@@ -51,8 +51,14 @@
   },
   {
     "description": "Bug fix for changeing letterbox",
-    "done": false,
+    "done": true,
     "subtasks": [],
     "id": "3"
+  },
+  {
+    "description": "Bug fix disable change letter sound for consonants",
+    "done": false,
+    "subtasks": [],
+    "id": "4"
   }
 ]

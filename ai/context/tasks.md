@@ -1,5 +1,3 @@
-# Current Tasks
-
 - [x] Re-wire functionality for Settings letterboxes
   - [x] can display settings icons for Theme, Mode, and Patter
   - [x] can update Theme, change Mode, and pick Pattern
@@ -8,4 +6,5 @@
   - [ ] each setting is laid out in grid space. Theme first, Mode second, Pattern third
   - [ ] select options are cycled through with upward and downward nav
   - [ ] settings change and update on Return key and Space bar
-- [ ] Bug fix for changeing letterbox
+- [x] Bug fix for changeing letterbox
+- [ ] Bug fix disable change letter sound for consonants

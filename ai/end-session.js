@@ -9,14 +9,19 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
+const { execSync } = require('child_process');
 
 // Paths
 const aiDir = __dirname;
+const projectRoot = path.resolve(aiDir, '..');
 const tasksFilePath = path.join(aiDir, 'data', 'tasks.json');
 const sessionDir = path.join(aiDir, 'ai_sessions');
 const sessionFile = path.join(sessionDir, 'current_session.md');
-const roadmapFile = path.join(aiDir, 'ROADMAP.md');
 const tasksMarkdownFile = path.join(aiDir, 'context', 'tasks.md');
+const configFilePath = path.join(aiDir, 'ai-config.json');
+
+// Load config
+const config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'));
 
 // Check if tasks file exists
 if (!fs.existsSync(tasksFilePath)) {
@@ -142,7 +147,6 @@ function addOrEditTask(taskId = null) {
           taskCounter = 0;
           assignTaskIds(tasks);
           fs.writeFileSync(tasksFilePath, JSON.stringify(tasks, null, 2));
-          console.log('Tasks updated.');
           manageTasksInterface();
           return;
         } else {
@@ -214,7 +218,8 @@ function displayHelp() {
   console.log('  "d #" - Delete a specific task (replace # with task ID)');
   console.log('  "t #" - Toggle task completion (replace # with task ID)');
   console.log('  "?" - Display this help guide');
-  console.log('  "x" - Finish the session and save changes');
+  console.log('  "s #" - Select a task and finish the session (replace # with task ID)');
+  console.log('  "x" - Exit the session');
   console.log('\nAdding/Editing Tasks:');
   console.log('  • Main tasks start at the beginning of the line');
   console.log('  • Subtasks are created by adding two spaces before the task description');
@@ -233,7 +238,7 @@ function manageTasksInterface() {
   console.log('\nCurrent Tasks:');
   console.log(generateTaskList(tasks));
   rl.question(
-    'Enter command (a:add, e #:edit, d #:delete, t #:toggle, ?:help, x:exit, or press Enter to exit): ',
+    'Enter command (a:add, e #:edit, d #:delete, t #:toggle, s #:select, ?:help, x:exit): ',
     answer => {
       const [command, ...args] = answer.trim().split(/\s+/);
       const taskIds = args.join(' ').split(' ');
@@ -282,6 +287,14 @@ function manageTasksInterface() {
             manageTasksInterface();
           }
           break;
+        case 's':
+          if (taskIds.length === 1) {
+            selectTaskAndFinishSession(taskIds[0]);
+          } else {
+            console.log('Please provide a task ID to select. Example: s 1');
+            manageTasksInterface();
+          }
+          break;
         default:
           console.log('Invalid command. Type "?" for help.');
           manageTasksInterface();
@@ -290,106 +303,23 @@ function manageTasksInterface() {
   );
 }
 
-function displayTaskStatus() {
-  let totalTasks = 0;
-  let completedTasks = 0;
-
-  function countTasks(taskList) {
-    taskList.forEach(task => {
-      totalTasks++;
-      if (task.done) completedTasks++;
-      if (task.subtasks && task.subtasks.length > 0) {
-        countTasks(task.subtasks);
-      }
-    });
+function selectTaskAndFinishSession(taskId) {
+  const task = findTask(taskId);
+  if (task) {
+    console.log(`Selected task: ${task.description}`);
+    updateTasksMarkdown();
+    updateSession(task);
+    generateContextFiles();
+    rl.close();
+  } else {
+    console.log(`Task ${taskId} not found. Please try again.`);
+    manageTasksInterface();
   }
-
-  countTasks(tasks);
-
-  const incompleteTasks = totalTasks - completedTasks;
-
-  console.log('\nTask Status:');
-  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  console.log(`Total Tasks:     ${totalTasks}`);
-  console.log(`Completed:       ${completedTasks}`);
-  console.log(`Incomplete:      ${incompleteTasks}`);
-  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-
-  const completionPercentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
-  const progressBar =
-    '█'.repeat(Math.floor(completionPercentage / 5)) +
-    '░'.repeat(20 - Math.floor(completionPercentage / 5));
-
-  console.log(`Progress: [${progressBar}] ${completionPercentage.toFixed(1)}%`);
-}
-
-function saveAndExit() {
-  taskCounter = 0;
-  assignTaskIds(tasks);
-  fs.writeFileSync(tasksFilePath, JSON.stringify(tasks, null, 2));
-  updateTasksMarkdown();
-  console.log('Session ended. Tasks updated.');
-  displayTaskStatus();
-  summarizeSession();
-  emptyCurrentSession();
-  rl.close();
 }
 
 function updateTasksMarkdown() {
   const tasksMarkdown = generateFormattedTaskList(tasks);
   fs.writeFileSync(tasksMarkdownFile, tasksMarkdown);
-}
-
-function summarizeSession() {
-  if (fs.existsSync(sessionFile)) {
-    const sessionContent = fs.readFileSync(sessionFile, 'utf8');
-    const summary = generateSummary(sessionContent);
-    const taskSummary = generateFormattedTaskList(tasks);
-
-    const timestamp = new Date()
-      .toLocaleString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-      })
-      .replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2');
-
-    // Append summary to ROADMAP.md
-    const roadmapUpdate = `
-## Session Summary (${timestamp})
-${summary}
-
-## End of Session Updates
-Task Overview:
-${taskSummary}
- ...
-`;
-    fs.appendFileSync(roadmapFile, roadmapUpdate);
-
-    // Archive the session with task updates
-    const archiveDir = path.join(sessionDir, 'archive');
-    if (!fs.existsSync(archiveDir)) {
-      fs.mkdirSync(archiveDir, { recursive: true });
-    }
-    const archiveTimestamp = timestamp.replace(/:/g, '-');
-    const archiveContent = `${sessionContent}\n\n## End of Session Updates\nTask Overview:\n${taskSummary}\n ... `;
-    fs.writeFileSync(path.join(archiveDir, `session_${archiveTimestamp}.md`), archiveContent);
-
-    console.log('Session summarized and archived with end of session updates.');
-    console.log('ROADMAP.md updated with end of session information.');
-  } else {
-    console.warn('No active session found.');
-  }
-}
-
-function generateSummary(sessionContent) {
-  // Simple summary generation - can be enhanced
-  const lines = sessionContent.split('\n');
-  const summary = lines.slice(0, 5).join('\n'); // First 5 lines as summary
-  return summary + '\n...\n';
 }
 
 function generateFormattedTaskList(taskList, indent = '') {
@@ -404,9 +334,118 @@ function generateFormattedTaskList(taskList, indent = '') {
     .join('\n');
 }
 
-function emptyCurrentSession() {
-  fs.writeFileSync(sessionFile, '');
-  console.log('Current session file emptied.');
+function updateSession(task) {
+  const startTimestamp = new Date()
+    .toLocaleString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    })
+    .replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2');
+
+  const sessionContent = `## Session Started (${startTimestamp})
+
+Start of session: ${task.description}
+${generateFormattedTaskList([task])}
+`;
+
+  fs.writeFileSync(sessionFile, sessionContent);
+  console.log(`Session started with task: ${task.description}`);
+}
+
+function generateContextFiles() {
+  const updatedFiles = [];
+
+  // Write tasks.md
+  const tasksMarkdown = generateFormattedTaskList(tasks);
+  fs.writeFileSync(tasksMarkdownFile, tasksMarkdown);
+  updatedFiles.push(tasksMarkdownFile);
+
+  console.log(`Updated files:`);
+  updatedFiles.forEach(file => console.log(file));
+}
+
+function saveAndExit() {
+  taskCounter = 0;
+  assignTaskIds(tasks);
+  fs.writeFileSync(tasksFilePath, JSON.stringify(tasks, null, 2));
+  updateTasksMarkdown();
+  archiveCurrentSession();
+  rl.close();
+}
+
+function archiveCurrentSession() {
+  const currentSessionContent = fs.readFileSync(sessionFile, 'utf8');
+
+  if (currentSessionContent.trim() !== '') {
+    // Create archive directory if it doesn't exist
+    const archiveDir = path.join(sessionDir, 'archive');
+    if (!fs.existsSync(archiveDir)) {
+      fs.mkdirSync(archiveDir, { recursive: true });
+    }
+
+    // Generate a timestamp for the archive file name
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+
+    const archiveFileName = `session_${year}-${month}-${day}_${hours}:${minutes}.md`;
+    const archiveFilePath = path.join(archiveDir, archiveFileName);
+    const relativeArchivePath = path.relative(projectRoot, archiveFilePath);
+
+    // Write the current session content to the archive file
+    fs.writeFileSync(archiveFilePath, currentSessionContent);
+
+    // Get today's commits from the repository
+    const today = new Date();
+    const dateString = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    const gitLogCommand = `git log --since="${dateString} 00:00" --until="${dateString} 23:59" --pretty=format:"(%h) %s"`;
+    let commitLog;
+
+    try {
+      commitLog = execSync(gitLogCommand).toString();
+    } catch (error) {
+      console.error('Error retrieving commits:', error);
+      commitLog = 'No commits for today.';
+    }
+
+    // Append session end information
+    const endTimestamp = new Date()
+      .toLocaleString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      })
+      .replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2');
+    fs.appendFileSync(archiveFilePath, `\n## Session Ended (${endTimestamp})\n`);
+
+    // Append today's commits to the archived session file
+    fs.appendFileSync(
+      archiveFilePath,
+      `\n## Session's Commits:\n${commitLog || 'No commits this session.'}\n`
+    );
+
+    // Empty the contents of current_session.md
+    fs.writeFileSync(sessionFile, '');
+
+    console.log(`Session ended (${endTimestamp})`);
+    console.log(`Created (${archiveFileName})`);
+    console.log(`Archived Session to: ${relativeArchivePath} directory`);
+    console.log('Reset current_session.md.');
+  } else {
+    console.log('No session content to archive.');
+  }
 }
 
 manageTasksInterface();

@@ -13,8 +13,8 @@ import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
 
-const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
-// const fullName = ['PRD', 'KPI', 'OKR'];
+// const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
+const fullName = ['PRD', 'KPI', 'OKR'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
   letterChangeAudioDown,
@@ -139,7 +139,6 @@ const NameGrid = ({ onLetterUnlock }) => {
       case 'Enter':
       case ' ':
         updateLetterBox(row, col, shiftKey ? -1 : 1);
-        playSound(shiftKey ? letterChangeAudioDown : letterChangeAudio);
         return;
       case 'Tab':
         direction = shiftKey ? 'left' : 'right';
@@ -159,7 +158,6 @@ const NameGrid = ({ onLetterUnlock }) => {
   };
 
   const playSound = audio => {
-    console.log(`Attempting to play sound: ${audio.src}`);
     if (audio) {
       audio.currentTime = 0;
       audio.play().catch(error => {
@@ -173,11 +171,7 @@ const NameGrid = ({ onLetterUnlock }) => {
   const updateLetterBox = (row, col, direction) => {
     const letterObj = names[row][col];
 
-    // Debug log to show the current state of the word
-    createEffect(() => {
-      console.log(`Updating word in row ${row}:`, names[row].map(l => l.currentLetter).join(''));
-    });
-
+    // Log the current state and parameters at the start of the function
     if (letterObj.isEmpty) {
       const emptyIndexInRow = names[row].slice(0, col).filter(l => l.isEmpty).length;
       const emptyIndexInGrid =
@@ -204,51 +198,39 @@ const NameGrid = ({ onLetterUnlock }) => {
       return alphabet[(currentIndex + direction + 26) % 26];
     };
 
-    setNames(row, col, letter => {
-      if (!letter.isEmpty && letter.isVowel && !letter.matched) {
-        const newLetter = getNextLetter(letter.currentLetter, direction);
+    // Only call setNames if the letter is a vowel
+    if (letterObj.isVowel) {
+      setNames(row, col, letter => {
+        if (!letter.isEmpty && !letter.matched) {
+          const newLetter = getNextLetter(letter.currentLetter, direction);
 
-        if (newLetter === letter.correctLetter) {
-          onLetterUnlock(row, col);
+          if (newLetter === letter.correctLetter) {
+            onLetterUnlock(row, col);
+            // Check if this is the last unmatched vowel in the word
+            const isLastVowel = names[row].filter(l => l.isVowel && !l.matched).length === 1;
 
-          // Check if this is the last unmatched vowel in the word
-          const isLastVowel = names[row].filter(l => l.isVowel && !l.matched).length === 1;
+            // Check if this is the last word with unmatched vowels
+            const isLastWord = names.every(
+              (word, index) => index === row || word.every(l => !l.isVowel || l.matched)
+            );
 
-          // Check if this is the last word with unmatched vowels
-          const isLastWord = names.every(
-            (word, index) => index === row || word.every(l => !l.isVowel || l.matched)
-          );
+            if (isLastWord && isLastVowel) {
+              playSound(allWordsCompleteAudio);
+            } else if (isLastVowel) {
+              playSound(correctWordAudios[row]);
+            } else {
+              playSound(correctLetterAudio);
+            }
 
-          createEffect(() => {
-            console.log(`Row ${row}, Col ${col}: Letter matched`);
-            console.log(`Is last vowel in word: ${isLastVowel}`);
-            console.log(`Is last word: ${isLastWord}`);
-          });
-
-          if (isLastWord && isLastVowel) {
-            createEffect(() => {
-              console.log('All words complete - playing allWordsCompleteAudio');
-            });
-            playSound(allWordsCompleteAudio);
-          } else if (isLastVowel) {
-            createEffect(() => {
-              console.log(`Word in row ${row} complete - playing correctWordAudio`);
-            });
-            playSound(correctWordAudios[row]);
-          } else {
-            createEffect(() => {
-              console.log('Correct letter - playing correctLetterAudio');
-            });
-            playSound(correctLetterAudio);
+            return { ...letter, currentLetter: newLetter, matched: true };
           }
-
-          return { ...letter, currentLetter: newLetter, matched: true };
+          // Play sound for vowels
+          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
+          return { ...letter, currentLetter: newLetter };
         }
-        playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
-        return { ...letter, currentLetter: newLetter };
-      }
-      return letter;
-    });
+        return letter;
+      });
+    }
   };
 
   onMount(() => {
@@ -264,19 +246,6 @@ const NameGrid = ({ onLetterUnlock }) => {
     allWordsCompleteAudio = new Audio(allWordsCompleteSound);
     leftKeyAudio = new Audio(leftKeySound);
     rightKeyAudio = new Audio(rightKeySound);
-
-    // Debug logging for audio loading
-    console.log('Audio files loaded:');
-    console.log('letterChangeAudio:', letterChangeAudio.src);
-    console.log('letterChangeAudioDown:', letterChangeAudioDown.src);
-    console.log('correctLetterAudio:', correctLetterAudio.src);
-    console.log(
-      'correctWordAudios:',
-      correctWordAudios.map(audio => audio.src)
-    );
-    console.log('allWordsCompleteAudio:', allWordsCompleteAudio.src);
-    console.log('leftKeyAudio:', leftKeyAudio.src);
-    console.log('rightKeyAudio:', rightKeyAudio.src);
   });
 
   onCleanup(() => {
@@ -308,19 +277,6 @@ const NameGrid = ({ onLetterUnlock }) => {
   const getThemeIcon = () => {
     const iconName = getItemIcon('theme', theme.theme());
     return iconName;
-  };
-
-  // Add this function at the top level of your component
-  const logWordState = row => {
-    console.log(
-      'Word state:',
-      names[row].map(l => ({
-        letter: l.currentLetter,
-        isVowel: l.isVowel,
-        matched: l.matched,
-        isEmpty: l.isEmpty
-      }))
-    );
   };
 
   return (

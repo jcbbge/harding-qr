@@ -1,5 +1,11 @@
 # Instruction Testing
 
+Solid JS is a declarative JavaScript library for building user interfaces. It allows you to build complex interactive applications with a reactive data model. As such, there are nuances to testing that are not present in other frameworks. Use the following resources when testing as well as this template to ensure thorough and effective testing.
+
+- [Solid JS Testing Guide](https://www.solidjs.com/guides/testing)
+- [Testing Your SolidJS Code](https://dev.to/lexlohr/testing-your-solidjs-code-2gfh)
+- [Solid JS Testing](https://docs.solidjs.com/guides/testing)
+
 ## **Purpose**
 
 This template provides a structured approach to testing, ensuring code reliability, functionality, and adherence to quality standards.

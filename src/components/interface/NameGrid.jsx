@@ -13,8 +13,8 @@ import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
 
-// const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
-const fullName = ['PRD', 'KPI', 'OKR'];
+const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
+// const fullName = ['PRD', 'KPI', 'OKR'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
   letterChangeAudioDown,
@@ -27,7 +27,10 @@ let correctWordAudios = [];
 const initializeWordList = () => {
   const maxLength = Math.max(...fullName.map(name => name.length), 4);
   const isVowel = char => 'AEIOU'.includes(char.toUpperCase());
-  const getRandomLetter = () => alphabet[Math.floor(Math.random() * 26)];
+  const getRandomLetter = (exclude) => {
+    const availableLetters = alphabet.replace(exclude.toUpperCase(), '');
+    return availableLetters[Math.floor(Math.random() * availableLetters.length)];
+  };
   const padder = name => {
     const lengthPos = maxLength === 3 ? 4 : maxLength;
 
@@ -43,7 +46,7 @@ const initializeWordList = () => {
   return paddedNames.map(name => {
     return name.split('').map(char => ({
       correctLetter: char,
-      currentLetter: isVowel(char) ? getRandomLetter() : char,
+      currentLetter: isVowel(char) ? getRandomLetter(char) : char,
       isVowel: isVowel(char),
       matched: !isVowel(char) && char !== ' ',
       isEmpty: char === ' '

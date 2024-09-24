@@ -62,3 +62,6 @@ Implement user authentication feature as per the roadmap.
 - Ensure the feature integrates with current routing setup.
 
 ```
+
+~/.bashrc
+tabxnavigator

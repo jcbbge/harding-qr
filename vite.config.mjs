@@ -76,17 +76,17 @@ function copyIcons() {
   });
 }
 
-function cliPlugin() {
-  return {
-    name: 'vite-plugin-cli',
-    configureServer(server) {
-      server.httpServer.once('listening', () => {
-        const cli = spawn('node', ['ai/cli-script.js'], { stdio: 'inherit' });
-        process.on('exit', () => cli.kill());
-      });
-    },
-  };
-}
+// function cliPlugin() {
+//   return {
+//     name: 'vite-plugin-cli',
+//     configureServer(server) {
+//       server.httpServer.once('listening', () => {
+//         const cli = spawn('node', ['ai/cli-script.js'], { stdio: 'inherit' });
+//         process.on('exit', () => cli.kill());
+//       });
+//     },
+//   };
+// }
 // Run the copy function immediately
 copyIcons();
 
@@ -102,7 +102,7 @@ export default defineConfig({
         copyIcons();
       }
     }
-    , cliPlugin()
+    // , cliPlugin()
   ],
   server: {
     port: 3000

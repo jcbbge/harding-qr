@@ -35,23 +35,21 @@
 .contentLayer {
   position: relative;
   z-index: 10;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
   height: 100vh;
-  overflow: hidden;
 }
 
 .topColumn {
-  flex: 1;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .bottomColumn {
-  flex: 1;
   overflow: hidden;
+}
+
+.cardContainer {
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,11 +69,6 @@
 
 @media (max-width: 768px) {
   .contentLayer {
-    flex-direction: column;
-  }
-
-  .topColumn,
-  .bottomColumn {
-    width: 100%;
+    grid-template-rows: auto 1fr;
   }
 }

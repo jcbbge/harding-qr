@@ -9,6 +9,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { ThemeDisplay } from './components/interface/ThemeDisplay';
 import BackgroundPattern from './components/interface/BackgroundPattern';
 import Footer from './components/interface/Footer';
+import Header from './components/interface/Header';
 
 import App from './App';
 import Roleco from './pages/Roleco';
@@ -82,23 +83,7 @@ const RolecoWrapper = () => {
 const Layout = props => {
   return (
     <>
-      <header>
-        <nav class="navContainer">
-          <a
-            href="/"
-            class="navLink"
-          >
-            Home
-          </a>
-          <a
-            href="/scrumble"
-            class="navLink"
-          >
-            PlayScrumble
-          </a>
-        </nav>
-      </header>
-
+      <Header></Header>
       {props.children}
       <ThemeDisplay></ThemeDisplay>
       <Footer></Footer>

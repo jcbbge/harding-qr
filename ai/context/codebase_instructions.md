@@ -2,7 +2,7 @@
 
 # Project Context
 
-Check `ai/context` directory for `ROADMAP.md`, `project_structure.md`, `tech_stack.md`, and `tasks.md`.
+Review `ai/context` directory
 
 # Current Task
 

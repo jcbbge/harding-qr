@@ -1,6 +1,0 @@
-- [x] Re-wire functionality for Settings letterboxes
-  - [x] can display settings icons for Theme, Mode, and Patter
-  - [x] can update Theme, change Mode, and pick Pattern
-  - [x] does save to localstorage
-- [x] Bug fix for changeing letterbox
-- [x] Bug fix disable change letter sound for consonants

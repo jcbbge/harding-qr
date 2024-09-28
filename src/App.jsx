@@ -1,6 +1,7 @@
 import { createSignal, onMount } from 'solid-js';
 import NameGrid from './components/interface/NameGrid';
 import styles from './App.module.css';
+import Card from './components/interface/Card';
 
 function App() {
   const [company, setCompany] = createSignal('');
@@ -32,7 +33,8 @@ function App() {
           />
         </div>
         <div class={styles.bottomColumn}>
-          <p>Unlock Letters</p>
+
+          <Card><p>Unlock Letters</p></Card>
         </div>
       </div>
     </div>

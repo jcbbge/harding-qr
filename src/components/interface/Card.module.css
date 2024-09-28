@@ -3,176 +3,112 @@
   --text-color: #ffffff;
   --text-secondary: #a0a0a0;
   --button-color: #2a2a40;
-  /* Controls the color and intensity of the glow effect
-     * Range: 0 (transparent) to 1 (opaque)
-     * Lower values create a more subtle glow, higher values a more intense glow
-     */
   --highlight-color: rgba(255, 255, 255, 0.05);
   --border-color: rgba(255, 255, 255, 0.1);
-}
 
-.scene {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  perspective: 1000px;
-  overflow: hidden;
+  --font-size-small: 14px;
+  --font-size-medium: 16px;
+  --font-size-large: 24px;
 }
 
 .card {
-  position: relative;
   background-color: var(--card-color);
   border-radius: 8px;
   color: var(--text-color);
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
+  max-width: 100%;
+  margin: 0;
+  padding: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transform-style: preserve-3d;
-  transform: rotateX(calc((var(--mouse-y) - 150) * 0.01deg))
-    rotateY(calc((var(--mouse-x) - 200) * -0.01deg));
-  transition: transform 0.1s ease;
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
-.card::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background: radial-gradient(
-    /* Controls the size of the glow effect
-         * Larger values create a more spread out, subtle glow
-         * Smaller values create a more concentrated, intense glow
-         * Range: 0px to any positive value (e.g., 200px, 1000px)
-         */
-      800px circle at var(--mouse-x) var(--mouse-y),
-    var(--highlight-color),
-    /* Controls how quickly the glow fades out
-         * Lower percentage: glow fades out more quickly (more concentrated)
-         * Higher percentage: glow fades out more slowly (more spread out)
-         * Range: 0% to 100%
-         */
-      transparent 60%
-  );
-  opacity: 0;
-  /* Controls the speed of the glow effect appearance/disappearance
-     * Lower values: faster transition
-     * Higher values: slower transition
-     * Range: 0s to any positive value (e.g., 0.1s, 1s)
-     */
-  transition: opacity 0.3s ease;
+/* Header styles */
+.card__header {
+  text-align: center;
+  margin-bottom: 16px;
 }
 
-.card:hover::before {
-  /* Controls the intensity of the glow effect on hover
-     * Range: 0 (invisible) to 1 (fully visible)
-     * Lower values create a more subtle effect, higher values a more pronounced effect
-     */
-  opacity: 0.5;
+.card__title {
+  font-size: var(--font-size-large);
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-}
-
-.header-left h2 {
-  margin-left: 10px;
-  /* font-size: 18px; */
-}
-
-.header-right {
-  display: flex;
-}
-
-.icon-button {
-  background: none;
-  border: none;
-  color: var(--text-color);
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-.card-body {
+/* Body styles */
+.card__body {
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
-  padding: 20px 0;
+  padding: 16px 0;
   flex-grow: 1;
-  overflow-y: auto;
 }
 
-.sent-from {
-  /* font-size: 14px; */
+.card__from {
+  font-size: var(--font-size-small);
   color: var(--text-secondary);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
-.subject {
-  /* font-size: 24px; */
-  margin-bottom: 20px;
+.card__subject {
+  font-size: var(--font-size-large);
+  margin-bottom: 16px;
 }
 
-.body-text {
-  /* font-size: 16px; */
+.card__text {
+  font-size: var(--font-size-medium);
   line-height: 1.5;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-.body-buttons {
+.card__buttons {
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  gap: 8px;
 }
 
-.text-button {
+.card__button {
   background-color: var(--button-color);
   border: none;
   border-radius: 4px;
   color: var(--text-color);
   cursor: pointer;
   padding: 8px 16px;
-  /* font-size: 14px; */
+  font-size: var(--font-size-small);
 }
 
-.card-footer {
+/* Footer styles */
+.card__footer {
   display: flex;
-  justify-content: flex-start;
-  padding-top: 20px;
+  justify-content: center;
+  padding-top: 16px;
   margin-top: auto;
 }
 
-.bottom-column {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Hover effect styles */
+.card--hover::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(
+    800px circle at var(--mouse-x) var(--mouse-y),
+    var(--highlight-color),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
+.card--hover:hover::before {
+  opacity: 0.5;
+}
+
+/* Media queries */
 @media (max-width: 768px) {
   .card {
-    max-width: 90%;
+    padding: 12px;
   }
 }
 
 @media (max-width: 480px) {
   .card {
-    max-width: 95%;
-  }
-
-  .card-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .header-right {
-    margin-top: 10px;
+    padding: 8px;
   }
 }

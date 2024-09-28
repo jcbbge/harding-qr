@@ -1,5 +1,5 @@
-const EventEmitter = require('events');
-const readline = require('readline');
+import EventEmitter from 'events';
+import readline from 'readline';
 
 class TaskManager extends EventEmitter {
   constructor() {

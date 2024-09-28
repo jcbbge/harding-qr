@@ -1,124 +1,113 @@
 # Project Structure
 
-  - 📄 README.md
-- 📁 __mocks__/
-  - 📄 __mocks__/fileMock.js
-  - 📄 babel.config.js
-- 📁 docs/
-  - 📄 docs/debug.md
-  - 📄 docs/solidjs-documentation.md
-  - 📄 index.html
-  - 📄 jest.config.js
-  - 📄 jest.setup.js
-  - 📄 jsconfig.json
-  - 📄 package-lock.json
-  - 📄 package.json
-  - 📄 pnpm-lock.yaml
-- 📁 src/
-  - 📄 src/App.jsx
-  - 📄 src/App.module.css
-- 📁 src/assets/
-  - 📄 src/assets/apple-touch-icon.png
-  - 📄 src/assets/favicon.ico
-- 📁 src/assets/fonts/
-- 📁 src/assets/fonts/Array/
-- 📁 src/assets/fonts/Array/css/
-  - 📄 src/assets/fonts/Array/css/array.css
-- 📁 src/assets/fonts/Array/fonts/
-  - 📄 src/assets/fonts/Array/fonts/Array-BoldWide.eot
-  - 📄 src/assets/fonts/Array/fonts/Array-BoldWide.ttf
-  - 📄 src/assets/fonts/Array/fonts/Array-BoldWide.woff
-  - 📄 src/assets/fonts/Array/fonts/Array-BoldWide.woff2
-- 📁 src/assets/fonts/DepartureMono/
-- 📁 src/assets/fonts/DepartureMono/css/
-  - 📄 src/assets/fonts/DepartureMono/css/departure-mono.css
-- 📁 src/assets/fonts/DepartureMono/fonts/
-  - 📄 src/assets/fonts/DepartureMono/fonts/DepartureMono-Regular.woff
-  - 📄 src/assets/fonts/DepartureMono/fonts/DepartureMono-Regular.woff2
-- 📁 src/assets/icons/
-  - 📄 src/assets/icons/arrow-back.svg
-  - 📄 src/assets/icons/arrow-big-up.svg
-  - 📄 src/assets/icons/arrow-narrow-down.svg
-  - 📄 src/assets/icons/arrow-narrow-left.svg
-  - 📄 src/assets/icons/arrow-narrow-right.svg
-  - 📄 src/assets/icons/arrow-narrow-up.svg
-  - 📄 src/assets/icons/brand-apple-arcade.svg
-  - 📄 src/assets/icons/building-skyscraper.svg
-  - 📄 src/assets/icons/cpu.svg
-  - 📄 src/assets/icons/device-tv-old.svg
-  - 📄 src/assets/icons/device-vision-pro.svg
-  - 📄 src/assets/icons/grid-3x3.svg
-  - 📄 src/assets/icons/grid-dots.svg
-  - 📄 src/assets/icons/help-square-rounded.svg
-  - 📄 src/assets/icons/ice-cream.svg
-  - 📄 src/assets/icons/layers-difference.svg
-  - 📄 src/assets/icons/layout-dashboard.svg
-  - 📄 src/assets/icons/lollipop.svg
-  - 📄 src/assets/icons/moon-stars.svg
-  - 📄 src/assets/icons/moon.svg
-  - 📄 src/assets/icons/mug.svg
-  - 📄 src/assets/icons/palette.svg
-  - 📄 src/assets/icons/plus.svg
-  - 📄 src/assets/icons/polaroid.svg
-  - 📄 src/assets/icons/radar-2.svg
-  - 📄 src/assets/icons/recharging.svg
-  - 📄 src/assets/icons/shopping-bag.svg
-  - 📄 src/assets/icons/space.svg
-  - 📄 src/assets/icons/sphere.svg
-  - 📄 src/assets/icons/square.svg
-  - 📄 src/assets/icons/stereo-glasses.svg
-  - 📄 src/assets/icons/sun-moon.svg
-  - 📄 src/assets/icons/sun.svg
-  - 📄 src/assets/icons/target.svg
-  - 📄 src/assets/icons/terminal-2.svg
-  - 📄 src/assets/icons/texture.svg
-  - 📄 src/assets/icons/timeline.svg
-  - 📄 src/assets/icons/track.svg
-  - 📄 src/assets/icons/wave-sine.svg
-  - 📄 src/assets/icons/zodiac-aquarius.svg
-  - 📄 src/assets/site.webmanifest
-- 📁 src/assets/sounds/
-  - 📄 src/assets/sounds/atmosphere-1.wav
-  - 📄 src/assets/sounds/atmostphere-2.wav
-  - 📄 src/assets/sounds/button-4.wav
-  - 📄 src/assets/sounds/button-6.wav
-  - 📄 src/assets/sounds/musical-tap-1.wav
-  - 📄 src/assets/sounds/musical-tap-2.wav
-  - 📄 src/assets/sounds/musical-tap-3.wav
-  - 📄 src/assets/sounds/natural-tap-1.wav
-  - 📄 src/assets/sounds/natural-tap-2.wav
-  - 📄 src/assets/sounds/natural-tap-3.wav
-  - 📄 src/assets/sounds/success.wav
-- 📁 src/components/
-- 📁 src/components/interface/
-  - 📄 src/components/interface/AppearanceToggle.jsx
-  - 📄 src/components/interface/AppearanceToggle.module.css
-  - 📄 src/components/interface/BackgroundPattern.jsx
-  - 📄 src/components/interface/BackgroundPattern.module.css
-  - 📄 src/components/interface/Card.jsx
-  - 📄 src/components/interface/Card.module.css
-  - 📄 src/components/interface/Footer.jsx
-  - 📄 src/components/interface/GridRow.jsx
-  - 📄 src/components/interface/LoaderModal.jsx
-  - 📄 src/components/interface/LoaderModal.module.css
-  - 📄 src/components/interface/NameGrid.jsx
-  - 📄 src/components/interface/NameGrid.module.css
-  - 📄 src/components/interface/NameGrid.test.jsx
-  - 📄 src/components/interface/NavigationGuide.jsx
-  - 📄 src/components/interface/NavigationGuide.module.css
-  - 📄 src/components/interface/ThemeDisplay.jsx
-  - 📄 src/components/interface/ThemeDisplay.module.css
-  - 📄 src/components/interface/ThemeSwitcher.jsx
-- 📁 src/components/util/
-  - 📄 src/components/util/DebugWrapper.jsx
-  - 📄 src/components/util/Icon.jsx
-- 📁 src/contexts/
-  - 📄 src/contexts/ThemeContext.jsx
-  - 📄 src/index.css
-  - 📄 src/index.jsx
-- 📁 src/pages/
-  - 📄 src/pages/NotFound.jsx
-  - 📄 src/pages/Roleco.jsx
-  - 📄 src/pages/Scrumble.jsx
-  - 📄 src/setupTests.js
-  - 📄 vite.config.mjs
+```
+├── App.jsx
+├── App.module.css
+├── assets/
+│   ├── apple-touch-icon.png
+│   ├── favicon.ico
+│   ├── fonts/
+│   │   ├── Array/
+│   │   │   ├── .DS_Store
+│   │   │   ├── css/
+│   │   │   │   └── array.css
+│   │   │   └── fonts/
+│   │   │       ├── Array-BoldWide.eot
+│   │   │       ├── Array-BoldWide.ttf
+│   │   │       ├── Array-BoldWide.woff
+│   │   │       └── Array-BoldWide.woff2
+│   │   └── DepartureMono/
+│   │       ├── css/
+│   │       │   └── departure-mono.css
+│   │       └── fonts/
+│   │           ├── DepartureMono-Regular.woff
+│   │           └── DepartureMono-Regular.woff2
+│   ├── icons/
+│   │   ├── arrow-back.svg
+│   │   ├── arrow-big-up.svg
+│   │   ├── arrow-narrow-down.svg
+│   │   ├── arrow-narrow-left.svg
+│   │   ├── arrow-narrow-right.svg
+│   │   ├── arrow-narrow-up.svg
+│   │   ├── brand-apple-arcade.svg
+│   │   ├── building-skyscraper.svg
+│   │   ├── cpu.svg
+│   │   ├── device-tv-old.svg
+│   │   ├── device-vision-pro.svg
+│   │   ├── grid-3x3.svg
+│   │   ├── grid-dots.svg
+│   │   ├── help-square-rounded.svg
+│   │   ├── ice-cream.svg
+│   │   ├── layers-difference.svg
+│   │   ├── layout-dashboard.svg
+│   │   ├── lollipop.svg
+│   │   ├── moon-stars.svg
+│   │   ├── moon.svg
+│   │   ├── mug.svg
+│   │   ├── palette.svg
+│   │   ├── plus.svg
+│   │   ├── polaroid.svg
+│   │   ├── radar-2.svg
+│   │   ├── recharging.svg
+│   │   ├── shopping-bag.svg
+│   │   ├── space.svg
+│   │   ├── sphere.svg
+│   │   ├── square.svg
+│   │   ├── stereo-glasses.svg
+│   │   ├── sun-moon.svg
+│   │   ├── sun.svg
+│   │   ├── target.svg
+│   │   ├── terminal-2.svg
+│   │   ├── texture.svg
+│   │   ├── timeline.svg
+│   │   ├── track.svg
+│   │   ├── wave-sine.svg
+│   │   └── zodiac-aquarius.svg
+│   ├── site.webmanifest
+│   └── sounds/
+│       ├── .DS_Store
+│       ├── atmosphere-1.wav
+│       ├── atmostphere-2.wav
+│       ├── button-4.wav
+│       ├── button-6.wav
+│       ├── musical-tap-1.wav
+│       ├── musical-tap-2.wav
+│       ├── musical-tap-3.wav
+│       ├── natural-tap-1.wav
+│       ├── natural-tap-2.wav
+│       ├── natural-tap-3.wav
+│       └── success.wav
+├── components/
+│   ├── .DS_Store
+│   ├── interface/
+│   │   ├── AppearanceToggle.jsx
+│   │   ├── AppearanceToggle.module.css
+│   │   ├── BackgroundPattern.jsx
+│   │   ├── BackgroundPattern.module.css
+│   │   ├── Card.jsx
+│   │   ├── Card.module.css
+│   │   ├── Footer.jsx
+│   │   ├── GridRow.jsx
+│   │   ├── LoaderModal.jsx
+│   │   ├── LoaderModal.module.css
+│   │   ├── NameGrid.jsx
+│   │   ├── NameGrid.module.css
+│   │   ├── NavigationGuide.jsx
+│   │   ├── NavigationGuide.module.css
+│   │   ├── ThemeDisplay.jsx
+│   │   ├── ThemeDisplay.module.css
+│   │   └── ThemeSwitcher.jsx
+│   └── util/
+│       ├── DebugWrapper.jsx
+│       └── Icon.jsx
+├── contexts/
+│   └── ThemeContext.jsx
+├── index.css
+├── index.jsx
+├── pages/
+│   ├── NotFound.jsx
+│   ├── Roleco.jsx
+│   └── Scrumble.jsx
+└── setupTests.js
+
+```

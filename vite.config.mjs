@@ -3,6 +3,7 @@ import solidPlugin from 'vite-plugin-solid';
 import devtools from 'solid-devtools/vite';
 import path from 'path';
 import fs from 'fs-extra';
+import { spawn } from 'child_process';
 
 // List of icon names you need
 const requiredIcons = [
@@ -75,6 +76,17 @@ function copyIcons() {
   });
 }
 
+function cliPlugin() {
+  return {
+    name: 'vite-plugin-cli',
+    configureServer(server) {
+      server.httpServer.once('listening', () => {
+        const cli = spawn('node', ['ai/cli-script.js'], { stdio: 'inherit' });
+        process.on('exit', () => cli.kill());
+      });
+    },
+  };
+}
 // Run the copy function immediately
 copyIcons();
 
@@ -90,6 +102,7 @@ export default defineConfig({
         copyIcons();
       }
     }
+    , cliPlugin()
   ],
   server: {
     port: 3000

@@ -1,5 +1,5 @@
 import { createSignal, onMount } from 'solid-js';
-import '../../index.css';
+import { ThemeDisplay } from './ThemeDisplay';
 
 const Footer = () => {
   const [currentYear, setCurrentYear] = createSignal('');
@@ -9,9 +9,11 @@ const Footer = () => {
   });
 
   return (
-    <footer class="footerContainer">
-      👨🏾‍💻&nbsp;<a href="https://www.solidjs.com">solid.js</a>&nbsp;site by jrg &copy; {currentYear()}
-      . All rights reserved.
+    <footer>
+      <ThemeDisplay />
+      <span>
+        👨🏾‍💻&nbsp;<a href="https://www.solidjs.com">solid.js</a>&nbsp;site by jrg &copy; {currentYear()} &nbsp; All rights reserved.
+      </span>
     </footer>
   );
 };

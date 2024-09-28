@@ -1,13 +1,15 @@
 .nameGrid {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: auto;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 120px); /* Subtract the combined height of header and footer */
   max-width: 100%;
-  margin: 20px auto;
+  margin: 0 auto;
   position: relative;
   z-index: 10;
+  padding-bottom: 60px; /* Add padding to account for the footer */
 }
 
 .timer {
@@ -46,7 +48,7 @@
 .nameRow {
   display: flex;
   margin-bottom: 20px;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
 }
 

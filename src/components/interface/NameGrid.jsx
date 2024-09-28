@@ -13,8 +13,8 @@ import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
 
-const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
-// const fullName = ['PRD', 'KPI', 'OKR'];
+// const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
+const fullName = ['PRD', 'KPI', 'OKR'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
   letterChangeAudioDown,

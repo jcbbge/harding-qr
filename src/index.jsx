@@ -6,7 +6,6 @@ import { Navigate } from '@solidjs/router';
 import 'solid-devtools';
 
 import { ThemeProvider } from './contexts/ThemeContext';
-import { ThemeDisplay } from './components/interface/ThemeDisplay';
 import BackgroundPattern from './components/interface/BackgroundPattern';
 import Footer from './components/interface/Footer';
 import Header from './components/interface/Header';
@@ -83,10 +82,9 @@ const RolecoWrapper = () => {
 const Layout = props => {
   return (
     <>
-      <Header></Header>
-      {props.children}
-      <ThemeDisplay></ThemeDisplay>
-      <Footer></Footer>
+      <Header />
+      <main>{props.children}</main>
+      <Footer />
     </>
   );
 };

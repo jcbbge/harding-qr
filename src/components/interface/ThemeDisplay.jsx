@@ -43,15 +43,11 @@ export function ThemeDisplay() {
     <div class={styles.themeDisplay}>
       <p>
         {logAndRenderIcon('theme', theme.theme)}
-        Current Theme: {theme.theme()}
-      </p>
-      <p>
+        {theme.theme()}
         {logAndRenderIcon('mode', theme.mode)}
-        Current Mode: {theme.mode()}
-      </p>
-      <p>
+        {theme.mode()}
         {logAndRenderIcon('pattern', theme.pattern)}
-        Current Pattern: {theme.pattern()}
+        {theme.pattern()}
       </p>
     </div>
   );

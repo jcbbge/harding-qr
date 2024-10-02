@@ -14,7 +14,7 @@ import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
 
 // const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
-const fullName = ['PRD', 'KPI', 'OKR'];
+const fullName = ['JOSHUA', 'PRODUCT', 'CODE'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
   letterChangeAudioDown,
@@ -26,31 +26,51 @@ let correctWordAudios = [];
 
 const initializeWordList = () => {
   const maxLength = Math.max(...fullName.map(name => name.length), 4);
+  console.log('Debug: maxLength', maxLength);
+  const [totalLengthCount, setTotalLengthCount] = createSignal(0);
+
   const isVowel = char => 'AEIOU'.includes(char.toUpperCase());
   const getRandomLetter = (exclude) => {
     const availableLetters = alphabet.replace(exclude.toUpperCase(), '');
     return availableLetters[Math.floor(Math.random() * availableLetters.length)];
   };
-  const padder = name => {
-    const lengthPos = maxLength === 3 ? 4 : maxLength;
 
-    if (lengthPos === 4 && fullName.indexOf(name) === 1) {
-      return name.padEnd(lengthPos, ' ');
-    } else {
-      return name.padStart(lengthPos, ' ');
+  const padder = (name, index) => {
+    console.log(`Debug: Padding name "${name}" at index ${index}`);
+    console.log(`Debug: Initial name length: ${name.length}`);
+    console.log(`Debug: Total length count before: ${totalLengthCount()}`);
+
+    let paddedName = name;
+    const difference = maxLength - name.length;
+
+    if (totalLengthCount() < 3) {
+      const spaceToAdd = Math.min(difference, 3 - totalLengthCount());
+      paddedName = paddedName.padStart(name.length + spaceToAdd, ' ');
+      setTotalLengthCount(prev => prev + spaceToAdd);
     }
+
+    // Always pad to maxLength, regardless of where the spaces were added
+    paddedName = paddedName.padEnd(maxLength, ' ');
+
+    console.log(`Debug: Final padded name: "${paddedName}", length: ${paddedName.length}`);
+    console.log(`Debug: Total length count after: ${totalLengthCount()}`);
+    return paddedName;
   };
 
   const paddedNames = fullName.map(padder);
+  console.log('Debug: paddedNames', paddedNames);
+  console.log('Debug: paddedNames lengths', paddedNames.map(name => name.length));
 
   return paddedNames.map(name => {
-    return name.split('').map(char => ({
+    const result = name.split('').map(char => ({
       correctLetter: char,
       currentLetter: isVowel(char) ? getRandomLetter(char) : char,
       isVowel: isVowel(char),
       matched: !isVowel(char) && char !== ' ',
       isEmpty: char === ' '
     }));
+    console.log('Debug: processed name', result);
+    return result;
   });
 };
 
@@ -174,7 +194,6 @@ const NameGrid = ({ onLetterUnlock }) => {
   const updateLetterBox = (row, col, direction) => {
     const letterObj = names[row][col];
 
-    // Log the current state and parameters at the start of the function
     if (letterObj.isEmpty) {
       const emptyIndexInRow = names[row].slice(0, col).filter(l => l.isEmpty).length;
       const emptyIndexInGrid =
@@ -184,15 +203,20 @@ const NameGrid = ({ onLetterUnlock }) => {
       switch (emptyIndexInGrid) {
         case 0:
           updateTheme(direction);
+          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
           break;
         case 1:
           updateMode(direction);
+          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
           break;
         case 2:
           updatePattern(direction);
+          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
           break;
+        default:
+          // This is a truly empty letterbox, do nothing and don't play any sound
+          return;
       }
-      playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
       return;
     }
 
@@ -201,7 +225,7 @@ const NameGrid = ({ onLetterUnlock }) => {
       return alphabet[(currentIndex + direction + 26) % 26];
     };
 
-    // Only call setNames if the letter is a vowel
+    // Only update and play sound if the letter is a vowel
     if (letterObj.isVowel) {
       setNames(row, col, letter => {
         if (!letter.isEmpty && !letter.matched) {
@@ -314,40 +338,29 @@ const NameGrid = ({ onLetterUnlock }) => {
                   return classes.join(' ');
                 });
 
-                if (letterObj.isEmpty) {
-                  const emptyIndexInRow = name
-                    .slice(0, letterIndex())
-                    .filter(l => l && l.isEmpty).length;
-                  const emptyIndexInGrid =
-                    names.slice(0, nameIndex()).reduce((count, row) => {
-                      return count + row.filter(l => l.isEmpty).length;
-                    }, 0) + emptyIndexInRow;
+                const getSettingIcon = createMemo(() => {
+                  if (letterObj.isEmpty) {
+                    const emptyIndexInRow = name
+                      .slice(0, letterIndex())
+                      .filter(l => l && l.isEmpty).length;
+                    const emptyIndexInGrid =
+                      names.slice(0, nameIndex()).reduce((count, row) => {
+                        return count + row.filter(l => l.isEmpty).length;
+                      }, 0) + emptyIndexInRow;
 
-                  let iconElement;
-                  switch (emptyIndexInGrid) {
-                    case 0:
-                      iconElement = (
-                        <div class={letterBoxClass()}>{getIconImg(getThemeIcon())}</div>
-                      );
-                      break;
-                    case 1:
-                      iconElement = (
-                        <div class={letterBoxClass()}>{logAndRenderIcon('mode', theme.mode)}</div>
-                      );
-                      break;
-                    case 2:
-                      iconElement = (
-                        <div class={letterBoxClass()}>
-                          {logAndRenderIcon('pattern', theme.pattern)}
-                        </div>
-                      );
-                      break;
-                    default:
-                      return null;
+                    switch (emptyIndexInGrid) {
+                      case 0:
+                        return getIconImg(getItemIcon('theme', theme.theme()));
+                      case 1:
+                        return getIconImg(getItemIcon('mode', theme.mode()));
+                      case 2:
+                        return getIconImg(getItemIcon('pattern', theme.pattern()));
+                      default:
+                        return null;
+                    }
                   }
-
-                  return iconElement;
-                }
+                  return null;
+                });
 
                 return (
                   <div
@@ -355,7 +368,7 @@ const NameGrid = ({ onLetterUnlock }) => {
                     role="button"
                     tabIndex={isFocused() ? 0 : -1}
                   >
-                    <span>{letterObj.currentLetter}</span>
+                    {letterObj.isEmpty ? getSettingIcon() : <span>{letterObj.currentLetter}</span>}
                   </div>
                 );
               }}

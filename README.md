@@ -65,3 +65,55 @@ Implement user authentication feature as per the roadmap.
 
 ~/.bashrc
 tabxnavigator
+
+---
+
+09/30/2024
+cloned a python cli tool called o1-eng. set up a virtual environment and installed the dependencies. added the venv to .gitignore. Follow these steps to get setup:
+# Navigate to your project directory
+cd ~/webdevelopment/solidjs/jrg-portfolio
+
+# Create a new virtual environment
+python3 -m venv venv
+
+# Activate the virtual environment
+source venv/bin/activate
+
+# Deactivate the virtual environment
+deactivate
+
+# Install a package
+pip install package_name
+
+# Install multiple packages
+pip install package1 package2 package3
+
+# Install packages from requirements.txt
+pip install -r requirements.txt
+
+# Create or update requirements.txt
+pip freeze > requirements.txt
+
+# Run your script (from any directory)
+python ~/webdevelopment/o1-engineer/o1-eng.py
+
+# Run your script (from the script's directory)
+cd ~/webdevelopment/o1-engineer
+python o1-eng.py
+
+# Activate venv from a different directory
+source ~/webdevelopment/solidjs/jrg-portfolio/venv/bin/activate
+
+# Check installed packages
+pip list
+
+# Check Python version
+python --version
+
+# Check where Python is installed
+which python
+
+# Check sys.path (Python's search path for modules)
+python -c "import sys; print('\n'.join(sys.path))"
+
+# Remember: Always activate your virtual environment before working on your project!

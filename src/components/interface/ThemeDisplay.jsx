@@ -2,10 +2,10 @@ import { useTheme } from '../../contexts/ThemeContext';
 import styles from './ThemeDisplay.module.css';
 import { createEffect, createSignal } from 'solid-js';
 
-// Import SVG icons
-import { default as MoonStarsIcon } from '/src/assets/icons/moon-stars.svg?component';
-import { default as RadarIcon } from '/src/assets/icons/radar-2.svg?component';
-import { default as WaveSineIcon } from '/src/assets/icons/wave-sine.svg?component';
+// Update these import statements
+import { default as MoonStarsIcon } from '/assets/icons/moon-stars.svg?component';
+import { default as RadarIcon } from '/assets/icons/radar-2.svg?component';
+import { default as WaveSineIcon } from '/assets/icons/wave-sine.svg?component';
 // Import other icons as needed
 
 const iconComponents = {
@@ -23,7 +23,7 @@ export function ThemeDisplay() {
     return (
       <>
         <img
-          src={`/src/assets/icons/${iconName}.svg`}
+          src={`/assets/icons/${iconName}.svg`} // Update this line
           alt={`${iconName} icon`}
           class={styles.icon}
           onError={() => setError(true)}

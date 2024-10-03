@@ -293,7 +293,7 @@ const NameGrid = (props) => {
     return (
       <>
         <img
-          src={`/src/assets/icons/${iconName}.svg`}
+          src={`/assets/icons/${iconName}.svg`} // Update this line
           alt={`${iconName} icon`}
           class={styles.icon}
           onError={() => setError(true)}

@@ -51,30 +51,26 @@ const requiredIcons = [
 
 // Updated function to copy icons
 function copyIcons() {
-  const iconDir = path.resolve(__dirname, 'node_modules/@tabler/icons/icons/outline');
-  const publicIconDir = path.resolve(__dirname, 'src/assets/icons');
-
-  console.log('Icon source directory:', iconDir);
-  console.log('Icon destination directory:', publicIconDir);
-
-  fs.ensureDirSync(publicIconDir);
-
-  requiredIcons.forEach(iconName => {
-    const sourceFile = path.join(iconDir, `${iconName}.svg`);
-    const destFile = path.join(publicIconDir, `${iconName}.svg`);
-
-    if (fs.existsSync(sourceFile)) {
-      if (!fs.existsSync(destFile)) {
-        fs.copySync(sourceFile, destFile);
-        console.log(`Copied icon: ${iconName}.svg`);
+    const iconDir = path.resolve(__dirname, 'node_modules/@tabler/icons/icons/outline');
+    const publicIconDir = path.resolve(__dirname, 'public/assets/icons');
+    console.log('Icon source directory:', iconDir);
+    console.log('Icon destination directory:', publicIconDir);
+    fs.ensureDirSync(publicIconDir);
+    requiredIcons.forEach(iconName => {
+      const sourceFile = path.join(iconDir, `${iconName}.svg`);
+      const destFile = path.join(publicIconDir, `${iconName}.svg`);
+      if (fs.existsSync(sourceFile)) {
+        if (!fs.existsSync(destFile)) {
+          fs.copySync(sourceFile, destFile);
+          console.log(`Copied icon: ${iconName}.svg`);
+        } else {
+          console.log(`Skipped existing icon: ${iconName}.svg`);
+        }
       } else {
-        console.log(`Skipped existing icon: ${iconName}.svg`);
+        console.warn(`Icon not found: ${iconName}.svg`);
       }
-    } else {
-      console.warn(`Icon not found: ${iconName}.svg`);
-    }
-  });
-}
+    });
+  }
 
 // function cliPlugin() {
 //   return {
@@ -111,6 +107,12 @@ export default defineConfig({
             source: '/*.js\n  Content-Type: application/javascript'
           });
         }
+      },
+      {
+        name: 'move-assets',
+        writeBundle() {
+          fs.copySync('public/assets', 'dist/assets');
+        },
       }
     // , cliPlugin()
   ],
@@ -118,12 +120,31 @@ export default defineConfig({
     port: 3000
   },
   build: {
-    target: 'esnext'
+    target: 'esnext',
+    outDir: 'dist',
+    assetsDir: 'assets',
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+      },
+      output: {
+        assetFileNames: (assetInfo) => {
+          let extType = assetInfo.name.split('.')[1];
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
+            extType = 'img';
+          }
+          return `assets/${extType}/[name]-[hash][extname]`;
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+      },
+    },
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
   },
+  publicDir: 'public',
   assetsInclude: ['**/*.svg', '**/*.woff', '**/*.woff2', '**/*.ttf', '**/*.eot']
 });

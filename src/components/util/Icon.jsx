@@ -7,7 +7,7 @@ export function Icon(props) {
   const [svg, { refetch }] = createResource(iconName, async name => {
     setIsLoading(true);
     try {
-      const response = await fetch(`/icons/${name}.svg`);
+      const response = await fetch(`/assets/icons/${name}.svg`); // Update this line
       if (!response.ok) throw new Error(`Failed to fetch icon: ${name}`);
       const svgText = await response.text();
       setIsLoading(false);

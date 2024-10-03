@@ -1,0 +1,61 @@
+/* Container for the animated letter, clips the animation */
+.letterContainer {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+/* Wrapper for the letters, contains both the current and new letter */
+.letterWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%; /* Double height to accommodate two letters */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Styles for each letter span */
+.letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50%; /* Each letter takes up half the wrapper height */
+  width: 100%;
+}
+
+/* Animation for rolling down (new letter appears from top) */
+@keyframes rollDown {
+  from { transform: translateY(-50%); }
+  to { transform: translateY(0); }
+}
+
+/* Animation for rolling up (new letter appears from bottom) */
+@keyframes rollUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+/* Class applied to trigger roll down animation */
+.rollDown {
+  animation-name: rollDown;
+}
+
+/* Class applied to trigger roll up animation */
+.rollUp {
+  animation-name: rollUp;
+}
+
+.velocity1 {
+  animation-duration: 300ms;
+}
+
+.velocity1_5 {
+  animation-duration: 200ms;
+}
+
+.velocity2 {
+  animation-duration: 150ms;
+}

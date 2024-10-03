@@ -1,4 +1,4 @@
-import { createSignal, createEffect, For, onMount, onCleanup, createMemo } from 'solid-js';
+import { createSignal, createEffect, For, Show, onMount, onCleanup, createMemo } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { useTheme } from '../../contexts/ThemeContext';
 import styles from './NameGrid.module.css';
@@ -74,7 +74,7 @@ const initializeWordList = () => {
   });
 };
 
-const NameGrid = ({ onLetterUnlock }) => {
+const NameGrid = (props) => {
   const [theme, { updateTheme, updateMode, updatePattern, getItemIcon }] = useTheme();
   const [names, setNames] = createStore(initializeWordList());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
@@ -232,7 +232,7 @@ const NameGrid = ({ onLetterUnlock }) => {
           const newLetter = getNextLetter(letter.currentLetter, direction);
 
           if (newLetter === letter.correctLetter) {
-            onLetterUnlock(row, col);
+            props.onLetterUnlock(row, col);
             // Check if this is the last unmatched vowel in the word
             const isLastVowel = names[row].filter(l => l.isVowel && !l.matched).length === 1;
 
@@ -310,70 +310,75 @@ const NameGrid = ({ onLetterUnlock }) => {
     <div class={styles.nameGrid}>
       <For each={names}>
         {(name, nameIndex) => (
-          <div
-            class={styles.nameRow}
-            style={{ '--name-length': name.length }}
-          >
-            <For each={name}>
-              {(letterObj, letterIndex) => {
-                const isFocused = createMemo(
-                  () =>
-                    nameIndex() === focusedPosition().row && letterIndex() === focusedPosition().col
-                );
+          <>
+            <Show when={props.jsxElements && props.jsxElements[nameIndex()]}>
+              <div class={styles.jsxElement}>{props.jsxElements[nameIndex()]}</div>
+            </Show>
+            <div
+              class={styles.nameRow}
+              style={{ '--name-length': name.length }}
+            >
+              <For each={name}>
+                {(letterObj, letterIndex) => {
+                  const isFocused = createMemo(
+                    () =>
+                      nameIndex() === focusedPosition().row && letterIndex() === focusedPosition().col
+                  );
 
-                const letterBoxClass = createMemo(() => {
-                  const classes = [styles.letterBox];
-                  if (letterObj.isEmpty) {
-                    classes.push(styles.emptyBox, styles.accentUnexpected);
-                  } else {
-                    if (letterObj.matched) classes.push(styles.matched);
-                    if (letterObj.isVowel) classes.push(styles.vowel);
-                    if (letterObj.isVowel && letterObj.matched) {
-                      classes.push(styles.accentBackground);
-                    } else if (letterObj.isVowel && !letterObj.matched) {
-                      classes.push(styles.accentOpposite);
+                  const letterBoxClass = createMemo(() => {
+                    const classes = [styles.letterBox];
+                    if (letterObj.isEmpty) {
+                      classes.push(styles.emptyBox, styles.accentUnexpected);
+                    } else {
+                      if (letterObj.matched) classes.push(styles.matched);
+                      if (letterObj.isVowel) classes.push(styles.vowel);
+                      if (letterObj.isVowel && letterObj.matched) {
+                        classes.push(styles.accentBackground);
+                      } else if (letterObj.isVowel && !letterObj.matched) {
+                        classes.push(styles.accentOpposite);
+                      }
                     }
-                  }
-                  if (isFocused()) classes.push(styles.focused);
-                  return classes.join(' ');
-                });
+                    if (isFocused()) classes.push(styles.focused);
+                    return classes.join(' ');
+                  });
 
-                const getSettingIcon = createMemo(() => {
-                  if (letterObj.isEmpty) {
-                    const emptyIndexInRow = name
-                      .slice(0, letterIndex())
-                      .filter(l => l && l.isEmpty).length;
-                    const emptyIndexInGrid =
-                      names.slice(0, nameIndex()).reduce((count, row) => {
-                        return count + row.filter(l => l.isEmpty).length;
-                      }, 0) + emptyIndexInRow;
+                  const getSettingIcon = createMemo(() => {
+                    if (letterObj.isEmpty) {
+                      const emptyIndexInRow = name
+                        .slice(0, letterIndex())
+                        .filter(l => l && l.isEmpty).length;
+                      const emptyIndexInGrid =
+                        names.slice(0, nameIndex()).reduce((count, row) => {
+                          return count + row.filter(l => l.isEmpty).length;
+                        }, 0) + emptyIndexInRow;
 
-                    switch (emptyIndexInGrid) {
-                      case 0:
-                        return getIconImg(getItemIcon('theme', theme.theme()));
-                      case 1:
-                        return getIconImg(getItemIcon('mode', theme.mode()));
-                      case 2:
-                        return getIconImg(getItemIcon('pattern', theme.pattern()));
-                      default:
-                        return null;
+                      switch (emptyIndexInGrid) {
+                        case 0:
+                          return getIconImg(getItemIcon('theme', theme.theme()));
+                        case 1:
+                          return getIconImg(getItemIcon('mode', theme.mode()));
+                        case 2:
+                          return getIconImg(getItemIcon('pattern', theme.pattern()));
+                        default:
+                          return null;
+                      }
                     }
-                  }
-                  return null;
-                });
+                    return null;
+                  });
 
-                return (
-                  <div
-                    class={letterBoxClass()}
-                    role="button"
-                    tabIndex={isFocused() ? 0 : -1}
-                  >
-                    {letterObj.isEmpty ? getSettingIcon() : <span>{letterObj.currentLetter}</span>}
-                  </div>
-                );
-              }}
-            </For>
-          </div>
+                  return (
+                    <div
+                      class={letterBoxClass()}
+                      role="button"
+                      tabIndex={isFocused() ? 0 : -1}
+                    >
+                      {letterObj.isEmpty ? getSettingIcon() : <span>{letterObj.currentLetter}</span>}
+                    </div>
+                  );
+                }}
+              </For>
+            </div>
+          </>
         )}
       </For>
     </div>

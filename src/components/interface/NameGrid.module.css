@@ -1,129 +1,238 @@
+/* Main container for the name grid */
+
 .nameGrid {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* Use CSS Grid for layout */
+  display: grid;
+
+  /* Create responsive columns that adjust based on available space */
+  /* Adjust minmax values to control minimum and maximum column widths */
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+
+  /* Set the gap between grid items */
+  /* Increase or decrease to adjust spacing between letterboxes */
+  gap: 70px 0;
+
+  /* Center the grid horizontally within its container */
   justify-content: center;
+
+  /* Align grid items vertically within their cells */
+  align-items: center;
+
+  /* Set the width of the grid container */
   width: 100%;
-  height: calc(100vh - 120px); /* Subtract the combined height of header and footer */
-  max-width: 100%;
+
+  /* Set maximum width to prevent the grid from becoming too wide on large screens */
+  /* Adjust this value to control the maximum width of the grid */
+  max-width: 700px;
+
+  /* Center the grid container horizontally */
   margin: 0 auto;
+
+  /* Set the stacking context for the grid */
   position: relative;
   z-index: 10;
-  padding-bottom: 60px; /* Add padding to account for the footer */
+
+  /* Add padding around the grid */
+  /* Adjust this value to increase or decrease space around the grid */
+  padding: 20px;
+
+  /* Prevent horizontal scrolling */
+  overflow-x: hidden;
 }
 
-.timer {
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
+/* Styles for the setting icon */
 .settingIcon {
+  /* Set the color of the setting icon */
   color: var(--text-secondary);
 }
 
+/* Styles for the desktop icon */
 .desktopIcon {
+  /* Add a smooth transition effect for transform changes */
   transition: transform 0.3s ease;
 }
 
+/* Desktop-specific styles */
 @media (min-width: 769px) {
   .desktopIcon {
+    /* Increase the size of the desktop icon */
+    /* Adjust this value to make the icon larger or smaller */
     transform: scale(1.2);
   }
 }
 
+/* Tablet-specific styles */
 @media (max-width: 768px) {
   .nameGrid {
-    margin: 0px 15px;
+    /* Adjust grid columns for tablet view */
+    /* Decrease minmax values for smaller screens */
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+
+    /* Reduce gap between grid items for tablet view */
+    gap: 8px;
+  }
+
+  /* Adjust letterbox size for tablet view */
+  .letterBox {
+    /* Set width and height of letterboxes for tablet */
+    /* Decrease these values to make letterboxes smaller on tablets */
+    width: 50px;
+    height: 50px;
+
+    /* Adjust font size for letterboxes on tablet */
+    /* Decrease this value to make the text smaller on tablets */
+    font-size: 35px;
   }
 }
 
+/* Mobile-specific styles */
 @media (max-width: 480px) {
   .nameGrid {
-    margin: 0px 10px;
+    /* Adjust grid columns for mobile view */
+    /* Further decrease minmax values for mobile screens */
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+
+    /* Reduce gap between grid items for mobile view */
+    gap: 6px;
+  }
+
+  /* Adjust letterbox size for mobile view */
+  .letterBox {
+    /* Set width and height of letterboxes for mobile */
+    /* Decrease these values to make letterboxes smaller on mobile */
+    width: 40px;
+    height: 40px;
+
+    /* Adjust font size for letterboxes on mobile */
+    /* Decrease this value to make the text smaller on mobile */
+    font-size: 30px;
   }
 }
 
+/* Styles for each row in the name grid */
 .nameRow {
-  display: flex;
-  margin-bottom: 20px;
-  justify-content: center;
-  width: 100%;
+  /* Allow child elements to participate in the parent grid layout */
+  display: contents;
 }
 
+/* Styles for individual letter boxes */
 .letterBox {
+  /* Set default width and height for letterboxes */
+  /* Adjust these values to change the size of letterboxes */
   width: 70px;
   height: 70px;
+
+  /* Set border style for letterboxes */
   border: 2px solid var(--text-primary);
+
+  /* Use flexbox for centering content within letterboxes */
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* Set font size for letters */
+  /* Adjust this value to change the size of the letters */
   font-size: 60px;
+
+  /* Set font weight for letters */
   font-weight: bold;
+
+  /* Add right margin to letterboxes */
+  /* Adjust this value to change spacing between letterboxes */
   margin-right: 25px;
+
+  /* Add smooth transition for all property changes */
   transition: all 0.3s ease;
+
+  /* Set font family for letters */
   font-family: 'Array-BoldWide', sans-serif;
+
+  /* Add rounded corners to letterboxes */
+  /* Increase this value for more rounded corners */
   border-radius: 5px;
+
+  /* Set positioning context for letterboxes */
   position: relative;
   z-index: 11;
+
+  /* Set background color for letterboxes */
   background-color: var(--gradient-base-bottom);
 }
 
+/* Remove right margin from the last letterbox in a row */
 .letterBox:last-child {
   margin-right: 0;
 }
 
+/* Styles for empty letterboxes */
 .letterBox.emptyBox {
+  /* Set background color for empty letterboxes */
   background-color: var(--accent-fun);
 }
 
+/* Styles for empty letterboxes with unexpected accent */
 .letterBox.emptyBox.accentUnexpected {
+  /* Set background color for empty letterboxes with unexpected accent */
   background-color: var(--accent-unexpected);
 }
 
+/* Styles for vowel letterboxes */
 .letterBox.vowel {
+  /* Change cursor style for vowel letterboxes */
   cursor: ns-resize;
+
+  /* Set background color for vowel letterboxes */
   background-color: var(--accent-opposite);
+
+  /* Set text color for vowel letterboxes */
   color: var(--gradient-base-bottom);
 }
 
+/* Styles for matched vowel letterboxes */
 .letterBox.matched.vowel {
+  /* Set background color for matched vowel letterboxes */
   background-color: var(--accent);
 }
 
+/* Styles for matched letterboxes */
 .letterBox.matched {
+  /* Set border style for matched letterboxes */
   border: 2px solid var(--text-primary);
+
+  /* Set background color for matched letterboxes */
   background-color: var(--accent-unexpected);
+
+  /* Set text color for matched letterboxes */
   color: var(--gradient-base-bottom);
 }
 
+/* Styles for focused letterboxes */
 .letterBox.focused {
+  /* Set border style for focused letterboxes */
   border: 2px solid var(--gradient-base-bottom);
+
+  /* Add box shadow to focused letterboxes */
+  /* Adjust color and blur radius to change the glow effect */
   box-shadow: 0 0 15px var(--accent);
+
+  /* Ensure focused letterboxes appear above others */
   z-index: 12;
 }
 
+/* Adjust row spacing for tablet view */
 @media (max-width: 768px) {
-  .letterBox {
-    width: 50px;
-    height: 50px;
-    font-size: 35px;
-    margin-right: 20px;
-  }
   .nameRow {
+    /* Add bottom margin to rows for tablet view */
+    /* Increase or decrease this value to adjust vertical spacing between rows */
     margin-bottom: 15px;
   }
 }
 
+/* Adjust row spacing for mobile view */
 @media (max-width: 480px) {
-  .letterBox {
-    width: 40px;
-    height: 40px;
-    font-size: 30px;
-    margin-right: 15px;
-  }
   .nameRow {
+    /* Add bottom margin to rows for mobile view */
+    /* Increase or decrease this value to adjust vertical spacing between rows */
     margin-bottom: 10px;
   }
 }

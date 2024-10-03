@@ -1,9 +1,10 @@
-import { createSignal, onMount } from 'solid-js';
+import { createSignal, onMount, createEffect } from 'solid-js';
 import NameGrid from './components/interface/NameGrid';
 
 function App() {
   const [company, setCompany] = createSignal('');
   const [role, setRole] = createSignal('');
+  const [contentHeight, setContentHeight] = createSignal(0);
 
   onMount(() => {
     const urlPath = window.location.pathname;
@@ -13,27 +14,72 @@ function App() {
       setCompany(pathSegments[0]);
       setRole(pathSegments[1]);
     }
+
+    // Get the height of the content
+    const content = document.querySelector('.hero-section');
+    if (content) {
+      setContentHeight(content.offsetHeight);
+    }
+
+    // Center the content
+    centerContent();
+
+    // Add resize event listener
+    window.addEventListener('resize', centerContent);
   });
 
+  createEffect(() => {
+    // Recenter content when contentHeight changes
+    centerContent();
+  });
+
+  function centerContent() {
+    const snapContainer = document.querySelector('.snap-container');
+    const viewportHeight = window.innerHeight;
+    const scrollPosition = (viewportHeight - contentHeight()) / 2;
+    
+    if (snapContainer) {
+      snapContainer.scrollTo({
+        top: Math.max(0, scrollPosition),
+        behavior: 'auto'
+      });
+    }
+  }
+
   function handleLetterUnlock() {
-    // Handle letter unlock logic
     console.log('Letter unlocked App.jsx callback');
   }
 
+  const jsxElements = [
+    <h1 class="intro-1">Hi. I'm</h1>,
+    <h1 id="intro-2">I do</h1>,
+    <h1 id="intro-3"><s>Design</s> <s>Management</s> Stuff. I also</h1>,
+    <h1 id="intro-4">Code. But I use AI alot</h1>
+  ];
+
   return (
-    <>
-      <div>
-        <NameGrid
-          company={company()}
-          role={role()}
-          onLetterUnlock={handleLetterUnlock}
-        />
+    <div class="main-content">
+      <div class="snap-container">
+        <section class="snap-section hero-section">
+          <div class="name-grid-container">
+            <NameGrid
+              company={company()}
+              role={role()}
+              onLetterUnlock={handleLetterUnlock}
+              jsxElements={jsxElements}
+            />
+          </div>
+        </section>
+        <section class="snap-section">
+          <h2>Section 2</h2>
+          <p>Content for section 2 goes here.</p>
+        </section>
+        <section class="snap-section">
+          <h2>Section 3</h2>
+          <p>Content for section 3 goes here.</p>
+        </section>
       </div>
-      <div>
-        <p>Unlock Letters</p>
-        {/* <Card></Card> */}
-      </div>
-    </>
+    </div>
   );
 }
 

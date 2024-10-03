@@ -81,11 +81,15 @@ const RolecoWrapper = () => {
 
 const Layout = props => {
   return (
-    <>
+    <div class="layout">
       <Header />
-      <main>{props.children}</main>
+      <main class="main-content">
+        <div class="snap-container">
+          {props.children}
+        </div>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

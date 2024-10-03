@@ -9,8 +9,8 @@ const Footer = () => {
   });
 
   return (
-    <footer>
-      <ThemeDisplay />
+    <footer class="bg-accent-fun">
+      <ThemeDisplay></ThemeDisplay>
       <span>
         👨🏾‍💻&nbsp;<a href="https://www.solidjs.com">solid.js</a>&nbsp;site by jrg &copy; {currentYear()} &nbsp; All rights reserved.
       </span>

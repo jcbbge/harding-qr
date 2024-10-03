@@ -1,5 +1,30 @@
 @import url('@/assets/fonts/Array/css/array.css');
 @import url('@/assets/fonts/DepartureMono/css/departure-mono.css');
+@font-face {
+  font-family: 'Departure Mono';
+  src: url('path-to-departure-mono-font-file.woff2') format('woff2');
+  /* Add additional src lines for other font formats if available */
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Add this near the top of the file, after the box-sizing rule */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  overflow-x: hidden;
+}
 
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
@@ -86,7 +111,7 @@ time,
 mark,
 audio,
 video {
-  /*margin: 0;*/
+  margin: 0;
   padding: 0;
   border: 0;
   font-size: 100%;
@@ -109,6 +134,7 @@ section {
 }
 body {
   line-height: 1;
+  margin: 0;
 }
 ol,
 ul {
@@ -131,11 +157,7 @@ table {
 }
 
 /* monospace design system*/
-@font-face {
-  font-family: 'Departure Mono';
-  src: url('path-to-departure-mono-font-file.woff2') format('woff2');
-  /* Add additional src lines for other font formats if available */
-}
+
 
 :root {
   --font-family: 'Departure Mono', monospace;
@@ -686,35 +708,6 @@ nav.container > div {
 .text-accent-fun { color: var(--accent-fun); }
 .text-accent-unexpected { color: var(--accent-unexpected); }
 
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  color: var(--text-primary);
-  overflow: hidden;
-  position: relative;
-  font-family: 'DepartureMono-Regular', monospace !important;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-}
-
-.site-layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem;
-  padding-bottom: 60px; /* Adjust this value based on your footer's height */
-  position: relative;
-  z-index: 1;
-}
 
 /* Gradient animations */
 .gradient-base {
@@ -763,47 +756,159 @@ body {
   }
 }
 
-#root {
-  position: relative;
-  z-index: 1;
-  min-height: calc(100vh - 60px); /* Subtract the footer height */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Array-Regular', 'Array', sans-serif;
+  background-color: #000;
+  color: #fff;
+  overflow: hidden;
 }
 
-.fixed-top {
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden; /* Prevent scrolling on the layout */
+}
+
+header, footer {
   position: fixed;
-  top: 0;
   left: 0;
   right: 0;
-  background-color: var(--accent-fun);
-  z-index: 1000;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
-@media (max-width: 640px) {
+header {
+  top: 0;
+}
 
-  .sm\:gap-1 {
-    gap: 11px;
+footer {
+  bottom: 0;
+}
+
+.main-content {
+  flex-grow: 1;
+  overflow: hidden;
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+.snap-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.snap-section {
+  height: 100%;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hero section specific styles */
+.hero-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%; /* Ensure it takes up at least the full height of its container */
+}
+
+.name-grid-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 22px;
+}
+
+/* Updated nav-menu styles */
+.nav-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0; /* Removed padding */
+}
+
+.nav-menu a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+  color: var(--accent-fun);
+}
+
+/* Desktop styles (1024px and above) */
+@media (min-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+}
+
+/* iPad styles (768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .main-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+}
+
+/* Mobile styles (up to 767px) */
+@media (max-width: 767px) {
+  .layout {
+    padding: 0; /* Removed padding */
   }
 
-  .sm\:w-full {
+  .nav-menu {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0; /* Removed padding */
+  }
+
+  .nav-menu > div {
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0; /* Removed margin */
   }
 
-  .sm\:p-2 {
-    padding: 22px;
+  .nav-menu a {
+    font-size: 1rem;
+    margin-right: 0; /* Removed margin */
   }
 
-  .sm\:text-md {
-    font-size: 22px;
+  .nav-menu > div:last-child {
+    margin-top: 0; /* Removed margin */
+  }
+
+  .main-content {
+    gap: 11px;
+    padding: 0; /* Removed padding */
   }
 }
 
-.theme-display {
-  background-color: rgba(0, 0, 0, 0.05);
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
+/* Add this new rule to ensure Array font is used globally */
+* {
+  font-family: 'Array-Regular', 'Array', sans-serif;
 }
 
-.theme-display p {
-  margin: 5px 0;
+/* If you want headings to use a different weight of Array, add this */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Array-Bold', 'Array', sans-serif;
 }

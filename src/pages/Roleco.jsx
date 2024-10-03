@@ -45,6 +45,12 @@ const Roleco = props => {
     setShowModal(false);
   };
 
+  const jsxElements = [
+    <h1>{role()} at {company()}</h1>,
+    <h2>Product Requirements</h2>,
+    <h2>Key Features</h2>
+  ];
+
   return (
     <>
       {showModal() && (
@@ -59,6 +65,7 @@ const Roleco = props => {
           company={company()}
           role={role()}
           onLetterUnlock={handleLetterUnlock}
+          jsxElements={jsxElements}
         />
       </div>
       <div class="bottom-column">

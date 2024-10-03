@@ -121,3 +121,16 @@
   box-shadow: 0 0 1.36rem var(--accent); /* 15px */
   z-index: 12;
 }
+
+.touching {
+  background-color: #e0e0e0;
+  transition: background-color 0.2s ease;
+}
+
+/* Add this at the end of the file */
+@media (max-width: 768px) {
+  .letterBox.touching {
+    background-color: var(--accent-opposite);
+    transition: background-color 0.2s ease;
+  }
+}

@@ -79,6 +79,9 @@ const NameGrid = (props) => {
   const [names, setNames] = createStore(initializeWordList());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
   const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 1 });
+  const [isMobile, setIsMobile] = createSignal(false);
+  const [touchStartX, setTouchStartX] = createSignal(0);
+  const [selectedCell, setSelectedCell] = createSignal(null);
 
   // Add this line to get the maxLength
   const maxLength = Math.max(...fullName.map(name => name.length), 4);
@@ -268,6 +271,10 @@ const NameGrid = (props) => {
     }
   };
 
+  const checkMobile = () => {
+    setIsMobile(window.innerWidth <= 768); // Adjust this breakpoint as needed
+  };
+
   onMount(() => {
     window.addEventListener('keydown', gridNavigate);
     letterChangeAudio = new Audio(letterChangeSound);
@@ -281,11 +288,42 @@ const NameGrid = (props) => {
     allWordsCompleteAudio = new Audio(allWordsCompleteSound);
     leftKeyAudio = new Audio(leftKeySound);
     rightKeyAudio = new Audio(rightKeySound);
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
   });
 
   onCleanup(() => {
     window.removeEventListener('keydown', gridNavigate);
+    window.removeEventListener('resize', checkMobile);
   });
+
+  const handleTouchStart = (event, rowIndex, colIndex) => {
+    if (!isMobile()) return;
+    setTouchStartX(event.touches[0].clientX);
+    setSelectedCell({ row: rowIndex, col: colIndex });
+  };
+
+  const handleTouchEnd = (event, rowIndex, colIndex) => {
+    if (!isMobile()) return;
+    const touchEndX = event.changedTouches[0].clientX;
+    const diff = touchEndX - touchStartX();
+
+    if (Math.abs(diff) > 50) { // Threshold for swipe detection
+      if (diff > 0) {
+        // Swipe right
+        updateLetterBox(rowIndex, colIndex, 1);
+      } else {
+        // Swipe left
+        updateLetterBox(rowIndex, colIndex, -1);
+      }
+    } else {
+      // Tap event
+      props.onCellClick(rowIndex, colIndex);
+    }
+
+    setSelectedCell(null);
+  };
 
   const getIconImg = iconName => {
     const [error, setError] = createSignal(false);
@@ -369,6 +407,9 @@ const NameGrid = (props) => {
                       class={letterBoxClass()}
                       role="button"
                       tabIndex={isFocused() ? 0 : -1}
+                      onClick={() => props.onCellClick(nameIndex(), letterIndex())}
+                      onTouchStart={(e) => handleTouchStart(e, nameIndex(), letterIndex())}
+                      onTouchEnd={(e) => handleTouchEnd(e, nameIndex(), letterIndex())}
                     >
                       {letterObj.isEmpty ? getSettingIcon() : <span>{letterObj.currentLetter}</span>}
                     </div>

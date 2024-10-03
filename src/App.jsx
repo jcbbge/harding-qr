@@ -54,10 +54,18 @@ function App() {
   }
 
   const jsxElements = [
-    <h1 class="intro-1">Hi. I'm</h1>,
-    <h1 id="intro-2">I do</h1>,
-    <h1 id="intro-3"><s>Design</s> <s>Management</s> Stuff. I also</h1>,
-    <h1 id="intro-4">Code. But I use AI alot</h1>
+    <div class="name-intro">
+      <span class="name-left">← →</span>
+      <span class="name-right">Hi. My name is</span>
+    </div>,
+    <div class="product-intro">
+      <span class="product-left">I do</span>
+      <span class="product-right">ꜛ ꜜ &#x2423; ⮐</span>
+    </div>,
+    <div class="code-intro">
+      <span class="code-left"><s>Design</s> <s>Management</s> <b>Stuff.</b></span>
+      <span class="code-right">I also</span>
+    </div>
   ];
 
   return (

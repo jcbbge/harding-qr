@@ -2,7 +2,7 @@
 .nameGrid {
   display: grid;
   grid-template-columns: repeat(var(--grid-columns, 4), minmax(0, 1fr));
-  gap: 0.55rem; /* 6px */
+  gap: 1rem 0.55rem; /* Increased row gap to 1rem, kept column gap at 0.55rem */
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -31,25 +31,21 @@
 
 .jsxElement {
   grid-column: 1 / -1;
-  text-align: center;
-  margin-bottom: 0.73rem; /* 8px */
-  font-size: clamp(1.45rem, 6vw, 6rem); /* 16px to 24px */
+  margin-bottom: 11px;
 }
 
 /* Styles for larger mobile devices (375px and up) */
 @media (min-width: 34.09rem) { /* 375px */
   .nameGrid {
-    gap: clamp(0.55rem, 1.5vw, 0.91rem); /* 6px to 10px */
+    gap: clamp(1rem, 2.5vw, 1.5rem) clamp(0.55rem, 1.5vw, 0.91rem);
     padding: clamp(1.09rem, 2vw, 1.82rem); /* 12px to 20px */
   }
-  
-
 }
 
 /* Styles for tablets and large phones (600px and up) */
 @media (min-width: 54.55rem) { /* 600px */
   .nameGrid {
-    gap: clamp(0.73rem, 2vw, 1.09rem); /* 8px to 12px */
+    gap: clamp(1.2rem, 3vw, 1.8rem) clamp(0.73rem, 2vw, 1.09rem);
     padding: clamp(1.45rem, 3vw, 2.18rem); /* 16px to 24px */
   }
 
@@ -61,7 +57,7 @@
 /* Styles for laptops and small desktops (992px and up) */
 @media (min-width: 90.18rem) { /* 992px */
   .nameGrid {
-    gap: clamp(0.91rem, 2.5vw, 1.27rem); /* 10px to 14px */
+    gap: clamp(1.5rem, 3.5vw, 2.2rem) clamp(0.91rem, 2.5vw, 1.27rem);
     padding: clamp(1.82rem, 4vw, 2.55rem); /* 20px to 28px */
   }
 
@@ -70,7 +66,7 @@
 /* Styles for larger desktops (1200px and above) */
 @media (min-width: 109.09rem) { /* 1200px */
   .nameGrid {
-    gap: clamp(1.09rem, 3vw, 1.45rem); /* 12px to 16px */
+    gap: clamp(1.8rem, 4vw, 2.5rem) clamp(1.09rem, 3vw, 1.45rem);
     padding: clamp(2.18rem, 5vw, 2.91rem); /* 24px to 32px */
   }
 

@@ -188,6 +188,9 @@ table {
 .text-xxl {
   font-size: 55px;
 }
+.text-xxxl {
+  font-size: 66px;
+}
 
 .font-normal {
   font-weight: var(--font-weight-normal);
@@ -901,4 +904,25 @@ footer {
     gap: 11px;
     padding: 0; /* Removed padding */
   }
+}
+
+.name-intro,
+.product-intro,
+.code-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.name-left,
+.product-left,
+.code-left {
+  text-align: left;
+}
+
+.name-right,
+.product-right,
+.code-right {
+  text-align: right;
 }

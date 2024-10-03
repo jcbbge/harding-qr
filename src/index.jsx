@@ -1,4 +1,3 @@
-/* @refresh reload */
 import { render } from 'solid-js/web';
 import { ErrorBoundary } from 'solid-js';
 import { Router, Route, useParams, useNavigate } from '@solidjs/router';

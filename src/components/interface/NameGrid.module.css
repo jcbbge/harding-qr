@@ -1,238 +1,127 @@
-/* Main container for the name grid */
-
+/* Base styles (mobile-first approach) */
 .nameGrid {
-  /* Use CSS Grid for layout */
   display: grid;
-
-  /* Create responsive columns that adjust based on available space */
-  /* Adjust minmax values to control minimum and maximum column widths */
-  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-
-  /* Set the gap between grid items */
-  /* Increase or decrease to adjust spacing between letterboxes */
-  gap: 70px 0;
-
-  /* Center the grid horizontally within its container */
+  grid-template-columns: repeat(var(--grid-columns, 4), minmax(0, 1fr));
+  gap: 0.55rem; /* 6px */
   justify-content: center;
-
-  /* Align grid items vertically within their cells */
   align-items: center;
-
-  /* Set the width of the grid container */
   width: 100%;
-
-  /* Set maximum width to prevent the grid from becoming too wide on large screens */
-  /* Adjust this value to control the maximum width of the grid */
-  max-width: 700px;
-
-  /* Center the grid container horizontally */
+  max-width: 100%;
   margin: 0 auto;
-
-  /* Set the stacking context for the grid */
-  position: relative;
-  z-index: 10;
-
-  /* Add padding around the grid */
-  /* Adjust this value to increase or decrease space around the grid */
-  padding: 20px;
-
-  /* Prevent horizontal scrolling */
+  padding: 1rem; /* 11px */
   overflow-x: hidden;
 }
 
-/* Styles for the setting icon */
-.settingIcon {
-  /* Set the color of the setting icon */
-  color: var(--text-secondary);
-}
-
-/* Styles for the desktop icon */
-.desktopIcon {
-  /* Add a smooth transition effect for transform changes */
-  transition: transform 0.3s ease;
-}
-
-/* Desktop-specific styles */
-@media (min-width: 769px) {
-  .desktopIcon {
-    /* Increase the size of the desktop icon */
-    /* Adjust this value to make the icon larger or smaller */
-    transform: scale(1.2);
-  }
-}
-
-/* Tablet-specific styles */
-@media (max-width: 768px) {
-  .nameGrid {
-    /* Adjust grid columns for tablet view */
-    /* Decrease minmax values for smaller screens */
-    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-
-    /* Reduce gap between grid items for tablet view */
-    gap: 8px;
-  }
-
-  /* Adjust letterbox size for tablet view */
-  .letterBox {
-    /* Set width and height of letterboxes for tablet */
-    /* Decrease these values to make letterboxes smaller on tablets */
-    width: 50px;
-    height: 50px;
-
-    /* Adjust font size for letterboxes on tablet */
-    /* Decrease this value to make the text smaller on tablets */
-    font-size: 35px;
-  }
-}
-
-/* Mobile-specific styles */
-@media (max-width: 480px) {
-  .nameGrid {
-    /* Adjust grid columns for mobile view */
-    /* Further decrease minmax values for mobile screens */
-    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
-
-    /* Reduce gap between grid items for mobile view */
-    gap: 6px;
-  }
-
-  /* Adjust letterbox size for mobile view */
-  .letterBox {
-    /* Set width and height of letterboxes for mobile */
-    /* Decrease these values to make letterboxes smaller on mobile */
-    width: 40px;
-    height: 40px;
-
-    /* Adjust font size for letterboxes on mobile */
-    /* Decrease this value to make the text smaller on mobile */
-    font-size: 30px;
-  }
-}
-
-/* Styles for each row in the name grid */
-.nameRow {
-  /* Allow child elements to participate in the parent grid layout */
-  display: contents;
-}
-
-/* Styles for individual letter boxes */
 .letterBox {
-  /* Set default width and height for letterboxes */
-  /* Adjust these values to change the size of letterboxes */
-  width: 70px;
-  height: 70px;
-
-  /* Set border style for letterboxes */
-  border: 2px solid var(--text-primary);
-
-  /* Use flexbox for centering content within letterboxes */
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 0.18rem solid var(--text-primary); /* 2px */
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* Set font size for letters */
-  /* Adjust this value to change the size of the letters */
-  font-size: 60px;
-
-  /* Set font weight for letters */
+  font-size: clamp(1rem, 7vw, 6rem); /* 11px to 16px */
   font-weight: bold;
-
-  /* Add right margin to letterboxes */
-  /* Adjust this value to change spacing between letterboxes */
-  margin-right: 25px;
-
-  /* Add smooth transition for all property changes */
   transition: all 0.3s ease;
-
-  /* Set font family for letters */
   font-family: 'Array-BoldWide', sans-serif;
-
-  /* Add rounded corners to letterboxes */
-  /* Increase this value for more rounded corners */
-  border-radius: 5px;
-
-  /* Set positioning context for letterboxes */
+  border-radius: 0.36rem; /* 4px */
   position: relative;
   z-index: 11;
-
-  /* Set background color for letterboxes */
   background-color: var(--gradient-base-bottom);
 }
 
-/* Remove right margin from the last letterbox in a row */
+.jsxElement {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-bottom: 0.73rem; /* 8px */
+  font-size: clamp(1.45rem, 6vw, 6rem); /* 16px to 24px */
+}
+
+/* Styles for larger mobile devices (375px and up) */
+@media (min-width: 34.09rem) { /* 375px */
+  .nameGrid {
+    gap: clamp(0.55rem, 1.5vw, 0.91rem); /* 6px to 10px */
+    padding: clamp(1.09rem, 2vw, 1.82rem); /* 12px to 20px */
+  }
+  
+
+}
+
+/* Styles for tablets and large phones (600px and up) */
+@media (min-width: 54.55rem) { /* 600px */
+  .nameGrid {
+    gap: clamp(0.73rem, 2vw, 1.09rem); /* 8px to 12px */
+    padding: clamp(1.45rem, 3vw, 2.18rem); /* 16px to 24px */
+  }
+
+  .letterBox {
+    border-radius: clamp(0.45rem, 1vw, 0.55rem); /* 5px to 6px */
+  }
+}
+
+/* Styles for laptops and small desktops (992px and up) */
+@media (min-width: 90.18rem) { /* 992px */
+  .nameGrid {
+    gap: clamp(0.91rem, 2.5vw, 1.27rem); /* 10px to 14px */
+    padding: clamp(1.82rem, 4vw, 2.55rem); /* 20px to 28px */
+  }
+
+}
+
+/* Styles for larger desktops (1200px and above) */
+@media (min-width: 109.09rem) { /* 1200px */
+  .nameGrid {
+    gap: clamp(1.09rem, 3vw, 1.45rem); /* 12px to 16px */
+    padding: clamp(2.18rem, 5vw, 2.91rem); /* 24px to 32px */
+  }
+
+  .letterBox {
+    border-radius: clamp(0.55rem, 1.2vw, 0.64rem); /* 6px to 7px */
+  }
+}
+
+/* Other existing styles */
+.settingIcon {
+  color: var(--text-secondary);
+}
+
+.desktopIcon {
+  transition: transform 0.3s ease;
+}
+
+.nameRow {
+  display: contents;
+}
+
 .letterBox:last-child {
   margin-right: 0;
 }
 
-/* Styles for empty letterboxes */
 .letterBox.emptyBox {
-  /* Set background color for empty letterboxes */
   background-color: var(--accent-fun);
 }
 
-/* Styles for empty letterboxes with unexpected accent */
 .letterBox.emptyBox.accentUnexpected {
-  /* Set background color for empty letterboxes with unexpected accent */
   background-color: var(--accent-unexpected);
 }
 
-/* Styles for vowel letterboxes */
 .letterBox.vowel {
-  /* Change cursor style for vowel letterboxes */
   cursor: ns-resize;
-
-  /* Set background color for vowel letterboxes */
   background-color: var(--accent-opposite);
-
-  /* Set text color for vowel letterboxes */
   color: var(--gradient-base-bottom);
 }
 
-/* Styles for matched vowel letterboxes */
 .letterBox.matched.vowel {
-  /* Set background color for matched vowel letterboxes */
   background-color: var(--accent);
 }
 
-/* Styles for matched letterboxes */
 .letterBox.matched {
-  /* Set border style for matched letterboxes */
-  border: 2px solid var(--text-primary);
-
-  /* Set background color for matched letterboxes */
+  border: 0.18rem solid var(--text-primary); /* 2px */
   background-color: var(--accent-unexpected);
-
-  /* Set text color for matched letterboxes */
   color: var(--gradient-base-bottom);
 }
 
-/* Styles for focused letterboxes */
 .letterBox.focused {
-  /* Set border style for focused letterboxes */
-  border: 2px solid var(--gradient-base-bottom);
-
-  /* Add box shadow to focused letterboxes */
-  /* Adjust color and blur radius to change the glow effect */
-  box-shadow: 0 0 15px var(--accent);
-
-  /* Ensure focused letterboxes appear above others */
+  border: 0.18rem solid var(--gradient-base-bottom); /* 2px */
+  box-shadow: 0 0 1.36rem var(--accent); /* 15px */
   z-index: 12;
-}
-
-/* Adjust row spacing for tablet view */
-@media (max-width: 768px) {
-  .nameRow {
-    /* Add bottom margin to rows for tablet view */
-    /* Increase or decrease this value to adjust vertical spacing between rows */
-    margin-bottom: 15px;
-  }
-}
-
-/* Adjust row spacing for mobile view */
-@media (max-width: 480px) {
-  .nameRow {
-    /* Add bottom margin to rows for mobile view */
-    /* Increase or decrease this value to adjust vertical spacing between rows */
-    margin-bottom: 10px;
-  }
 }

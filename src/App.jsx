@@ -26,6 +26,9 @@ function App() {
 
     // Add resize event listener
     window.addEventListener('resize', centerContent);
+
+    // Add this event listener to prevent default scrolling on arrow keys
+    window.addEventListener('keydown', preventArrowScroll);
   });
 
   createEffect(() => {
@@ -81,6 +84,13 @@ function App() {
       </div>
     </div>
   );
+}
+
+// Add this function to prevent default scrolling on arrow keys
+function preventArrowScroll(e) {
+  if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
+    e.preventDefault();
+  }
 }
 
 export default App;

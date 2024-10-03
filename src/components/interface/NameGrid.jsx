@@ -13,7 +13,7 @@ import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
 
-// const fullName = ['JOSHUA', 'RUSSELL', 'GANTT'];
+// const fullName = ['OKR', 'API', 'EOD'];
 const fullName = ['JOSHUA', 'PRODUCT', 'CODE'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
@@ -79,6 +79,14 @@ const NameGrid = (props) => {
   const [names, setNames] = createStore(initializeWordList());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
   const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 1 });
+
+  // Add this line to get the maxLength
+  const maxLength = Math.max(...fullName.map(name => name.length), 4);
+
+  // Add this effect to set the CSS custom property
+  createEffect(() => {
+    document.documentElement.style.setProperty('--grid-columns', maxLength.toString());
+  });
 
   // Load theme from local storage on mount
   onMount(() => {
@@ -294,16 +302,6 @@ const NameGrid = (props) => {
         {error() && <span class={styles.iconFallback}>{iconName.charAt(0).toUpperCase()}</span>}
       </>
     );
-  };
-
-  const logAndRenderIcon = (type, name) => {
-    const iconName = getItemIcon(type, name());
-    return getIconImg(iconName);
-  };
-
-  const getThemeIcon = () => {
-    const iconName = getItemIcon('theme', theme.theme());
-    return iconName;
   };
 
   return (

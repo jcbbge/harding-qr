@@ -12,19 +12,20 @@
       href="/src/assets/favicon.ico"
     />
 
-    <script>
-      (function () {
-        var theme = localStorage.getItem('theme') || 'digital-dawn';
-        var appearanceMode = localStorage.getItem('appearanceMode') || 'system';
-        document.documentElement.setAttribute('data-theme', theme);
-        if (appearanceMode === 'system') {
-          var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          document.documentElement.classList.toggle('dark-mode', isDarkMode);
-        } else {
-          document.documentElement.classList.toggle('dark-mode', appearanceMode === 'dark');
-        }
-      })();
-    </script>
+    <script type="module">
+        (() => {
+          const theme = localStorage.getItem('theme') || 'digital-dawn';
+          const appearanceMode = localStorage.getItem('appearanceMode') || 'system';
+          document.documentElement.setAttribute('data-theme', theme);
+          if (appearanceMode === 'system') {
+            const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.classList.toggle('dark-mode', isDarkMode);
+          } else {
+            document.documentElement.classList.toggle('dark-mode', appearanceMode === 'dark');
+          }
+        })();
+      </script>
+      
 
   </head>
   <body>

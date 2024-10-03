@@ -101,7 +101,17 @@ export default defineConfig({
       buildStart() {
         copyIcons();
       }
-    }
+    }, 
+    {
+        name: 'copy-headers-file',
+        generateBundle() {
+          this.emitFile({
+            type: 'asset',
+            fileName: '_headers',
+            source: '/*.js\n  Content-Type: application/javascript'
+          });
+        }
+      }
     // , cliPlugin()
   ],
   server: {

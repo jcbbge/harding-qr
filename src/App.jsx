@@ -64,7 +64,7 @@ function App() {
     </div>,
     <div class="code-intro">
       <span class="code-left"><s>Design</s> <s>Management</s> <b>Stuff.</b></span>
-      <span class="code-right">I also</span>
+      <span class="code-right">I also like to</span>
     </div>
   ];
 

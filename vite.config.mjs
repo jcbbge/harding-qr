@@ -46,7 +46,8 @@ const requiredIcons = [
   'plus',
   'square',
   'grid-3x3',
-  'grid-dots'
+  'grid-dots',
+  'caret-up-down'
 ];
 
 // Updated function to copy icons
@@ -117,7 +118,8 @@ export default defineConfig({
     // , cliPlugin()
   ],
   server: {
-    port: 3000
+    port: 3000,
+    host: true
   },
   build: {
     target: 'esnext',

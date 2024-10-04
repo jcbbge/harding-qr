@@ -143,6 +143,10 @@
     background-color: var(--accent-opposite);
     transition: background-color 0.2s ease;
   }
+
+  body {
+    overscroll-behavior-y: contain;
+  }
 }
 
 .cell {

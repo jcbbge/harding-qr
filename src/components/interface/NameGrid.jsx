@@ -2,6 +2,7 @@ import { createSignal, createEffect, For, Show, onMount, onCleanup, createMemo }
 import { createStore } from 'solid-js/store';
 import { useTheme } from '../../contexts/ThemeContext';
 import styles from './NameGrid.module.css';
+import MobileScrollUnlock from './MobileScrollUnlock';
 
 import letterChangeSound from '../../assets/sounds/natural-tap-1.wav';
 import letterChangeSoundDown from '../../assets/sounds/natural-tap-3.wav';
@@ -282,6 +283,14 @@ const NameGrid = (props) => {
     setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
   };
 
+  const disableOverscroll = () => {
+    document.body.style.overscrollBehaviorY = 'contain';
+  };
+
+  const enableOverscroll = () => {
+    document.body.style.overscrollBehaviorY = 'auto';
+  };
+
   onMount(() => {
     window.addEventListener('keydown', gridNavigate);
     letterChangeAudio = new Audio(letterChangeSound);
@@ -298,11 +307,17 @@ const NameGrid = (props) => {
 
     checkMobile();
     window.addEventListener('resize', checkMobile);
+
+    if (isMobile()) {
+      disableOverscroll();
+    }
   });
 
   onCleanup(() => {
     window.removeEventListener('keydown', gridNavigate);
     window.removeEventListener('resize', checkMobile);
+
+    enableOverscroll();
   });
 
   const handleTouchStart = (event, rowIndex, colIndex) => {
@@ -348,7 +363,6 @@ const NameGrid = (props) => {
 
   const getIconImg = iconName => {
     const [error, setError] = createSignal(false);
-
     return (
       <>
         <img
@@ -361,6 +375,11 @@ const NameGrid = (props) => {
         {error() && <span class={styles.iconFallback}>{iconName.charAt(0).toUpperCase()}</span>}
       </>
     );
+  };
+
+  const handleLetterChange = (direction) => {
+    // Call the existing letterChange function with the direction
+    updateLetterBox(focusedPosition().row, focusedPosition().col, direction);
   };
 
   return (
@@ -442,6 +461,10 @@ const NameGrid = (props) => {
           </>
         )}
       </For>
+      <MobileScrollUnlock
+        isMobile={isMobile()}
+        onLetterChange={handleLetterChange}
+      />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { action, useAction, useSubmission } from '@solidjs/router';
 
 const Scrumble = () => {
   const [timeLeft, setTimeLeft] = createSignal(60); // 60 seconds = 1 minute
+  const [heroUnlocked, setHeroUnlocked] = createSignal(false);
 
   let timerInterval;
 
@@ -35,23 +36,39 @@ const Scrumble = () => {
   const wordList = ['DEBUG', 'QUEUE', 'MERGE'];
 
   return (
-    <>
-      <div class="top-column">
-        <NameGrid
-          company={company()}
-          role={role()}
-          onLetterUnlock={handleLetterUnlock}
-          onAllLettersMatched={handleAllLettersMatched}
-          wordList={wordList}
-        />
+    <div class="main-content">
+      <div class={`snap-container ${heroUnlocked() ? 'unlocked' : ''}`}>
+        <section class="snap-section hero-section">
+            <h1>Scrumble #72438</h1>
+          <div class="name-grid-container">
+            <NameGrid
+              company={company()}
+              role={role()}
+              onLetterUnlock={handleLetterUnlock}
+              onAllLettersMatched={handleAllLettersMatched}
+              wordList={wordList}
+            />
+          </div>
+          <div class="timer-container">
+            <div id="timer">Time: {formattedTime()}</div>
+          </div>
+          <div class="score-container">
+            <div id="score">Score: 1000</div>
+          </div>
+          <div class="level-container">
+            <div id="level">Difficulty: med</div>
+          </div>
+        </section>
+        <section class="snap-section">
+          <h2>Section 2</h2>
+          <p>Content for section 2 goes here.</p>
+        </section>
+        <section class="snap-section">
+          <h2>Section 3</h2>
+          <p>Content for section 3 goes here.</p>
+        </section>
       </div>
-      <div class="timer-container">
-        <div id="timer">{formattedTime()}</div>
-      </div>
-      <div class="bottom-column">
-        <p>Scrumble #92734</p>
-      </div>
-    </>
+    </div>
   );
 };
 

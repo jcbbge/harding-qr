@@ -80,8 +80,6 @@ const NameGrid = (props) => {
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
   const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 1 });
   const [isMobile, setIsMobile] = createSignal(false);
-  const [touchStartX, setTouchStartX] = createSignal(0);
-  const [selectedCell, setSelectedCell] = createSignal(null);
   const [touchStartY, setTouchStartY] = createSignal(0);
   const [lastTouchTime, setLastTouchTime] = createSignal(0);
 
@@ -309,40 +307,42 @@ const NameGrid = (props) => {
 
   const handleTouchStart = (event, rowIndex, colIndex) => {
     if (!isMobile()) return;
-    setTouchStartX(event.touches[0].clientX);
+    event.preventDefault();
     setTouchStartY(event.touches[0].clientY);
     setLastTouchTime(Date.now());
-    setSelectedCell({ row: rowIndex, col: colIndex });
     setFocusedPosition({ row: rowIndex, col: colIndex });
     setActiveNameIndex(rowIndex);
   };
 
+  const handleTouchMove = (event) => {
+    if (!isMobile()) return;
+    event.preventDefault();
+  };
+
   const handleTouchEnd = (event, rowIndex, colIndex) => {
     if (!isMobile()) return;
-    const touchEndX = event.changedTouches[0].clientX;
+    event.preventDefault();
     const touchEndY = event.changedTouches[0].clientY;
-    const diffX = touchEndX - touchStartX();
     const diffY = touchEndY - touchStartY();
     const timeDiff = Date.now() - lastTouchTime();
 
-    if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
-      // Horizontal swipe
-      updateLetterBox(rowIndex, colIndex, diffX > 0 ? 1 : -1);
-    } else if (Math.abs(diffY) > 50 && Math.abs(diffY) > Math.abs(diffX)) {
+    if (Math.abs(diffY) > 50) {
       // Vertical swipe
       handleVerticalSwipe(rowIndex, colIndex, diffY > 0);
     } else if (timeDiff < 300) {
       // Tap event (if touch duration is less than 300ms)
-      props.onCellClick(rowIndex, colIndex);
+      setFocusedPosition({ row: rowIndex, col: colIndex });
+      setActiveNameIndex(rowIndex);
     }
-
-    setSelectedCell(null);
   };
 
   const handleVerticalSwipe = (rowIndex, colIndex, isDownSwipe) => {
-    const letterObj = names[rowIndex][colIndex];
-    if (letterObj.isVowel || letterObj.isEmpty) {
-      updateLetterBox(rowIndex, colIndex, isDownSwipe ? 1 : -1);
+    const { row, col } = focusedPosition();
+    if (row === rowIndex && col === colIndex) {
+      const letterObj = names[row][col];
+      if (letterObj.isVowel || letterObj.isEmpty) {
+        updateLetterBox(row, col, isDownSwipe ? 1 : -1);
+      }
     }
   };
 
@@ -430,6 +430,7 @@ const NameGrid = (props) => {
                       tabIndex={isFocused() ? 0 : -1}
                       onClick={() => !isMobile() && props.onCellClick(nameIndex(), letterIndex())}
                       onTouchStart={(e) => handleTouchStart(e, nameIndex(), letterIndex())}
+                      onTouchMove={handleTouchMove}
                       onTouchEnd={(e) => handleTouchEnd(e, nameIndex(), letterIndex())}
                     >
                       {letterObj.isEmpty ? getSettingIcon() : <span>{letterObj.currentLetter}</span>}

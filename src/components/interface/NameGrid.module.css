@@ -132,14 +132,25 @@
   .letterBox {
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    touch-action: none; /* Prevent default touch actions */
   }
 
   .letterBox.vowel {
     cursor: ns-resize;
   }
 
-  .letterBox.touching {
+  .letterBox.focused {
     background-color: var(--accent-opposite);
     transition: background-color 0.2s ease;
+  }
+}
+
+.cell {
+  touch-action: none; /* Prevent default touch actions */
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .cell {
+    user-select: none; /* Prevent text selection on mobile */
   }
 }

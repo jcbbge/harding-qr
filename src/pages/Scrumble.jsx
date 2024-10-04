@@ -21,6 +21,10 @@ const Scrumble = () => {
   const handleLetterUnlock = () => {
     console.log('letter unlocked - inside Scrumble.jsx');
   };
+  function handleAllLettersMatched() {
+    setHeroUnlocked(true);
+    console.log('All letters matched, hero section unlocked');
+  }
   // Format time as MM:SS
   const formattedTime = () => {
     const minutes = Math.floor(timeLeft() / 60);
@@ -37,6 +41,7 @@ const Scrumble = () => {
           company={company()}
           role={role()}
           onLetterUnlock={handleLetterUnlock}
+          onAllLettersMatched={handleAllLettersMatched}
           wordList={wordList}
         />
       </div>

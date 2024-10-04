@@ -5,6 +5,7 @@ function App() {
   const [company, setCompany] = createSignal('');
   const [role, setRole] = createSignal('');
   const [contentHeight, setContentHeight] = createSignal(0);
+  const [heroUnlocked, setHeroUnlocked] = createSignal(false);
 
   onMount(() => {
     const urlPath = window.location.pathname;
@@ -29,6 +30,9 @@ function App() {
 
     // Add this event listener to prevent default scrolling on arrow keys
     window.addEventListener('keydown', preventArrowScroll);
+
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
   });
 
   createEffect(() => {
@@ -53,6 +57,18 @@ function App() {
     console.log('Letter unlocked App.jsx callback');
   }
 
+  function handleAllLettersMatched() {
+    setHeroUnlocked(true);
+    console.log('All letters matched, hero section unlocked');
+  }
+
+  function handleScroll(event) {
+    if (!heroUnlocked()) {
+      event.preventDefault();
+      window.scrollTo(0, 0);
+    }
+  }
+
   const jsxElements = [
     <div class="name-intro">
       <span class="name-left">← →</span>
@@ -70,13 +86,14 @@ function App() {
 
   return (
     <div class="main-content">
-      <div class="snap-container">
+      <div class={`snap-container ${heroUnlocked() ? 'unlocked' : ''}`}>
         <section class="snap-section hero-section">
           <div class="name-grid-container">
             <NameGrid
               company={company()}
               role={role()}
               onLetterUnlock={handleLetterUnlock}
+              onAllLettersMatched={handleAllLettersMatched}
               jsxElements={jsxElements}
             />
           </div>
@@ -96,7 +113,7 @@ function App() {
 
 // Add this function to prevent default scrolling on arrow keys
 function preventArrowScroll(e) {
-  if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
+  if (['ArrowUp', 'ArrowDown', 'Space'].includes(e.key)) {
     e.preventDefault();
   }
 }

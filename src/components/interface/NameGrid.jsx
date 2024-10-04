@@ -82,6 +82,8 @@ const NameGrid = (props) => {
   const [isMobile, setIsMobile] = createSignal(false);
   const [touchStartX, setTouchStartX] = createSignal(0);
   const [selectedCell, setSelectedCell] = createSignal(null);
+  const [touchStartY, setTouchStartY] = createSignal(0);
+  const [lastTouchTime, setLastTouchTime] = createSignal(0);
 
   // Add this line to get the maxLength
   const maxLength = Math.max(...fullName.map(name => name.length), 4);
@@ -103,6 +105,13 @@ const NameGrid = (props) => {
   createEffect(() => {
     const currentTheme = theme.theme();
     localStorage.setItem('theme', currentTheme);
+  });
+
+  createEffect(() => {
+    const allMatched = names.every(word => word.every(letter => !letter.isVowel || letter.matched));
+    if (allMatched) {
+      props.onAllLettersMatched();
+    }
   });
 
   const findNextLetterBox = (currentRow, currentCol, direction) => {
@@ -202,7 +211,7 @@ const NameGrid = (props) => {
     }
   };
 
-  const updateLetterBox = (row, col, direction) => {
+  const updateLetterBox = (row, col, direction, isShiftEquivalent = false) => {
     const letterObj = names[row][col];
 
     if (letterObj.isEmpty) {
@@ -240,7 +249,7 @@ const NameGrid = (props) => {
     if (letterObj.isVowel) {
       setNames(row, col, letter => {
         if (!letter.isEmpty && !letter.matched) {
-          const newLetter = getNextLetter(letter.currentLetter, direction);
+          const newLetter = getNextLetter(letter.currentLetter, isShiftEquivalent ? -direction : direction);
 
           if (newLetter === letter.correctLetter) {
             props.onLetterUnlock(row, col);
@@ -272,7 +281,7 @@ const NameGrid = (props) => {
   };
 
   const checkMobile = () => {
-    setIsMobile(window.innerWidth <= 768); // Adjust this breakpoint as needed
+    setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
   };
 
   onMount(() => {
@@ -301,28 +310,40 @@ const NameGrid = (props) => {
   const handleTouchStart = (event, rowIndex, colIndex) => {
     if (!isMobile()) return;
     setTouchStartX(event.touches[0].clientX);
+    setTouchStartY(event.touches[0].clientY);
+    setLastTouchTime(Date.now());
     setSelectedCell({ row: rowIndex, col: colIndex });
+    setFocusedPosition({ row: rowIndex, col: colIndex });
+    setActiveNameIndex(rowIndex);
   };
 
   const handleTouchEnd = (event, rowIndex, colIndex) => {
     if (!isMobile()) return;
     const touchEndX = event.changedTouches[0].clientX;
-    const diff = touchEndX - touchStartX();
+    const touchEndY = event.changedTouches[0].clientY;
+    const diffX = touchEndX - touchStartX();
+    const diffY = touchEndY - touchStartY();
+    const timeDiff = Date.now() - lastTouchTime();
 
-    if (Math.abs(diff) > 50) { // Threshold for swipe detection
-      if (diff > 0) {
-        // Swipe right
-        updateLetterBox(rowIndex, colIndex, 1);
-      } else {
-        // Swipe left
-        updateLetterBox(rowIndex, colIndex, -1);
-      }
-    } else {
-      // Tap event
+    if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
+      // Horizontal swipe
+      updateLetterBox(rowIndex, colIndex, diffX > 0 ? 1 : -1);
+    } else if (Math.abs(diffY) > 50 && Math.abs(diffY) > Math.abs(diffX)) {
+      // Vertical swipe
+      handleVerticalSwipe(rowIndex, colIndex, diffY > 0);
+    } else if (timeDiff < 300) {
+      // Tap event (if touch duration is less than 300ms)
       props.onCellClick(rowIndex, colIndex);
     }
 
     setSelectedCell(null);
+  };
+
+  const handleVerticalSwipe = (rowIndex, colIndex, isDownSwipe) => {
+    const letterObj = names[rowIndex][colIndex];
+    if (letterObj.isVowel || letterObj.isEmpty) {
+      updateLetterBox(rowIndex, colIndex, isDownSwipe ? 1 : -1);
+    }
   };
 
   const getIconImg = iconName => {
@@ -407,7 +428,7 @@ const NameGrid = (props) => {
                       class={letterBoxClass()}
                       role="button"
                       tabIndex={isFocused() ? 0 : -1}
-                      onClick={() => props.onCellClick(nameIndex(), letterIndex())}
+                      onClick={() => !isMobile() && props.onCellClick(nameIndex(), letterIndex())}
                       onTouchStart={(e) => handleTouchStart(e, nameIndex(), letterIndex())}
                       onTouchEnd={(e) => handleTouchEnd(e, nameIndex(), letterIndex())}
                     >

@@ -926,3 +926,25 @@ footer {
 .code-right {
   text-align: right;
 }
+
+/* Add these styles to your existing CSS */
+
+.snap-container {
+  overflow: hidden;
+  height: 100vh;
+  scroll-snap-type: y mandatory;
+}
+
+.snap-container.unlocked {
+  overflow-y: auto;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  height: 100vh;
+}
+
+/* Prevent scrolling on touch devices when locked */
+.snap-container:not(.unlocked) {
+  touch-action: none;
+}

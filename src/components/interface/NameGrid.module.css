@@ -129,6 +129,15 @@
 
 /* Add this at the end of the file */
 @media (max-width: 768px) {
+  .letterBox {
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .letterBox.vowel {
+    cursor: ns-resize;
+  }
+
   .letterBox.touching {
     background-color: var(--accent-opposite);
     transition: background-color 0.2s ease;

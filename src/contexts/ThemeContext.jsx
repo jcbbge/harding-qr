@@ -12,7 +12,8 @@ const themeList = [
   { name: 'pastel-pop', icon: 'lollipop' },
   { name: 'vision-tech', icon: 'device-vision-pro' },
   { name: 'surfside-vibes', icon: 'wave-sine' },
-  { name: 'mall-rat', icon: 'shopping-bag' }
+  { name: 'mall-rat', icon: 'shopping-bag' },
+  { name: 'byte-blitz', icon: 'components' }
 ];
 
 const modeList = [

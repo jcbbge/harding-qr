@@ -47,7 +47,8 @@ const requiredIcons = [
   'square',
   'grid-3x3',
   'grid-dots',
-  'caret-up-down'
+  'caret-up-down',
+  'components'
 ];
 
 // Updated function to copy icons

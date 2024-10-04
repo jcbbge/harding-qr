@@ -690,6 +690,30 @@ nav.container > div {
   --accent-unexpected: #39ff14;
 }
 
+[data-theme='byte-blitz'] {
+  --gradient-base-bottom: #f0f0f0;
+  --gradient-base-top: #d9d9d9;
+  --gradient-overlay: #bfbfbf;
+  --text-primary: #1a1a1a;
+  --text-secondary: #404040;
+  --accent: #808080;
+  --accent-opposite: #404040;
+  --accent-fun: #bfbfbf;
+  --accent-unexpected: #d9d9d9;
+}
+
+[data-theme='byte-blitz'].dark-mode {
+  --gradient-base-bottom: #262626;
+  --gradient-base-top: #4d4d4d;
+  --gradient-overlay: #737373;
+  --text-primary: #e6e6e6;
+  --text-secondary: #bfbfbf;
+  --accent: #999999;
+  --accent-opposite: #bfbfbf;
+  --accent-fun: #737373;
+  --accent-unexpected: #4d4d4d;
+}
+
 /* Background color classes */
 .bg-gradient-base-bottom { background-color: var(--gradient-base-bottom); }
 .bg-gradient-base-top { background-color: var(--gradient-base-top); }

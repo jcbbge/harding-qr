@@ -71,18 +71,18 @@ function App() {
 
   const jsxElements = [
     <div class="name-intro">
-      <span class="name-left">← →</span>
-      <span class="name-right">Hi. My name is</span>
+      <span class="name-left text-lg">← →</span>
+      <span class="name-right text-lg ">My name is</span>
     </div>,
     <div class="product-intro">
-      <span class="product-left">I do</span>
-      <span class="product-right">ꜛ ꜜ &#x2423; ⮐</span>
+      <span class="product-left text-md">I do</span>
+      <span class="product-right text-md">ꜛ ꜜ &#x2423; ⮐</span>
     </div>,
     <div class="code-intro">
-      <span class="code-left"><s>Design</s> <s>Management</s> <b>Stuff.</b></span>
-      <span class="code-right">I also like to</span>
+      <span class="code-left text-md"><s>Design.</s> <s>Management.</s> <b>Stuff.</b></span>
+      <span class="code-right text-md">I also like to</span>
     </div>
-  ];
+  ];    
 
   return (
     <div class="main-content">

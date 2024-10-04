@@ -461,10 +461,10 @@ const NameGrid = (props) => {
           </>
         )}
       </For>
-      <MobileScrollUnlock
+      {/* <MobileScrollUnlock
         isMobile={isMobile()}
         onLetterChange={handleLetterChange}
-      />
+      /> */}
     </div>
   );
 };

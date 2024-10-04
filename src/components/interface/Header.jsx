@@ -6,11 +6,11 @@ const Header = () => {
       <nav class="nav-menu">
         <div>
           <a href="/">Home</a>
-          <a href="/roleco">Roleco</a>
+          <a href="/pmfanduel">Roleco</a>
           <a href="/help">Help</a>
         </div>
         <div>
-          <a href="/new-project">Play Scrumble!</a>
+          <a href="/scrumble">Play Scrumble!</a>
         </div>
       </nav>
     </header>

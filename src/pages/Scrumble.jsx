@@ -37,9 +37,9 @@ const Scrumble = () => {
           onLetterUnlock={handleLetterUnlock}
         />
       </div>
-      {/* <div class="timer-container">
+      <div class="timer-container">
         <div id="timer">{formattedTime()}</div>
-      </div> */}
+      </div>
       <div class="bottom-column">
         <p>Scrumble #92734</p>
       </div>

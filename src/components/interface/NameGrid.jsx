@@ -14,8 +14,12 @@ import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
 
-// const fullName = ['OKR', 'API', 'EOD'];
-const fullName = ['JOSHUA', 'PRODUCT', 'CODE'];
+
+
+const NameGrid = (props) => {
+
+    // const fullName = ['OKR', 'API', 'EOD'];
+let fullName = ['JOSHUA', 'PRODUCT', 'CODE'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
   letterChangeAudioDown,
@@ -24,6 +28,10 @@ let letterChangeAudio,
   leftKeyAudio,
   rightKeyAudio;
 let correctWordAudios = [];
+
+    if(props.wordList) {
+      fullName = props.wordList;
+    }
 
 const initializeWordList = () => {
   const maxLength = Math.max(...fullName.map(name => name.length), 4);
@@ -72,10 +80,8 @@ const initializeWordList = () => {
     }));
     console.log('Debug: processed name', result);
     return result;
-  });
-};
-
-const NameGrid = (props) => {
+    });
+  };
   const [theme, { updateTheme, updateMode, updatePattern, getItemIcon }] = useTheme();
   const [names, setNames] = createStore(initializeWordList());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);

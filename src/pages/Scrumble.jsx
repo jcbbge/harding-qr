@@ -28,6 +28,8 @@ const Scrumble = () => {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  const wordList = ['DEBUG', 'QUEUE', 'MERGE'];
+
   return (
     <>
       <div class="top-column">
@@ -35,6 +37,7 @@ const Scrumble = () => {
           company={company()}
           role={role()}
           onLetterUnlock={handleLetterUnlock}
+          wordList={wordList}
         />
       </div>
       <div class="timer-container">

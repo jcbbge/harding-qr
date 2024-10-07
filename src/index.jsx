@@ -106,10 +106,10 @@ render(
             path="/:roleco"
             component={RolecoWrapper}
           />
-          <Route
+          {/* <Route
             path="/scrumble"
             component={Scrumble}
-          />
+          /> */}
           <Route
             path="*404"
             component={NotFound}

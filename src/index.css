@@ -407,7 +407,7 @@ nav.container > div {
   --gradient-base-top: #b0e2ff;
   --gradient-overlay: #e6e6fa;
   --text-primary: #000000;
-  --text-secondary: #595959;
+  --text-secondary: #3d3d3d; /* Updated */
   --accent: #0056b3;
   --accent-opposite: #ff4500;
   --accent-fun: #32cd32;
@@ -419,10 +419,10 @@ nav.container > div {
   --gradient-base-top: #001f3f;
   --gradient-overlay: #2c0052;
   --text-primary: #e6e6fa;
-  --text-secondary: #b0b0b0;
+  --text-secondary: #f2f2ff; /* Updated */
   --accent: #4d94ff;
   --accent-opposite: #ff6347;
-  --accent-fun: #00ff00;
+  --accent-fun: #03bf03;
   --accent-unexpected: #ff1493;
 }
 
@@ -431,7 +431,7 @@ nav.container > div {
   --gradient-base-top: #00ffff;
   --gradient-overlay: #ff00ff;
   --text-primary: #000000;
-  --text-secondary: #333333;
+  --text-secondary: #1a1a1a; /* Updated */
   --accent: #ff00ff;
   --accent-opposite: #00ffff;
   --accent-fun: #ff1493;
@@ -443,7 +443,7 @@ nav.container > div {
   --gradient-base-top: #1a1a3a;
   --gradient-overlay: #3b0256;
   --text-primary: #00ffff;
-  --text-secondary: #ff69b4;
+  --text-secondary: #4dffff; /* Updated */
   --accent: #fff700;
   --accent-opposite: #00ffff;
   --accent-fun: #ff1493;
@@ -455,7 +455,7 @@ nav.container > div {
   --gradient-base-top: #87cefa;
   --gradient-overlay: #dda0dd;
   --text-primary: #000000;
-  --text-secondary: #4b0082;
+  --text-secondary: #2e0061; /* Updated */
   --accent: #ff1493;
   --accent-opposite: #00ffff;
   --accent-fun: #ff00ff;
@@ -467,7 +467,7 @@ nav.container > div {
   --gradient-base-top: #000080;
   --gradient-overlay: #4b0082;
   --text-primary: #ff69b4;
-  --text-secondary: #00ffff;
+  --text-secondary: #ff9cd2; /* Updated */
   --accent: #ff1493;
   --accent-opposite: #00ffff;
   --accent-fun: #ff00ff;
@@ -479,7 +479,7 @@ nav.container > div {
   --gradient-base-top: #7da1bf;
   --gradient-overlay: #d7e5f2;
   --text-primary: #1a1a1a;
-  --text-secondary: #474747;
+  --text-secondary: #0e0e0e; /* Updated */
   --accent: #c73850;
   --accent-opposite: #5a8435;
   --accent-fun: #b78500;
@@ -491,10 +491,10 @@ nav.container > div {
   --gradient-base-top: #1e3a5f;
   --gradient-overlay: #2e5a8f;
   --text-primary: #f0f0f0;
-  --text-secondary: #d0d0d0;
+  --text-secondary: #ffffff; /* Updated */
   --accent: #ff8fa3;
   --accent-opposite: #90cc65;
-  --accent-fun: #ffd700;
+  --accent-fun: #caab06;
   --accent-unexpected: #ff9770;
 }
 
@@ -503,7 +503,7 @@ nav.container > div {
   --gradient-base-top: #f2c9c9;
   --gradient-overlay: #fce4e4;
   --text-primary: #3a3a3a;
-  --text-secondary: #686868;
+  --text-secondary: #2c2c2c; /* Updated */
   --accent: #b39700;
   --accent-opposite: #4a719e;
   --accent-fun: #d35400;
@@ -515,35 +515,11 @@ nav.container > div {
   --gradient-base-top: #6b3a3a;
   --gradient-overlay: #8c5656;
   --text-primary: #f2e6e6;
-  --text-secondary: #d9c2c2;
+  --text-secondary: #fff0f0; /* Updated */
   --accent: #ffd700;
   --accent-opposite: #87ceeb;
-  --accent-fun: #ff7f50;
+  --accent-fun: #e46714;
   --accent-unexpected: #98fb98;
-}
-
-[data-theme='echo-sphere'] {
-  --gradient-base-bottom: #669da7;
-  --gradient-base-top: #a6d1d9;
-  --gradient-overlay: #d6f1f5;
-  --text-primary: #333333;
-  --text-secondary: #5a5a5a;
-  --accent: #c45f6e;
-  --accent-opposite: #3e847f;
-  --accent-fun: #b38600;
-  --accent-unexpected: #c13f3e;
-}
-
-[data-theme='echo-sphere'].dark-mode {
-  --gradient-base-bottom: #1a3a3f;
-  --gradient-base-top: #2a5a66;
-  --gradient-overlay: #3a7a8c;
-  --text-primary: #e6f2f5;
-  --text-secondary: #b8d8e0;
-  --accent: #ff9aaa;
-  --accent-opposite: #66e6d9;
-  --accent-fun: #ffd700;
-  --accent-unexpected: #ff6b6b;
 }
 
 [data-theme='urban-pulse'] {
@@ -551,7 +527,7 @@ nav.container > div {
   --gradient-base-top: #8c969b;
   --gradient-overlay: #bcc3c8;
   --text-primary: #2d2d2d;
-  --text-secondary: #575757;
+  --text-secondary: #1f1f1f; /* Updated */
   --accent: #b36f00;
   --accent-opposite: #5c848e;
   --accent-fun: #b38600;
@@ -563,10 +539,10 @@ nav.container > div {
   --gradient-base-top: #2a3236;
   --gradient-overlay: #3a464c;
   --text-primary: #e6e8e9;
-  --text-secondary: #b8babb;
+  --text-secondary: #f4f6f7; /* Updated */
   --accent: #ffa500;
   --accent-opposite: #87ceeb;
-  --accent-fun: #ffd700;
+  --accent-fun: #c0a306;
   --accent-unexpected: #a9a9a9;
 }
 
@@ -575,10 +551,10 @@ nav.container > div {
   --gradient-base-top: #f0f0f0;
   --gradient-overlay: #ffffff;
   --text-primary: #4a4a4a;
-  --text-secondary: #808080;
+  --text-secondary: #3c3c3c; /* Updated */
   --accent: #ffd100;
   --accent-opposite: #87ceeb;
-  --accent-fun: #ff4500;
+  --accent-fun: #fa7e50;
   --accent-unexpected: #202020;
 }
 
@@ -587,7 +563,7 @@ nav.container > div {
   --gradient-base-top: #1e1e1e;
   --gradient-overlay: #2a2a2a;
   --text-primary: #e0e0e0;
-  --text-secondary: #a0a0a0;
+  --text-secondary: #ffffff; /* Updated */
   --accent: #ffd700;
   --accent-opposite: #00bfff;
   --accent-fun: #8a2be2;
@@ -599,7 +575,7 @@ nav.container > div {
   --gradient-base-top: #d5f0e2;
   --gradient-overlay: #f5e8e8;
   --text-primary: #3d8c7d;
-  --text-secondary: #6b8e9e;
+  --text-secondary: #2f6b5f; /* Updated */
   --accent: #ff9999;
   --accent-opposite: #66cccc;
   --accent-fun: #ffb347;
@@ -611,10 +587,10 @@ nav.container > div {
   --gradient-base-top: #234141;
   --gradient-overlay: #2d5353;
   --text-primary: #a8c7b5;
-  --text-secondary: #8eacb7;
+  --text-secondary: #c6e5d3; /* Updated */
   --accent: #ff6b8b;
   --accent-opposite: #4deeea;
-  --accent-fun: #ff9966;
+  --accent-fun: #fa702b;
   --accent-unexpected: #aaff00;
 }
 
@@ -623,7 +599,7 @@ nav.container > div {
   --gradient-base-top: #ffe4e1;
   --gradient-overlay: #f3e5ab;
   --text-primary: #2f4f4f;
-  --text-secondary: #708090;
+  --text-secondary: #213a3a; /* Updated */
   --accent: #ffff00;
   --accent-opposite: #87ceeb;
   --accent-fun: #ff6347;
@@ -635,10 +611,10 @@ nav.container > div {
   --gradient-base-top: #16213e;
   --gradient-overlay: #0f3460;
   --text-primary: #e0e0e0;
-  --text-secondary: #bfbfbf;
+  --text-secondary: #ffffff; /* Updated */
   --accent: #ffff66;
   --accent-opposite: #4dd0e1;
-  --accent-fun: #ff00ff;
+  --accent-fun: #d301d3;
   --accent-unexpected: #00ff00;
 }
 
@@ -647,7 +623,7 @@ nav.container > div {
   --gradient-base-top: #f2f0e6;
   --gradient-overlay: #ffffff;
   --text-primary: #4a4a4a;
-  --text-secondary: #808080;
+  --text-secondary: #3c3c3c; /* Updated */
   --accent: #ffd100;
   --accent-opposite: #47b8e0;
   --accent-fun: #ff6b6b;
@@ -659,7 +635,7 @@ nav.container > div {
   --gradient-base-top: #204051;
   --gradient-overlay: #2c5364;
   --text-primary: #e0e0e0;
-  --text-secondary: #a0a0a0;
+  --text-secondary: #ffffff; /* Updated */
   --accent: #ffe66d;
   --accent-opposite: #ff6b6b;
   --accent-fun: #4ecdc4;
@@ -671,10 +647,10 @@ nav.container > div {
   --gradient-base-top: #e0ffff;
   --gradient-overlay: #f0ffff;
   --text-primary: #20b2aa;
-  --text-secondary: #708090;
+  --text-secondary: #188781; /* Updated */
   --accent: #ff69b4;
   --accent-opposite: #1e90ff;
-  --accent-fun: #ff00ff;
+  --accent-fun: #fbbafb;
   --accent-unexpected: #2f4f4f;
 }
 
@@ -683,7 +659,7 @@ nav.container > div {
   --gradient-base-top: #16213e;
   --gradient-overlay: #0f3460;
   --text-primary: #e0e0e0;
-  --text-secondary: #a0a0a0;
+  --text-secondary: #ffffff; /* Updated */
   --accent: #ffff00;
   --accent-opposite: #00ffff;
   --accent-fun: #ff1493;
@@ -695,7 +671,7 @@ nav.container > div {
   --gradient-base-top: #d9d9d9;
   --gradient-overlay: #bfbfbf;
   --text-primary: #1a1a1a;
-  --text-secondary: #404040;
+  --text-secondary: #0c0c0c; /* Updated */
   --accent: #808080;
   --accent-opposite: #404040;
   --accent-fun: #bfbfbf;
@@ -707,7 +683,7 @@ nav.container > div {
   --gradient-base-top: #4d4d4d;
   --gradient-overlay: #737373;
   --text-primary: #e6e6e6;
-  --text-secondary: #bfbfbf;
+  --text-secondary: #ffffff; /* Updated */
   --accent: #999999;
   --accent-opposite: #bfbfbf;
   --accent-fun: #737373;
@@ -801,6 +777,13 @@ body {
   overflow: hidden; /* Prevent scrolling on the layout */
 }
 
+.header-icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
 header, footer {
   position: fixed;
   left: 0;
@@ -865,19 +848,47 @@ footer {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  box-sizing: border-box;
-  padding: 0; /* Removed padding */
+  background-color: var(--accent-fun);
+  padding: 11px;
+}
+.nav-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}   
+.nav-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .nav-menu a {
-  color: #fff;
+  color: var(--gradient-base-top);
   text-decoration: none;
-  font-size: 1.2rem;
-  transition: color 0.3s ease;
+  display: inline-block;
+  position: relative;
+}
+.nav-menu a:not(:first-child) {
+  margin-left: 22px; /* Adjust this value as needed */
 }
 
-.nav-menu a:hover {
-  color: var(--accent-fun);
+.footer-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 22px;
+  background-color: var(--accent-fun);
+}
+.footer-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.footer-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 /* Desktop styles (1024px and above) */
@@ -899,34 +910,41 @@ footer {
 /* Mobile styles (up to 767px) */
 @media (max-width: 767px) {
   .layout {
-    padding: 0; /* Removed padding */
-  }
-
-  .nav-menu {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0; /* Removed padding */
-  }
-
-  .nav-menu > div {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0; /* Removed margin */
-  }
-
-  .nav-menu a {
-    font-size: 1rem;
-    margin-right: 0; /* Removed margin */
-  }
-
-  .nav-menu > div:last-child {
-    margin-top: 0; /* Removed margin */
+    padding: 0; 
   }
 
   .main-content {
     gap: 11px;
-    padding: 0; /* Removed padding */
+    padding: 0; 
+  }
+
+  .footer-menu {
+    color: var(--gradient-base-top);
+    padding: 11px;
+    flex-direction: column; /* Change flex direction to column */
+    align-items: flex-start; /* Align items to the start */
+  }
+
+  .footer-left,
+  .footer-right {
+    width: 100%; /* Ensure both items take full width */
+    margin-bottom: 11px; /* Add spacing between stacked items */
+  }
+
+  .footer-right {
+    margin-bottom: 0; /* Remove margin from the last item */
+  }
+
+  .footer-menu img:first-child {
+  margin-left: 5px; /* Apply margin to the first icon */
+}
+
+.footer-menu img:not(:first-child) {
+  margin-left: 11px; /* Apply margin to the rest of the icons */
+}
+
+  .nav-menu a:first-child {
+    margin-left: 5px; /* Apply margin to the first nav link */
   }
 }
 

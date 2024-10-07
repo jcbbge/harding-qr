@@ -4,7 +4,6 @@ const themeList = [
   { name: 'digital-dawn', icon: 'cpu' },
   { name: 'cyber-punk', icon: 'layers-difference' },
   { name: 'retro-wave', icon: 'device-tv-old' },
-  { name: 'echo-sphere', icon: 'sphere' },
   { name: 'rail-pop', icon: 'track' },
   { name: 'charge-back', icon: 'recharging' },
   { name: 'urban-pulse', icon: 'building-skyscraper' },
@@ -23,7 +22,6 @@ const modeList = [
 ];
 
 const patternList = [
-  { name: 'wavy', class: 'bg-wavy', icon: 'radar-2' },
   { name: 'zigzag', class: 'bg-zigzag', icon: 'timeline' },
   { name: 'cross', class: 'bg-cross', icon: 'plus' },
   { name: 'rectangles', class: 'bg-rectangles', icon: 'square' },

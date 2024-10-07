@@ -1,0 +1,44 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: var(--accent-fun)
+}
+
+.navMenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 11px;
+}
+
+.navLeft, .navRight {
+  display: flex;
+  align-items: center;
+}
+
+.navLink {
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin: 0 11px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 767px) {
+  .navMenu {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navRight {
+    margin-top: 11px;
+  }
+}

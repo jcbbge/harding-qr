@@ -1,16 +1,14 @@
-import '../../index.css';
+import styles from './Header.module.css';
 
 const Header = () => {
   return (
-    <header>
-      <nav class="nav-menu">
+    <header class={styles.header}>
+      <nav class={styles.navMenu}>
         <div>
-          <a href="/">Home</a>
-          <a href="/pmfanduel">Roleco</a>
-          <a href="/help">Help</a>
+          <a href="/" class={styles.navLink}>Home</a>
         </div>
         <div>
-          <a href="/scrumble">Play Scrumble!</a>
+          <a href="/scrumble" class={styles.navLink}>!Play Scrumble</a>
         </div>
       </nav>
     </header>

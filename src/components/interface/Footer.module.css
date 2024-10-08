@@ -4,7 +4,8 @@
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: var(--accent-fun)
+  border-top: 1px solid var(--text-primary);
+  /* background-color: var(--accent-fun) */
 }
 
 .footerMenu {
@@ -25,4 +26,5 @@
   .footerMenu {
     flex-direction: column;
   }
+
 }

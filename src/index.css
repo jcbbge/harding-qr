@@ -970,6 +970,15 @@ footer {
   text-align: right;
 }
 
+@media (max-width: 768px) {
+    .name-intro,
+    .product-intro,
+    .code-intro {
+        font-size: 14px;
+    }
+
+}
+
 /* Add these styles to your existing CSS */
 
 .snap-container {

@@ -845,6 +845,7 @@ footer {
 /* Updated nav-menu styles */
 .nav-menu {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -917,6 +918,11 @@ footer {
     gap: 11px;
     padding: 0; 
   }
+      .name-intro,
+    .product-intro,
+    .code-intro {
+        font-size: 14px;
+    }
 
   .footer-menu {
     color: var(--gradient-base-top);
@@ -970,14 +976,7 @@ footer {
   text-align: right;
 }
 
-@media (max-width: 768px) {
-    .name-intro,
-    .product-intro,
-    .code-intro {
-        font-size: 14px;
-    }
 
-}
 
 /* Add these styles to your existing CSS */
 

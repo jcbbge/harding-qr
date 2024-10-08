@@ -24,6 +24,5 @@
 @media (max-width: 767px) {
   .footerMenu {
     flex-direction: column;
-    align-items: flex-start;
   }
 }

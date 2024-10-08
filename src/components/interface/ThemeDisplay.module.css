@@ -18,6 +18,16 @@
   flex: 1;
 }
 
+@media (max-width: 768px) {
+
+    .themeDisplay {
+        padding-bottom: 11px;
+    }
+  .themeItem {
+    padding: 0;
+  }
+}
+
 .icon {
   width: 16px;
   height: 16px;

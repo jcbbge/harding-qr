@@ -5,11 +5,12 @@ export function ThemeDisplay() {
   const [theme, { getItemIcon }] = useTheme();
 
   const getIconImg = (iconName) => {
+    const isDarkMode = theme.mode() === 'dark';
     return (
       <img
         src={`/assets/icons/${iconName}.svg`}
         alt={`${iconName} icon`}
-        class={styles.icon}
+        class={`${styles.icon} ${isDarkMode ? styles.iconInverted : ''}`}
       />
     );
   };

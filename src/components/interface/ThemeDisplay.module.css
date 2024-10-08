@@ -34,6 +34,11 @@
   margin-right: 5px;
   vertical-align: middle;
   flex-shrink: 0;
+  transition: filter 0.3s ease; /* Add smooth transition for color change */
+}
+
+.iconInverted {
+  filter: invert(1) brightness(100); /* Invert colors to make the icon white */
 }
 
 .themeText {

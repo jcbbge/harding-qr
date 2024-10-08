@@ -75,14 +75,9 @@
   }
 }
 
-/* Other existing styles */
-.settingIcon {
-  color: var(--text-secondary);
-}
 
-.desktopIcon {
-  transition: transform 0.3s ease;
-}
+
+
 
 .nameRow {
   display: contents;
@@ -157,4 +152,18 @@
   .cell {
     user-select: none; /* Prevent text selection on mobile */
   }
+}
+
+/* New styles for icons */
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  vertical-align: middle;
+  flex-shrink: 0;
+  transition: filter 0.3s ease;
+}
+
+.iconInverted {
+  filter: invert(1) brightness(100);
 }

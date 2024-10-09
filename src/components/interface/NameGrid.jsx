@@ -34,9 +34,7 @@ let correctWordAudios = [];
     }
 
 const initializeWordList = () => {
-  const maxLength = Math.max(...fullName.map(name => name.length), 4);
-  console.log('Debug: maxLength', maxLength);
-  const [totalLengthCount, setTotalLengthCount] = createSignal(0);
+  const maxLength = Math.max(...fullName.map(name => name.length));
 
   const isVowel = char => 'AEIOU'.includes(char.toUpperCase());
   const getRandomLetter = (exclude) => {
@@ -44,44 +42,23 @@ const initializeWordList = () => {
     return availableLetters[Math.floor(Math.random() * availableLetters.length)];
   };
 
-  const padder = (name, index) => {
-    console.log(`Debug: Padding name "${name}" at index ${index}`);
-    console.log(`Debug: Initial name length: ${name.length}`);
-    console.log(`Debug: Total length count before: ${totalLengthCount()}`);
-
-    let paddedName = name;
-    const difference = maxLength - name.length;
-
-    if (totalLengthCount() < 3) {
-      const spaceToAdd = Math.min(difference, 3 - totalLengthCount());
-      paddedName = paddedName.padStart(name.length + spaceToAdd, ' ');
-      setTotalLengthCount(prev => prev + spaceToAdd);
-    }
-
-    // Always pad to maxLength, regardless of where the spaces were added
-    paddedName = paddedName.padEnd(maxLength, ' ');
-
-    console.log(`Debug: Final padded name: "${paddedName}", length: ${paddedName.length}`);
-    console.log(`Debug: Total length count after: ${totalLengthCount()}`);
-    return paddedName;
+  const padder = (name) => {
+    // Simply pad the name to maxLength
+    return name.padStart(maxLength, ' ');
   };
 
   const paddedNames = fullName.map(padder);
-  console.log('Debug: paddedNames', paddedNames);
-  console.log('Debug: paddedNames lengths', paddedNames.map(name => name.length));
 
   return paddedNames.map(name => {
-    const result = name.split('').map(char => ({
+    return name.split('').map(char => ({
       correctLetter: char,
       currentLetter: isVowel(char) ? getRandomLetter(char) : char,
       isVowel: isVowel(char),
       matched: !isVowel(char) && char !== ' ',
       isEmpty: char === ' '
     }));
-    console.log('Debug: processed name', result);
-    return result;
-    });
-  };
+  });
+};
   const [theme, { updateTheme, updateMode, updatePattern, getItemIcon }] = useTheme();
   const [names, setNames] = createStore(initializeWordList());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);

@@ -158,6 +158,10 @@ table {
   border-spacing: 0;
 }
 
+a {
+  color: var(--text-secondary);
+}
+
 /* monospace design system*/
 
 :root {

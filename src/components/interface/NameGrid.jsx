@@ -411,7 +411,7 @@ const initializeWordList = () => {
                   const letterBoxClass = createMemo(() => {
                     const classes = [styles.letterBox];
                     if (letterObj.isEmpty) {
-                      classes.push(styles.emptyBox, styles.accentUnexpected);
+                      classes.push(styles.emptyBox);
                     } else {
                       if (letterObj.matched) classes.push(styles.matched);
                       if (letterObj.isVowel) classes.push(styles.vowel);
@@ -468,10 +468,6 @@ const initializeWordList = () => {
           </>
         )}
       </For>
-      {/* <MobileScrollUnlock
-        isMobile={isMobile()}
-        onLetterChange={handleLetterChange}
-      /> */}
     </div>
   );
 };

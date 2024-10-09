@@ -154,12 +154,23 @@ const initializeWordList = () => {
     return { row: newRow, col: newCol };
   };
 
+  const setFocus = (row, col) => {
+    setFocusedPosition({ row, col });
+    setActiveNameIndex(row);
+    // Find the element and set focus
+    const element = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+    if (element) {
+      element.focus();
+    }
+  };
+
   const gridNavigate = event => {
     const { key, shiftKey } = event;
     const { row, col } = focusedPosition();
     let direction;
 
-    if (key === ' ' || key === 'Tab') {
+    // Prevent default for all navigation keys
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'a', 'w', 's', 'd', ' ', 'Tab'].includes(key)) {
       event.preventDefault();
     }
 
@@ -198,8 +209,7 @@ const initializeWordList = () => {
 
     if (direction) {
       const newPosition = findNextLetterBox(row, col, direction);
-      setFocusedPosition({ row: newPosition.row, col: newPosition.col });
-      setActiveNameIndex(newPosition.row);
+      setFocus(newPosition.row, newPosition.col);
     }
 
     direction = undefined;
@@ -317,6 +327,11 @@ const initializeWordList = () => {
     if (isMobile()) {
       disableOverscroll();
     }
+
+    // Set initial focus with a small delay
+    setTimeout(() => {
+      setFocus(0, 1);
+    }, 0);
   });
 
   onCleanup(() => {
@@ -331,8 +346,7 @@ const initializeWordList = () => {
     event.preventDefault();
     setTouchStartY(event.touches[0].clientY);
     setLastTouchTime(Date.now());
-    setFocusedPosition({ row: rowIndex, col: colIndex });
-    setActiveNameIndex(rowIndex);
+    setFocus(rowIndex, colIndex);
   };
 
   const handleTouchMove = (event) => {
@@ -352,8 +366,7 @@ const initializeWordList = () => {
       handleVerticalSwipe(rowIndex, colIndex, diffY > 0);
     } else if (timeDiff < 300) {
       // Tap event (if touch duration is less than 300ms)
-      setFocusedPosition({ row: rowIndex, col: colIndex });
-      setActiveNameIndex(rowIndex);
+      setFocus(rowIndex, colIndex);
     }
   };
 
@@ -453,11 +466,19 @@ const initializeWordList = () => {
                     <div
                       class={letterBoxClass()}
                       role="button"
-                      tabIndex={isFocused() ? 0 : -1}
-                      onClick={() => !isMobile() && props.onCellClick(nameIndex(), letterIndex())}
+                      tabIndex={0}
+                      data-row={nameIndex()}
+                      data-col={letterIndex()}
+                      onClick={() => !isMobile() && setFocus(nameIndex(), letterIndex())}
                       onTouchStart={(e) => handleTouchStart(e, nameIndex(), letterIndex())}
                       onTouchMove={handleTouchMove}
                       onTouchEnd={(e) => handleTouchEnd(e, nameIndex(), letterIndex())}
+                      onFocus={() => setFocusedPosition({ row: nameIndex(), col: letterIndex() })}
+                      onBlur={() => {
+                        if (isFocused()) {
+                          setFocusedPosition({ row: -1, col: -1 });
+                        }
+                      }}
                     >
                       {letterObj.isEmpty ? getSettingIcon() : <span>{letterObj.currentLetter}</span>}
                     </div>

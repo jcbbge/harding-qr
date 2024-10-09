@@ -1,15 +1,13 @@
 /* Base styles (mobile-first approach) */
 .nameGrid {
   display: grid;
-  grid-template-columns: repeat(var(--grid-columns, 4), minmax(0, 1fr));
-  gap: 1rem 0.55rem; /* Increased row gap to 1rem, kept column gap at 0.55rem */
+  gap: 10px;
+  padding: 5px 5px 10px; /* Add padding to top, left, right, and increase bottom padding */
+  width: calc(100% - 10px); /* Adjust width to account for left and right padding */
+  margin: 0 auto; /* Center the grid */
   justify-content: center;
   align-items: center;
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  /* padding: 1rem;  */
-  overflow-x: hidden;
+  overflow: visible; /* Allow overflow to be visible for focus outlines */
 }
 
 .letterBox {
@@ -23,11 +21,30 @@
   font-weight: bold;
   transition: all 0.3s ease;
   font-family: 'Array-BoldWide', sans-serif;
-  border-radius: 0.36rem; /* 4px */
-  position: relative;
-  z-index: 11;
+  position: relative; /* Add this if not already present */
+  z-index: 1; /* Ensure letterBox is above the expanded container */
   background-color: var(--gradient-base-bottom);
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  min-width: 1.5em; /* Set a minimum width based on the font size */
+  overflow: hidden; /* Hide overflow content */
 }
+
+.letterBox:focus {
+    outline: 2px solid purple; /* Example focus style */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    outline-offset: 2px;
+    z-index: 2; /* Ensure focused element is on top */
+  }
+
+  .letterBox:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
+  .letterBox:focus-visible {
+    outline: 2px solid var(--accent-opposite);
+    /* box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); */
+    box-shadow: 0 0 0 4px var(--accent-opposite);
+  }
 
 .jsxElement {
   grid-column: 1 / -1;
@@ -48,10 +65,6 @@
     gap: clamp(1.2rem, 3vw, 1.8rem) clamp(0.73rem, 2vw, 1.09rem);
     /* padding: clamp(1.45rem, 3vw, 2.18rem);  */
   }
-
-  .letterBox {
-    border-radius: clamp(0.45rem, 1vw, 0.55rem); /* 5px to 6px */
-  }
 }
 
 /* Styles for laptops and small desktops (992px and up) */
@@ -70,9 +83,6 @@
     padding: clamp(2.18rem, 5vw, 2.91rem); /* 24px to 32px */
   }
 
-  .letterBox {
-    border-radius: clamp(0.55rem, 1.2vw, 0.64rem); /* 6px to 7px */
-  }
 }
 
 
@@ -80,7 +90,10 @@
 
 
 .nameRow {
-  display: contents;
+  display: grid;
+  grid-template-columns: repeat(var(--name-length), minmax(1.5em, 1fr));
+  column-gap: 5px; /* Gap between columns (elements in a row) */
+  row-gap: 5px; /* Gap between rows (if needed) */
 }
 
 .letterBox:last-child {
@@ -113,6 +126,11 @@
   box-shadow: 0 0 1.36rem var(--accent); /* 15px */
   z-index: 12;
 }
+
+.lettberBox.focused:focus {
+    outline: 2px solid red; 
+    box-shadow: 1px 1px 1px 2px rgba(0, 123, 255, 0.25);
+  }
 
 .touching {
   background-color: #e0e0e0;
@@ -164,3 +182,5 @@
 .iconInverted {
   filter: invert(1) brightness(100);
 }
+
+/* Remove the .expandedContainer class */

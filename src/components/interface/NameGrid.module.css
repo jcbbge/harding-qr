@@ -137,6 +137,18 @@
   transition: background-color 0.2s ease;
 }
 
+.icon {
+    width: 33px;
+    height: 33px;
+    vertical-align: middle;
+    flex-shrink: 0;
+    transition: filter 0.3s ease;
+  }
+  
+  .iconInverted {
+    filter: invert(1) brightness(100);
+  }
+
 /* Add this at the end of the file */
 @media (max-width: 768px) {
   .letterBox {
@@ -157,6 +169,11 @@
   body {
     overscroll-behavior-y: contain;
   }
+
+  .icon {
+    width: 16px;
+    height: 16px;
+  } 
 }
 
 .cell {
@@ -169,18 +186,4 @@
   }
 }
 
-/* New styles for icons */
-.icon {
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-  vertical-align: middle;
-  flex-shrink: 0;
-  transition: filter 0.3s ease;
-}
 
-.iconInverted {
-  filter: invert(1) brightness(100);
-}
-
-/* Remove the .expandedContainer class */

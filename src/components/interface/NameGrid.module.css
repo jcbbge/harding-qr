@@ -143,7 +143,10 @@
   vertical-align: middle;
   flex-shrink: 0;
   transition: filter 0.3s ease;
-  filter: var(--icon-filter);
+  filter: filter 0.3s ease;
+}
+.iconInverted {
+  filter: invert(1) brightness(100); /* Invert colors to make the icon white */
 }
 
 /* Add this at the end of the file */

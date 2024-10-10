@@ -358,19 +358,13 @@ const initializeWordList = () => {
   };
 
   const getIconImg = iconName => {
-    const [error, setError] = createSignal(false);
     const isDarkMode = theme.mode() === 'dark';
     return (
-      <>
         <img
           src={`/assets/icons/${iconName}.svg`}
           alt={`${iconName} icon`}
           class={`${styles.icon} ${isDarkMode ? styles.iconInverted : ''}`}
-          onError={() => setError(true)}
-          style={{ display: error() ? 'none' : 'inline' }}
         />
-        {error() && <span class={styles.iconFallback}>{iconName.charAt(0).toUpperCase()}</span>}
-      </>
     );
   };
 

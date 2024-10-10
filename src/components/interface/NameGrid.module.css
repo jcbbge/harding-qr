@@ -138,16 +138,13 @@
 }
 
 .icon {
-    width: 33px;
-    height: 33px;
-    vertical-align: middle;
-    flex-shrink: 0;
-    transition: filter 0.3s ease;
-  }
-  
-  .iconInverted {
-    filter: invert(1) brightness(100);
-  }
+  width: 33px;
+  height: 33px;
+  vertical-align: middle;
+  flex-shrink: 0;
+  transition: filter 0.3s ease;
+  filter: var(--icon-filter);
+}
 
 /* Add this at the end of the file */
 @media (max-width: 768px) {

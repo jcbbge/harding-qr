@@ -1,87 +1,119 @@
 /* Base styles (mobile-first approach) */
 .nameGrid {
-  display: grid;
-  gap: 11px;
-  padding: 5px 5px 10px; /* Add padding to top, left, right, and increase bottom padding */
-  width: calc(100% - 10px); /* Adjust width to account for left and right padding */
-  margin: 0 auto; /* Center the grid */
-  justify-content: center;
-  align-items: center;
-  overflow: visible; /* Allow overflow to be visible for focus outlines */
+    display: grid;
+    gap: 11px;
+    padding: 5px 5px 10px;
+    /* Add padding to top, left, right, and increase bottom padding */
+    width: calc(100% - 10px);
+    /* Adjust width to account for left and right padding */
+    margin: 0 auto;
+    /* Center the grid */
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+    /* Allow overflow to be visible for focus outlines */
 }
 
 .letterBox {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border: 0.18rem solid var(--text-primary); /* 2px */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: clamp(1rem, 7vw, 6rem); /* 11px to 16px */
-  font-weight: bold;
-  transition: all 0.3s ease;
-  /* font-family: 'Array-BoldWide', sans-serif; */
-  position: relative; /* Add this if not already present */
-  z-index: 1; /* Ensure letterBox is above the expanded container */
-  background-color: var(--gradient-base-bottom);
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  min-width: 1.5em; /* Set a minimum width based on the font size */
-  overflow: hidden; /* Hide overflow content */
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 0.18rem solid var(--text-primary);
+    /* 2px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1rem, 7vw, 6rem);
+    /* 11px to 16px */
+    font-weight: bold;
+    transition: all 0.3s ease;
+    /* font-family: 'Array-BoldWide', sans-serif; */
+    position: relative;
+    /* Add this if not already present */
+    z-index: 1;
+    /* Ensure letterBox is above the expanded container */
+    background-color: var(--gradient-base-bottom);
+    box-sizing: border-box;
+    /* Include padding and border in the element's total width and height */
+    min-width: 1.5em;
+    /* Set a minimum width based on the font size */
+    overflow: hidden;
+    /* Hide overflow content */
 }
 
-.letterBox:focus {
-    outline: 2px solid purple; /* Example focus style */
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-    outline-offset: 2px;
-    z-index: 2; /* Ensure focused element is on top */
-  }
+.letterBox:focus,
+.letterBox.focused {
+    outline: 2px solid var(--accent-opposite) !important;
+    box-shadow: 0 0 0 4px var(--accent-opposite) !important;
+    z-index: 12 !important;
+    background-color: var(--accent) !important;
+    color: var(--text-secondary) !important;
+    position: relative;
+    /* Ensure the z-index works */
+}
 
-  .letterBox:focus:not(:focus-visible) {
-    outline: none;
-    box-shadow: none;
-  }
-  .letterBox:focus-visible {
-    outline: 2px solid var(--accent-opposite);
-    /* box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); */
-    box-shadow: 0 0 0 4px var(--accent-opposite);
-  }
+/* Remove this rule to allow focus styles to be visible */
+/* .letterBox:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+} */
+
+/* Add a specific rule for focus-visible */
+.letterBox:focus-visible {
+    outline: 2px solid var(--accent-opposite) !important;
+    box-shadow: 0 0 0 4px var(--accent-opposite) !important;
+}
+
+/* Add a new rule to ensure focus is visible even when using mouse */
+.letterBox:focus:not(:focus-visible) {
+    outline: 2px solid var(--accent) !important;
+    box-shadow: 0 0 0 4px var(--accent) !important;
+}
 
 .jsxElement {
-  grid-column: 1 / -1;
-  letter-spacing: -0.05em;
+    grid-column: 1 / -1;
+    letter-spacing: -0.05em;
 }
 
 /* Styles for larger mobile devices (375px and up) */
-@media (min-width: 34.09rem) { /* 375px */
-  .nameGrid {
-    gap: clamp(1rem, 2.5vw, 1.5rem) clamp(0.55rem, 1.5vw, 0.91rem);
-    /* padding: clamp(1.09rem, 2vw, 1.82rem);  */
-  }
+@media (min-width: 34.09rem) {
+
+    /* 375px */
+    .nameGrid {
+        gap: clamp(1rem, 2.5vw, 1.5rem) clamp(0.55rem, 1.5vw, 0.91rem);
+        /* padding: clamp(1.09rem, 2vw, 1.82rem);  */
+    }
 }
 
 /* Styles for tablets and large phones (600px and up) */
-@media (min-width: 54.55rem) { /* 600px */
-  .nameGrid {
-    gap: clamp(1.2rem, 3vw, 1.8rem) clamp(0.73rem, 2vw, 1.09rem);
-    /* padding: clamp(1.45rem, 3vw, 2.18rem);  */
-  }
+@media (min-width: 54.55rem) {
+
+    /* 600px */
+    .nameGrid {
+        gap: clamp(1.2rem, 3vw, 1.8rem) clamp(0.73rem, 2vw, 1.09rem);
+        /* padding: clamp(1.45rem, 3vw, 2.18rem);  */
+    }
 }
 
 /* Styles for laptops and small desktops (992px and up) */
-@media (min-width: 90.18rem) { /* 992px */
-  .nameGrid {
-    gap: clamp(1.5rem, 3.5vw, 2.2rem) clamp(0.91rem, 2.5vw, 1.27rem);
-    /* padding: clamp(1.82rem, 4vw, 2.55rem); */
-  }
+@media (min-width: 90.18rem) {
+
+    /* 992px */
+    .nameGrid {
+        gap: clamp(1.5rem, 3.5vw, 2.2rem) clamp(0.91rem, 2.5vw, 1.27rem);
+        /* padding: clamp(1.82rem, 4vw, 2.55rem); */
+    }
 
 }
 
 /* Styles for larger desktops (1200px and above) */
-@media (min-width: 109.09rem) { /* 1200px */
-  .nameGrid {
-    gap: clamp(1.8rem, 4vw, 2.5rem) clamp(1.09rem, 3vw, 1.45rem);
-    padding: clamp(2.18rem, 5vw, 2.91rem); /* 24px to 32px */
-  }
+@media (min-width: 109.09rem) {
+
+    /* 1200px */
+    .nameGrid {
+        gap: clamp(1.8rem, 4vw, 2.5rem) clamp(1.09rem, 3vw, 1.45rem);
+        padding: clamp(2.18rem, 5vw, 2.91rem);
+        /* 24px to 32px */
+    }
 
 }
 
@@ -90,64 +122,59 @@
 
 
 .nameRow {
-  display: grid;
-  grid-template-columns: repeat(var(--name-length), 1fr);
-  gap: 11px;
-  column-gap: 5px; /* Gap between columns (elements in a row) */
-  row-gap: 5px; /* Gap between rows (if needed) */
+    display: grid;
+    grid-template-columns: repeat(var(--name-length), 1fr);
+    gap: 11px;
+    column-gap: 5px;
+    /* Gap between columns (elements in a row) */
+    row-gap: 5px;
+    /* Gap between rows (if needed) */
 }
 
 .letterBox:last-child {
-  margin-right: 0;
+    margin-right: 0;
 }
 
 .letterBox.emptyBox {
-  background-color: var(--accent-fun);
+    background-color: var(--accent-fun);
 }
 
 .letterBox.vowel {
-  cursor: ns-resize;
-  background-color: var(--accent-opposite);
-  color: var(--text-secondary);
+    cursor: ns-resize;
+    background-color: var(--accent-opposite);
+    color: var(--text-secondary);
 }
 
 .letterBox.matched.vowel {
-  background-color: var(--accent);
+    background-color: var(--accent);
 }
 
 .letterBox.matched {
-  border: 0.18rem solid var(--text-primary); /* 2px */
-  background-color: var(--accent-unexpected);
-  color: var(--text-secondary);
+    border: 0.18rem solid var(--text-primary);
+    /* 2px */
+    background-color: var(--accent-unexpected);
+    color: var(--text-secondary);
 }
 
-.letterBox.focused {
-  background-color: var(--accent);
-  border: 0.18rem solid var(--gradient-base-bottom); /* 2px */
-  box-shadow: 0 0 1.36rem var(--accent); /* 15px */
-  z-index: 12;
-}
 
-.lettberBox.focused:focus {
-    outline: 2px solid red; 
-    box-shadow: 1px 1px 1px 2px rgba(0, 123, 255, 0.25);
-  }
 
 .touching {
-  background-color: #e0e0e0;
-  transition: background-color 0.2s ease;
+    background-color: #e0e0e0;
+    transition: background-color 0.2s ease;
 }
 
 .icon {
-  width: 33px;
-  height: 33px;
-  vertical-align: middle;
-  flex-shrink: 0;
-  transition: filter 0.3s ease;
-  filter: filter 0.3s ease;
+    width: 33px;
+    height: 33px;
+    vertical-align: middle;
+    flex-shrink: 0;
+    transition: filter 0.3s ease;
+    filter: filter 0.3s ease;
 }
+
 .iconInverted {
-  filter: invert(1) brightness(100); /* Invert colors to make the icon white */
+    filter: invert(1) brightness(100);
+    /* Invert colors to make the icon white */
 }
 
 /* Add this at the end of the file */
@@ -157,39 +184,40 @@
         grid-template-columns: repeat(var(--name-length), 1fr);
     }
 
-  .letterBox {
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: none; /* Prevent default touch actions */
-  }
+    .letterBox {
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: none;
+        /* Prevent default touch actions */
+    }
 
-  .letterBox.vowel {
-    cursor: ns-resize;
-  }
+    .letterBox.vowel {
+        cursor: ns-resize;
+    }
 
-  .letterBox.focused {
-    background-color: var(--accent-opposite);
-    transition: background-color 0.2s ease;
-  }
+    .letterBox.focused {
+        background-color: var(--accent-opposite);
+        transition: background-color 0.2s ease;
+    }
 
-  body {
-    overscroll-behavior-y: contain;
-  }
+    body {
+        overscroll-behavior-y: contain;
+    }
 
-  .icon {
-    width: 16px;
-    height: 16px;
-  } 
+    .icon {
+        width: 16px;
+        height: 16px;
+    }
 }
 
 .cell {
-  touch-action: none; /* Prevent default touch actions */
+    touch-action: none;
+    /* Prevent default touch actions */
 }
 
 @media (hover: none) and (pointer: coarse) {
-  .cell {
-    user-select: none; /* Prevent text selection on mobile */
-  }
+    .cell {
+        user-select: none;
+        /* Prevent text selection on mobile */
+    }
 }
-
-

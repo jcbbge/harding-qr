@@ -44,11 +44,7 @@ let correctWordAudios = [];
     }
 
 const initializeWordList = () => {
-  console.log("Starting initializeWordList");
-  console.log("Initial fullName:", fullName);
-
   const maxLength = Math.max(...fullName.map(name => name.length), 4);
-  console.log("Calculated maxLength:", maxLength);
 
   const isVowel = char => 'AEIOU'.includes(char.toUpperCase());
   const getRandomLetter = (exclude) => {
@@ -59,12 +55,10 @@ const initializeWordList = () => {
   const padder = (name) => {
     // Simply pad the name to maxLength
     const paddedName = name.padStart(maxLength, ' ');
-    console.log(`Padded "${name}" to "${paddedName}"`);
     return paddedName;
   };
 
   const paddedNames = fullName.map(padder);
-  console.log("Padded names:", paddedNames);
 
   const result = paddedNames.map(name => {
     return name.split('').map(char => ({
@@ -76,7 +70,6 @@ const initializeWordList = () => {
     }));
   });
 
-  console.log("Final result:", result);
   return result;
 };
   const [theme, { updateTheme, updateMode, updatePattern, getItemIcon }] = useTheme();
@@ -153,16 +146,37 @@ const initializeWordList = () => {
     return { row: newRow, col: newCol };
   };
 
+  const [focusedElement, setFocusedElement] = createSignal(null);
+
+  // Replace the existing setFocus function with this:
   const setFocus = (row, col) => {
     setFocusedPosition({ row, col });
     setActiveNameIndex(row);
     setIsGridFocused(true);
-    // Find the element and set focus
-    const element = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-    if (element) {
-      element.focus();
-    }
+    const selector = `[data-row="${row}"][data-col="${col}"]`;
+    setFocusedElement(selector);
+    
+    // Add this part to focus the element directly
+    setTimeout(() => {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.focus();
+        // Add this line to prevent focus from being lost
+        element.addEventListener('blur', (event) => event.preventDefault(), { once: true });
+      }
+    }, 0);
   };
+
+  // Add this effect to handle focus
+  createEffect(() => {
+    const selector = focusedElement();
+    if (selector) {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.focus();
+      }
+    }
+  });
 
   const gridNavigate = event => {
     const { key, shiftKey } = event;
@@ -419,6 +433,18 @@ const initializeWordList = () => {
     // Call the existing letterChange function with the direction
     updateLetterBox(focusedPosition().row, focusedPosition().col, direction);
   };
+  const handleClick = (e, rowIndex, colIndex) => {
+    setFocus(rowIndex, colIndex);
+    // Use querySelector instead of e.currentTarget
+    setTimeout(() => {
+      const element = document.querySelector(`[data-row="${rowIndex}"][data-col="${colIndex}"]`);
+      if (element) {
+        element.focus();
+        // Add this line to prevent focus from being lost
+        element.addEventListener('blur', (event) => event.preventDefault(), { once: true });
+      }
+    }, 0);
+  }
 
   return (
     <div class={styles.nameGrid}>
@@ -434,12 +460,13 @@ const initializeWordList = () => {
             >
               <For each={name}>
                 {(letterObj, letterIndex) => {
-                  const isFocused = createMemo(
-                    () =>
-                      isGridFocused() &&
+                  const isFocused = createMemo(() => {
+                    const focused = isGridFocused() &&
                       nameIndex() === focusedPosition().row &&
-                      letterIndex() === focusedPosition().col
-                  );
+                      letterIndex() === focusedPosition().col;
+
+                    return focused;
+                  });
 
                   const letterBoxClass = createMemo(() => {
                     const classes = [styles.letterBox];
@@ -454,7 +481,9 @@ const initializeWordList = () => {
                         classes.push(styles.accentOpposite);
                       }
                     }
-                    if (isFocused()) classes.push(styles.focused);
+                    if (isFocused()) {
+                      classes.push(styles.focused);
+                    }
                     return classes.join(' ');
                   });
 
@@ -489,16 +518,13 @@ const initializeWordList = () => {
                       tabIndex={0}
                       data-row={nameIndex()}
                       data-col={letterIndex()}
-                      onClick={() => !isMobile() && setFocus(nameIndex(), letterIndex())}
+                      onClick={(e) => handleClick(e, nameIndex(), letterIndex())}
                       onTouchStart={(e) => handleTouchStart(e, nameIndex(), letterIndex())}
                       onTouchMove={handleTouchMove}
                       onTouchEnd={(e) => handleTouchEnd(e, nameIndex(), letterIndex())}
-                      onFocus={() => {
+                      onFocus={(e) => {
                         setFocusedPosition({ row: nameIndex(), col: letterIndex() });
                         setIsGridFocused(true);
-                      }}
-                      onBlur={() => {
-                        // We don't reset focus here, as it will be handled by the focusin event
                       }}
                     >
                       {letterObj.isEmpty ? getSettingIcon() : <span>{letterObj.currentLetter}</span>}
@@ -513,7 +539,7 @@ const initializeWordList = () => {
       <Show when={props.jsxElements}>
         <div class="name-intro">
             <span class="name-left">Code.</span>
-            <span class="name-right">But I also build w/ AI</span>
+            <span class="name-right">And I also build w/ AI</span>
         </div>
       </Show>
     </div>

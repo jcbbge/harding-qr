@@ -14,12 +14,22 @@ import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
 
-
+// Add this function near the top of the component, after the imports and before the NameGrid function
+const findFirstVowelPosition = (names) => {
+  for (let row = 0; row < names.length; row++) {
+    for (let col = 0; col < names[row].length; col++) {
+      if (names[row][col].isVowel) {
+        return { row, col };
+      }
+    }
+  }
+  return { row: 0, col: 0 }; // Fallback to first position if no vowels found
+};
 
 const NameGrid = (props) => {
 
-    // const fullName = ['OKR', 'API', 'EOD'];
-let fullName = ['RUSSELL', 'PRODUCT', 'CODE'];
+    // let fullName = ['OKR', 'API', 'EOD'];
+let fullName = ['JOSHUA', 'PRODUCT', 'CODE'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
   letterChangeAudioDown,
@@ -34,7 +44,11 @@ let correctWordAudios = [];
     }
 
 const initializeWordList = () => {
-  const maxLength = Math.max(...fullName.map(name => name.length));
+  console.log("Starting initializeWordList");
+  console.log("Initial fullName:", fullName);
+
+  const maxLength = Math.max(...fullName.map(name => name.length), 4);
+  console.log("Calculated maxLength:", maxLength);
 
   const isVowel = char => 'AEIOU'.includes(char.toUpperCase());
   const getRandomLetter = (exclude) => {
@@ -44,12 +58,15 @@ const initializeWordList = () => {
 
   const padder = (name) => {
     // Simply pad the name to maxLength
-    return name.padStart(maxLength, ' ');
+    const paddedName = name.padStart(maxLength, ' ');
+    console.log(`Padded "${name}" to "${paddedName}"`);
+    return paddedName;
   };
 
   const paddedNames = fullName.map(padder);
+  console.log("Padded names:", paddedNames);
 
-  return paddedNames.map(name => {
+  const result = paddedNames.map(name => {
     return name.split('').map(char => ({
       correctLetter: char,
       currentLetter: isVowel(char) ? getRandomLetter(char) : char,
@@ -58,11 +75,15 @@ const initializeWordList = () => {
       isEmpty: char === ' '
     }));
   });
+
+  console.log("Final result:", result);
+  return result;
 };
   const [theme, { updateTheme, updateMode, updatePattern, getItemIcon }] = useTheme();
   const [names, setNames] = createStore(initializeWordList());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
-  const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 2 });
+  // Replace the existing focusedPosition signal initialization with this:
+  const [focusedPosition, setFocusedPosition] = createSignal(findFirstVowelPosition(names));
   const [isMobile, setIsMobile] = createSignal(false);
   const [touchStartY, setTouchStartY] = createSignal(0);
   const [lastTouchTime, setLastTouchTime] = createSignal(0);
@@ -305,10 +326,9 @@ const initializeWordList = () => {
       disableOverscroll();
     }
 
-    // Set initial focus with a small delay
-    setTimeout(() => {
-      setFocus(0, 1);
-    }, 0);
+    // Set initial focus to the first vowel position
+    const firstVowelPosition = findFirstVowelPosition(names);
+    setFocus(firstVowelPosition.row, firstVowelPosition.col);
   });
 
   onCleanup(() => {

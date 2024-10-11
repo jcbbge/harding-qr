@@ -32,11 +32,11 @@ const NameGrid = (props) => {
 let fullName = ['RUSSELL', 'PRODUCT', 'CODE'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
-  letterChangeAudioDown,
-  correctLetterAudio,
-  allWordsCompleteAudio,
-  leftKeyAudio,
-  rightKeyAudio;
+    letterChangeAudioDown,
+    correctLetterAudio,
+    allWordsCompleteAudio,
+    leftKeyAudio,
+    rightKeyAudio;
 let correctWordAudios = [];
 
     if(props.wordList) {

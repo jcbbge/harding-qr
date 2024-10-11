@@ -1,61 +1,59 @@
-/* Container for the animated letter, clips the animation */
+/* Container for the animated letter
+   This element clips the animation to prevent overflow */
 .letterContainer {
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
+    position: relative;  /* Creates a positioning context for absolute children */
+    overflow: hidden;    /* Hides any content that exceeds this container's bounds */
+    height: 100%;        /* Takes full height of its parent */
+    width: 100%;         /* Takes full width of its parent */
 }
 
-/* Wrapper for the letters, contains both the current and new letter */
+/* Wrapper for the letters
+   This element contains both the current and new letter */
 .letterWrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 200%; /* Double height to accommodate two letters */
-  display: flex;
-  flex-direction: column;
+    position: absolute;  /* Positions this element relative to .letterContainer */
+    top: 0;              /* Aligns the wrapper to the top of the container */
+    left: 0;             /* Aligns the wrapper to the left of the container */
+    width: 100%;         /* Takes full width of the container */
+    height: 200%;        /* Double height to accommodate two letters */
+    display: flex;       /* Uses flexbox for layout */
+    flex-direction: column;  /* Stacks flex items (letters) vertically */
 }
 
 /* Styles for each letter span */
 .letter {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 50%; /* Each letter takes up half the wrapper height */
-  width: 100%;
+    display: flex;           /* Uses flexbox for centering content */
+    align-items: center;     /* Centers content vertically */
+    justify-content: center; /* Centers content horizontally */
+    height: 50%;             /* Each letter takes up half the wrapper height */
+    width: 100%;             /* Each letter takes full width */
 }
 
-/* Animation for rolling down (new letter appears from top) */
 @keyframes rollDown {
-  from { transform: translateY(-50%); }
-  to { transform: translateY(0); }
+    from { transform: translateY(0); }     /* Start position: no translation */
+    to { transform: translateY(100%); }     /* End position: moved down by 50% of its height */
 }
 
-/* Animation for rolling up (new letter appears from bottom) */
 @keyframes rollUp {
-  from { transform: translateY(0); }
-  to { transform: translateY(-50%); }
+    from { transform: translateY(0); }     /* Start position: no translation */
+    to { transform: translateY(-100%); }    /* End position: moved up by 50% of its height */
 }
 
-/* Class applied to trigger roll down animation */
 .rollDown {
-  animation-name: rollDown;
+    animation: rollDown 0.3s ease-in-out forwards;  /* Applies rollDown animation */
 }
 
-/* Class applied to trigger roll up animation */
 .rollUp {
-  animation-name: rollUp;
+    animation: rollUp 0.3s ease-in-out forwards;    /* Applies rollUp animation */
 }
 
 .velocity1 {
-  animation-duration: 300ms;
+    animation-duration: 300ms;  /* Slowest speed */
 }
 
 .velocity1_5 {
-  animation-duration: 200ms;
+    animation-duration: 200ms;  /* Medium speed */
 }
 
 .velocity2 {
-  animation-duration: 150ms;
+    animation-duration: 150ms;  /* Fastest speed */
 }

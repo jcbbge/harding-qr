@@ -2,46 +2,39 @@ import { createSignal, createEffect } from 'solid-js';
 import styles from './AnimatedLetter.module.css';
 
 const AnimatedLetter = (props) => {
-  const [currentLetter, setCurrentLetter] = createSignal(props.currentLetter);
-  const [newLetter, setNewLetter] = createSignal(props.newLetter);
-  const [animationClass, setAnimationClass] = createSignal('');
+	console.log('AnimatedLetter: Component rendered with props', props);
 
-  createEffect(() => {
-    console.log('Effect triggered. Current state:', {
-      currentLetter: currentLetter(),
-      newLetter: newLetter(),
-      direction: props.direction
-    });
+	const [currentLetter, setCurrentLetter] = createSignal(props.currentLetter);
+	const [newLetter, setNewLetter] = createSignal(props.newLetter);
+	const [animationClass, setAnimationClass] = createSignal('');
+	const [animationSpeed, setAnimationSpeed] = createSignal('velocity1');
 
-    if (props.newLetter !== currentLetter()) {
-      console.log('Letter changed. Initiating animation.');
-      
-      setCurrentLetter(currentLetter());
-      setNewLetter(props.newLetter);
-      setAnimationClass(props.direction > 0 ? styles.rollDown : styles.rollUp);
-      
-      console.log('Animation class set:', animationClass());
+	createEffect(() => {
+		if (props.newLetter !== currentLetter()) {
+			console.log(`AnimatedLetter: Letter changing from ${currentLetter()} to ${props.newLetter}, direction: ${props.direction}`);
+			
+			setNewLetter(props.newLetter);
+			const newAnimationClass = props.direction > 0 ? styles.rollDown : styles.rollUp;
+			console.log(`AnimatedLetter: Setting animation class to ${newAnimationClass}`);
+			setAnimationClass(newAnimationClass);
+			setAnimationSpeed(styles[`velocity${props.speed}`]);
+			
+			setTimeout(() => {
+				setCurrentLetter(props.newLetter);
+				setAnimationClass('');
+				console.log('AnimatedLetter: Animation completed, class reset');
+			}, 300);
+		}
+	});
 
-      // Update the displayed letter after the animation
-      setTimeout(() => {
-        console.log('Timeout callback. Updating displayed letter.');
-        setCurrentLetter(newLetter());
-        console.log('New current letter:', currentLetter());
-
-        setAnimationClass('');
-        console.log('Animation class removed.');
-      }, 300); // Adjust this value to match your desired animation duration
-    }
-  });
-
-  return (
-    <div class={styles.letterContainer}>
-      <div class={`${styles.letterWrapper} ${animationClass()}`}>
-        <span class={styles.letter}>{props.direction > 0 ? newLetter() : currentLetter()}</span>
-        <span class={styles.letter}>{props.direction > 0 ? currentLetter() : newLetter()}</span>
-      </div>
-    </div>
-  );
+	return (
+		<div class={styles.letterContainer}>
+			<div class={`${styles.letterWrapper}`}>
+				<span class={`styles.letter ${animationClass()} ${animationSpeed()}`}>{currentLetter()}</span>
+				<span class={`styles.letter ${animationClass()} ${animationSpeed()}`}>{newLetter()}</span>
+			</div>
+		</div>
+	);
 };
 
 export default AnimatedLetter;

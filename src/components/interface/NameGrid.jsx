@@ -19,7 +19,7 @@ import rightKeySound from '../../assets/sounds/button-6.wav';
 const NameGrid = (props) => {
 
     // const fullName = ['OKR', 'API', 'EOD'];
-let fullName = ['JOSHUA', 'PRODUCT', 'CODE'];
+let fullName = ['RUSSELL', 'PRODUCT', 'CODE'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
   letterChangeAudioDown,
@@ -62,7 +62,7 @@ const initializeWordList = () => {
   const [theme, { updateTheme, updateMode, updatePattern, getItemIcon }] = useTheme();
   const [names, setNames] = createStore(initializeWordList());
   const [activeNameIndex, setActiveNameIndex] = createSignal(0);
-  const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 1 });
+  const [focusedPosition, setFocusedPosition] = createSignal({ row: 0, col: 2 });
   const [isMobile, setIsMobile] = createSignal(false);
   const [touchStartY, setTouchStartY] = createSignal(0);
   const [lastTouchTime, setLastTouchTime] = createSignal(0);
@@ -460,6 +460,10 @@ const initializeWordList = () => {
           </>
         )}
       </For>
+        <div class="name-intro">
+            <span class="name-left">Code.</span>
+            <span class="name-right">But I also build w/ AI</span>
+        </div>
     </div>
   );
 };

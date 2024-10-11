@@ -1,7 +1,7 @@
 /* Base styles (mobile-first approach) */
 .nameGrid {
   display: grid;
-  gap: 10px;
+  gap: 11px;
   padding: 5px 5px 10px; /* Add padding to top, left, right, and increase bottom padding */
   width: calc(100% - 10px); /* Adjust width to account for left and right padding */
   margin: 0 auto; /* Center the grid */
@@ -20,7 +20,7 @@
   font-size: clamp(1rem, 7vw, 6rem); /* 11px to 16px */
   font-weight: bold;
   transition: all 0.3s ease;
-  font-family: 'Array-BoldWide', sans-serif;
+  /* font-family: 'Array-BoldWide', sans-serif; */
   position: relative; /* Add this if not already present */
   z-index: 1; /* Ensure letterBox is above the expanded container */
   background-color: var(--gradient-base-bottom);
@@ -48,7 +48,7 @@
 
 .jsxElement {
   grid-column: 1 / -1;
-  margin-bottom: 11px;
+  letter-spacing: -0.05em;
 }
 
 /* Styles for larger mobile devices (375px and up) */
@@ -91,7 +91,8 @@
 
 .nameRow {
   display: grid;
-  grid-template-columns: repeat(var(--name-length), minmax(1.5em, 1fr));
+  grid-template-columns: repeat(var(--name-length), 1fr);
+  gap: 11px;
   column-gap: 5px; /* Gap between columns (elements in a row) */
   row-gap: 5px; /* Gap between rows (if needed) */
 }
@@ -151,6 +152,11 @@
 
 /* Add this at the end of the file */
 @media (max-width: 768px) {
+
+    .nameRow {
+        grid-template-columns: repeat(var(--name-length), 1fr);
+    }
+
   .letterBox {
     user-select: none;
     -webkit-tap-highlight-color: transparent;

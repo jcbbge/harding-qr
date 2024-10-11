@@ -816,6 +816,7 @@ body {
 
 .name-grid-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -881,6 +882,8 @@ body {
   align-items: center;
   width: 100%;
   color: var(--text-primary);
+  letter-spacing: -0.05em;
+  font-size: 33px;
 }
 
 .name-left,
@@ -895,7 +898,19 @@ body {
   text-align: right;
 }
 
+/* .code-left {
+  font-size: 33px;
+  font-weight: var(--font-weight-bold);
+}
 
+.name-right {
+  font-size: 33px;
+  font-weight: var(--font-weight-bold);
+}
+.product-left {
+  font-size: 33px;
+  font-weight: var(--font-weight-bold);
+} */
 
 
 /* Add these styles to your existing CSS */

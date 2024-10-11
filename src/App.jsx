@@ -72,7 +72,7 @@ function App() {
   const jsxElements = [
     <div class="name-intro">
       <span class="name-left">← →</span>
-      <span class="name-right">My name is</span>
+      <span class="name-right">Hi. I'm Joshua</span>
     </div>,
     <div class="product-intro">
       <span class="product-left">I do</span>
@@ -80,7 +80,7 @@ function App() {
     </div>,
     <div class="code-intro">
       <span class="code-left"><s>Design</s> <s>Management</s> <b>Stuff.</b></span>
-      <span class="code-right">I also like to</span>
+      <span class="code-right">I</span>
     </div>
   ];    
 

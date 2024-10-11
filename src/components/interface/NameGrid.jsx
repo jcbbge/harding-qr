@@ -29,7 +29,7 @@ const findFirstVowelPosition = (names) => {
 const NameGrid = (props) => {
 
     // let fullName = ['OKR', 'API', 'EOD'];
-let fullName = ['JOSHUA', 'PRODUCT', 'CODE'];
+let fullName = ['RUSSELL', 'PRODUCT', 'CODE'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
   letterChangeAudioDown,
@@ -87,6 +87,7 @@ const initializeWordList = () => {
   const [isMobile, setIsMobile] = createSignal(false);
   const [touchStartY, setTouchStartY] = createSignal(0);
   const [lastTouchTime, setLastTouchTime] = createSignal(0);
+  const [isGridFocused, setIsGridFocused] = createSignal(false);
 
   // Add this line to get the maxLength
   const maxLength = Math.max(...fullName.map(name => name.length), 4);
@@ -155,6 +156,7 @@ const initializeWordList = () => {
   const setFocus = (row, col) => {
     setFocusedPosition({ row, col });
     setActiveNameIndex(row);
+    setIsGridFocused(true);
     // Find the element and set focus
     const element = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
     if (element) {
@@ -305,6 +307,24 @@ const initializeWordList = () => {
     document.body.style.overscrollBehaviorY = 'auto';
   };
 
+  const handleClickOutside = (event) => {
+    const gridElement = document.querySelector(`.${styles.nameGrid}`);
+    if (gridElement && !gridElement.contains(event.target)) {
+      resetFocus();
+    }
+  };
+
+  const handleFocusChange = () => {
+    if (!document.activeElement || !document.activeElement.closest(`.${styles.nameGrid}`)) {
+      resetFocus();
+    }
+  };
+
+  const resetFocus = () => {
+    setFocusedPosition({ row: -1, col: -1 });
+    setIsGridFocused(false);
+  };
+
   onMount(() => {
     window.addEventListener('keydown', gridNavigate);
     letterChangeAudio = new Audio(letterChangeSound);
@@ -326,9 +346,13 @@ const initializeWordList = () => {
       disableOverscroll();
     }
 
+    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('focusin', handleFocusChange);
+
     // Set initial focus to the first vowel position
     const firstVowelPosition = findFirstVowelPosition(names);
     setFocus(firstVowelPosition.row, firstVowelPosition.col);
+    setIsGridFocused(true);
   });
 
   onCleanup(() => {
@@ -336,6 +360,9 @@ const initializeWordList = () => {
     window.removeEventListener('resize', checkMobile);
 
     enableOverscroll();
+
+    document.removeEventListener('click', handleClickOutside);
+    document.removeEventListener('focusin', handleFocusChange);
   });
 
   const handleTouchStart = (event, rowIndex, colIndex) => {
@@ -409,7 +436,9 @@ const initializeWordList = () => {
                 {(letterObj, letterIndex) => {
                   const isFocused = createMemo(
                     () =>
-                      nameIndex() === focusedPosition().row && letterIndex() === focusedPosition().col
+                      isGridFocused() &&
+                      nameIndex() === focusedPosition().row &&
+                      letterIndex() === focusedPosition().col
                   );
 
                   const letterBoxClass = createMemo(() => {
@@ -464,11 +493,12 @@ const initializeWordList = () => {
                       onTouchStart={(e) => handleTouchStart(e, nameIndex(), letterIndex())}
                       onTouchMove={handleTouchMove}
                       onTouchEnd={(e) => handleTouchEnd(e, nameIndex(), letterIndex())}
-                      onFocus={() => setFocusedPosition({ row: nameIndex(), col: letterIndex() })}
+                      onFocus={() => {
+                        setFocusedPosition({ row: nameIndex(), col: letterIndex() });
+                        setIsGridFocused(true);
+                      }}
                       onBlur={() => {
-                        if (isFocused()) {
-                          setFocusedPosition({ row: -1, col: -1 });
-                        }
+                        // We don't reset focus here, as it will be handled by the focusin event
                       }}
                     >
                       {letterObj.isEmpty ? getSettingIcon() : <span>{letterObj.currentLetter}</span>}
@@ -480,10 +510,12 @@ const initializeWordList = () => {
           </>
         )}
       </For>
+      <Show when={props.jsxElements}>
         <div class="name-intro">
             <span class="name-left">Code.</span>
             <span class="name-right">But I also build w/ AI</span>
         </div>
+      </Show>
     </div>
   );
 };

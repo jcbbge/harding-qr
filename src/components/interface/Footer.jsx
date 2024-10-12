@@ -15,9 +15,11 @@ const Footer = () => {
         <div class={styles.footerLeft}>
           <ThemeDisplay />
         </div>
-        <p class={styles.footerText}>
-          <a href="https://www.solidjs.com">solid.js</a> 👨🏾‍💻 site by jrg &copy; {currentYear()} All rights reserved.
-        </p>
+        <div class={styles.footerRight}>
+          <p class={styles.footerText}>
+            <a href="https://www.solidjs.com">solid.js</a> 👨🏾‍💻 site by jrg &copy; {currentYear()} All rights reserved.
+          </p>
+        </div>
       </div>
     </footer>
   );

@@ -15,21 +15,23 @@ export function ThemeDisplay() {
     );
   };
 
-  const renderThemeItem = (type) => {
+  const renderThemeItem = (type, index) => {
     const iconName = getItemIcon(type, theme[type]());
     return (
-      <span class={styles.themeItem}>
-        {getIconImg(iconName)}
-        <span class={styles.themeText}>{theme[type]()}</span>
-      </span>
+      <div class={`${styles.themeItemContainer} ${index !== 0 ? styles.borderLeft : ''}`}>
+        <span class={styles.themeItem}>
+          {getIconImg(iconName)}
+          <span class={styles.themeText}>{theme[type]()}</span>
+        </span>
+      </div>
     );
   };
 
   return (
     <div class={styles.themeDisplay}>
-      {renderThemeItem('theme')}
-      {renderThemeItem('mode')}
-      {renderThemeItem('pattern')}
+      {renderThemeItem('theme', 0)}
+      {renderThemeItem('mode', 1)}
+      {renderThemeItem('pattern', 2)}
     </div>
   );
 }

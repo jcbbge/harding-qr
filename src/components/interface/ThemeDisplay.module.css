@@ -4,30 +4,24 @@
   align-items: center;
   width: 100%;
   color: var(--text-secondary);
-  white-space: nowrap;
-  overflow-x: auto;
 }
 
-.themeItem {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: left;
+.themeItemContainer {
+  display: flex;
   flex: 1;
 }
 
-.themeItem:not(:first-child) {
-  padding-left: 22px;
+.borderLeft {
+  border-left: 1px solid var(--text-primary);
 }
 
-@media (max-width: 768px) {
-
-  .themeDisplay {
-      padding-bottom: 11px;
-  }
-  .themeItem {
-      padding: 0 11px 0 11px;
-  }
+.themeItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  padding: 11px;
 }
 
 .icon {
@@ -36,11 +30,11 @@
   margin-right: 11px;
   vertical-align: middle;
   flex-shrink: 0;
-  transition: filter 0.3s ease; /* Add smooth transition for color change */
+  transition: filter 0.3s ease;
 }
 
 .iconInverted {
-  filter: invert(1) brightness(100); /* Invert colors to make the icon white */
+  filter: invert(1) brightness(100);
 }
 
 .themeText {
@@ -63,4 +57,18 @@
   font-size: 10px;
   font-weight: bold;
   flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .themeDisplay {
+    justify-content: space-around;
+  }
+
+  .borderRight {
+    border-right: none;
+  }
+
+  .themeItemContainer:not(:first-child) {
+    border-left: 1px solid var(--text-primary);
+  }
 }

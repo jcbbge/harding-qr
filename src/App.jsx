@@ -71,12 +71,26 @@ function App() {
 
   const jsxElements = [
     <div class="name-intro">
-      <span class="name-left">← →</span>
+      <span class="name-left">
+        <img id="ficon" src="/assets/icons/arrow-narrow-left.svg" alt="Left arrow" class="icon" />
+        <img src="/assets/icons/arrow-narrow-right.svg" alt="Right arrow" class="icon" />
+        <img src="/assets/icons/arrow-narrow-up.svg" alt="Up arrow" class="icon" />
+        <img src="/assets/icons/arrow-narrow-down.svg" alt="Down arrow" class="icon" />
+        <img src="/assets/icons/space.svg" alt="Spacebar" class="icon" />
+        <img src="/assets/icons/arrow-back.svg" alt="Return key" class="icon" />
+      </span>
       <span class="name-right">Hi. I'm Joshua</span>
     </div>,
     <div class="product-intro">
       <span class="product-left">I do</span>
-      <span class="product-right">ꜛ ꜜ &#x2423; ⮐</span>
+      <span class="product-right">
+        <img id="ficon" src="/assets/icons/arrow-narrow-left.svg" alt="Left arrow" class="icon" />
+        <img src="/assets/icons/arrow-narrow-right.svg" alt="Right arrow" class="icon" />
+        <img src="/assets/icons/arrow-narrow-up.svg" alt="Up arrow" class="icon" />
+        <img src="/assets/icons/arrow-narrow-down.svg" alt="Down arrow" class="icon" />
+        <img src="/assets/icons/space.svg" alt="Spacebar" class="icon" />
+        <img src="/assets/icons/arrow-back.svg" alt="Return key" class="icon" />
+      </span>
     </div>,
     <div class="code-intro">
       <span class="code-left"><s>Design</s> <s>Management</s> <b>Stuff.</b></span>

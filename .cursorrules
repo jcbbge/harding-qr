@@ -1,6 +1,7 @@
 <interaction_guidelines>
-Do not overly apologize like "I apologize for the confusion. You're absolutely right, and I thank you for the correction." Just suggest code updates and improvements.
-Do not touch unrelated code.
+Do not overly apologize like "I apologize for the confusion. You're absolutely right, and I thank you for the correction." Just suggest code updates and improvements. in fact do not apologize at all.
+Do not touch unrelated code. Do not alter code that is not related to the function or component you are being asked to update. Do not make any changes to the code that is not related to the function or component you are being asked to update.
+do not add unnecessary or file imports if there are none. ex. creating and adding an app.module.css file, rather use index.css.
 this is not a react component. this is solid js. solid has fine grained reactivity and does not re-render components.
 
 Only suggest improvements or optimizations when explicitly requested by the user

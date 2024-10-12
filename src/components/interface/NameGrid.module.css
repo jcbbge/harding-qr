@@ -27,10 +27,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(1rem, 7vw, 6rem);
+    font-size: clamp(1rem, 6vw, 5rem);
     /* 11px to 16px */
     transition: all 0.3s ease;
-    /* font-family: 'Array-BoldWide', sans-serif; */
+    font-family: 'Array-BoldWide', sans-serif;
     position: relative;
     /* Add this if not already present */
     z-index: 1;

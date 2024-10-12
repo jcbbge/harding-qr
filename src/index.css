@@ -820,7 +820,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 770px;
+  max-width: 700px;
 }
 
 /* Updated nav-menu styles */
@@ -854,24 +854,6 @@ body {
   margin-left: 22px; /* Adjust this value as needed */
 }
 
-
-
-/* Desktop styles (1024px and above) */
-@media (min-width: 1024px) {
-  .main-content {
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
-  }
-}
-
-/* iPad styles (768px to 1023px) */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .main-content {
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
-  }
-}
-
 .name-intro,
 .product-intro,
 .code-intro {
@@ -880,8 +862,8 @@ body {
   align-items: center;
   width: 100%;
   color: var(--text-primary);
-  letter-spacing: -0.05em;
   font-size: 33px;
+  margin: 1rem 0;
 }
 
 .name-left,
@@ -895,23 +877,6 @@ body {
 .code-right {
   text-align: right;
 }
-
-/* .code-left {
-  font-size: 33px;
-  font-weight: var(--font-weight-bold);
-}
-
-.name-right {
-  font-size: 33px;
-  font-weight: var(--font-weight-bold);
-}
-.product-left {
-  font-size: 33px;
-  font-weight: var(--font-weight-bold);
-} */
-
-
-/* Add these styles to your existing CSS */
 
 .snap-container {
   overflow: hidden;
@@ -933,23 +898,84 @@ body {
   touch-action: none;
 }
 
+.icon {
+  width: 33px; /* Adjust size as needed */
+  height: 33px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.icon::first-child {
+  margin-left: 0px;
+}
+.icon:last-child {
+  margin-right: 0px;
+}
+#ficon {
+    margin-left: -5px;
+}
+
+/* .code-left {
+  font-size: 33px;
+  font-weight: var(--font-weight-bold);
+}
+
+.name-right {
+  font-size: 33px;
+  font-weight: var(--font-weight-bold);
+}
+.product-left {
+  font-size: 33px;
+  font-weight: var(--font-weight-bold);
+} */
+
+
+/* Desktop styles (1024px and above) */
+@media (min-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+}
+
+/* iPad styles (768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .main-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+}
+
 /* Mobile styles (up to 767px) */
 @media (max-width: 767px) {
   .layout {
     padding: 0; 
   }
-
   .main-content {
-    gap: 11px;
+        gap: 11px;
     padding: 0; 
   }
-      .name-intro,
-    .product-intro,
-    .code-intro {
-        font-size: 14px;
-    }
+  .name-intro,
+  .product-intro,
+  .code-intro {
+    font-size: 17px;
+    margin: 0.5rem 0;
+  }
+
+  .name-grid-container {
+    width: 90%;
+  }
 
   .nav-menu a:first-child {
     margin-left: 5px; /* Apply margin to the first nav link */
   }
+  .icon {
+    width: 15px; /* Adjust size as needed */
+    height: 15px;
+    vertical-align: middle;
+    margin: 0 2px; /* Add some spacing between icons */
+  }
+}
+
+.dark-mode .icon {
+  filter: invert(1);
 }

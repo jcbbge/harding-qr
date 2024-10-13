@@ -1,4 +1,4 @@
-import { createSignal, createEffect, For, Show, onMount, onCleanup, createMemo } from 'solid-js';
+import { createSignal, createEffect, For, Show, onMount, onCleanup, createMemo, createRoot } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { useTheme } from '../../contexts/ThemeContext';
 import styles from './NameGrid.module.css';
@@ -13,6 +13,57 @@ import correctWordSound3 from '../../assets/sounds/musical-tap-2.wav';
 import allWordsCompleteSound from '../../assets/sounds/atmostphere-2.wav';
 import leftKeySound from '../../assets/sounds/button-4.wav';
 import rightKeySound from '../../assets/sounds/button-6.wav';
+
+// Add these imports at the top of the file
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioContext = new AudioContext();
+
+const loadSound = async (url) => {
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer();
+  const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+  return audioBuffer;
+};
+
+const createSound = createRoot(() => {
+  const [sounds, setSounds] = createSignal({});
+
+  const loadSounds = async () => {
+    const soundUrls = {
+      letterChange: letterChangeSound,
+      letterChangeDown: letterChangeSoundDown,
+      correctLetter: correctLetterSound,
+      correctWord1: correctWordSound1,
+      correctWord2: correctWordSound2,
+      correctWord3: correctWordSound3,
+      allWordsComplete: allWordsCompleteSound,
+      leftKey: leftKeySound,
+      rightKey: rightKeySound,
+    };
+
+    const loadedSounds = {};
+    for (const [key, url] of Object.entries(soundUrls)) {
+      loadedSounds[key] = await loadSound(url);
+    }
+    setSounds(loadedSounds);
+  };
+
+  const playSound = (soundName) => {
+    const sound = sounds()[soundName];
+    if (sound) {
+      const source = audioContext.createBufferSource();
+      source.buffer = sound;
+      source.connect(audioContext.destination);
+      source.start(0);
+    } else {
+      console.error(`Sound not found: ${soundName}`);
+    }
+  };
+
+  return { loadSounds, playSound };
+});
+
+const { loadSounds, playSound } = createSound;
 
 // Add this function near the top of the component, after the imports and before the NameGrid function
 const findFirstVowelPosition = (names) => {
@@ -31,13 +82,6 @@ const NameGrid = (props) => {
     // let fullName = ['OKR', 'API', 'EOD'];
 let fullName = ['JOSHUA', 'PRODUCT', 'CODE'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-let letterChangeAudio,
-    letterChangeAudioDown,
-    correctLetterAudio,
-    allWordsCompleteAudio,
-    leftKeyAudio,
-    rightKeyAudio;
-let correctWordAudios = [];
 
     if(props.wordList) {
       fullName = props.wordList;
@@ -184,7 +228,7 @@ const initializeWordList = () => {
     let direction;
 
     // Prevent default for all navigation keys
-    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'a', 'w', 's', 'd', ' ', 'Tab'].includes(key)) {
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'a', 'w', 's', 'd', ' ', 'Tab', 'Enter', ' '].includes(key)) {
       event.preventDefault();
     }
 
@@ -192,30 +236,30 @@ const initializeWordList = () => {
       case 'ArrowLeft':
       case 'a':
         direction = 'left';
-        playSound(leftKeyAudio);
+        playSound('leftKey');
         break;
       case 'ArrowRight':
       case 'd':
         direction = 'right';
-        playSound(rightKeyAudio);
+        playSound('rightKey');
         break;
       case 'ArrowUp':
       case 'w':
         direction = 'up';
-        playSound(rightKeyAudio);
+        playSound('rightKey');
         break;
       case 'ArrowDown':
       case 's':
         direction = 'down';
-        playSound(rightKeyAudio);
+        playSound('leftKey');
         break;
       case 'Enter':
-      case ' ':
+      case ' ':  // This is the spacebar
         updateLetterBox(row, col, shiftKey ? -1 : 1);
         return;
       case 'Tab':
         direction = shiftKey ? 'left' : 'right';
-        playSound(shiftKey ? leftKeyAudio : rightKeyAudio);
+        playSound(shiftKey ? 'leftKey' : 'rightKey');
         break;
       default:
         return;
@@ -227,17 +271,6 @@ const initializeWordList = () => {
     }
 
     direction = undefined;
-  };
-
-  const playSound = audio => {
-    if (audio) {
-      audio.currentTime = 0;
-      audio.play().catch(error => {
-        console.error('Error playing audio:', error);
-      });
-    } else {
-      console.error('Audio not found');
-    }
   };
 
   const updateLetterBox = (row, col, direction, isShiftEquivalent = false) => {
@@ -252,18 +285,17 @@ const initializeWordList = () => {
       switch (emptyIndexInGrid) {
         case 0:
           updateTheme(direction);
-          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
+          playSound(direction > 0 ? 'letterChange' : 'letterChangeDown');
           break;
         case 1:
           updateMode(direction);
-          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
+          playSound(direction > 0 ? 'letterChange' : 'letterChangeDown');
           break;
         case 2:
           updatePattern(direction);
-          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
+          playSound(direction > 0 ? 'letterChange' : 'letterChangeDown');
           break;
         default:
-          // This is a truly empty letterbox, do nothing and don't play any sound
           return;
       }
       return;
@@ -274,34 +306,30 @@ const initializeWordList = () => {
       return alphabet[(currentIndex + direction + 26) % 26];
     };
 
-    // Only update and play sound if the letter is a vowel
+    // Update the sound playing logic:
     if (letterObj.isVowel) {
       setNames(row, col, letter => {
         if (!letter.isEmpty && !letter.matched) {
-          const newLetter = getNextLetter(letter.currentLetter, isShiftEquivalent ? -direction : direction);
+          const newLetter = getNextLetter(letter.currentLetter, direction);
 
           if (newLetter === letter.correctLetter) {
             props.onLetterUnlock(row, col);
-            // Check if this is the last unmatched vowel in the word
             const isLastVowel = names[row].filter(l => l.isVowel && !l.matched).length === 1;
-
-            // Check if this is the last word with unmatched vowels
             const isLastWord = names.every(
               (word, index) => index === row || word.every(l => !l.isVowel || l.matched)
             );
 
             if (isLastWord && isLastVowel) {
-              playSound(allWordsCompleteAudio);
+              playSound('allWordsComplete');
             } else if (isLastVowel) {
-              playSound(correctWordAudios[row]);
+              playSound(`correctWord${row + 1}`);
             } else {
-              playSound(correctLetterAudio);
+              playSound('correctLetter');
             }
 
             return { ...letter, currentLetter: newLetter, matched: true };
           }
-          // Play sound for vowels
-          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
+          playSound(direction > 0 ? 'letterChange' : 'letterChangeDown');
           return { ...letter, currentLetter: newLetter };
         }
         return letter;
@@ -341,18 +369,6 @@ const initializeWordList = () => {
 
   onMount(() => {
     window.addEventListener('keydown', gridNavigate);
-    letterChangeAudio = new Audio(letterChangeSound);
-    letterChangeAudioDown = new Audio(letterChangeSoundDown);
-    correctLetterAudio = new Audio(correctLetterSound);
-    correctWordAudios = [
-      new Audio(correctWordSound1),
-      new Audio(correctWordSound2),
-      new Audio(correctWordSound3)
-    ];
-    allWordsCompleteAudio = new Audio(allWordsCompleteSound);
-    leftKeyAudio = new Audio(leftKeySound);
-    rightKeyAudio = new Audio(rightKeySound);
-
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
@@ -362,6 +378,9 @@ const initializeWordList = () => {
 
     document.addEventListener('click', handleClickOutside);
     document.addEventListener('focusin', handleFocusChange);
+
+    // Load sounds
+    loadSounds();
 
     // Set initial focus to the first vowel position
     const firstVowelPosition = findFirstVowelPosition(names);
@@ -400,11 +419,13 @@ const initializeWordList = () => {
     const timeDiff = Date.now() - lastTouchTime();
 
     if (Math.abs(diffY) > 50) {
-      // Vertical swipe
       handleVerticalSwipe(rowIndex, colIndex, diffY > 0);
     } else if (timeDiff < 300) {
-      // Tap event (if touch duration is less than 300ms)
       setFocus(rowIndex, colIndex);
+      // Resume audio context if it's suspended
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
     }
   };
 

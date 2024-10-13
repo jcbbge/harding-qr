@@ -79,7 +79,7 @@ function App() {
         <img src="/assets/icons/space.svg" alt="Spacebar" class="icon" />
         <img src="/assets/icons/arrow-back.svg" alt="Return key" class="icon" />
       </span>
-      <span class="name-right">Hi. I'm Joshua</span>
+      <span class="name-right">Hi. I'm</span>
     </div>,
     <div class="product-intro">
       <span class="product-left">I do</span>

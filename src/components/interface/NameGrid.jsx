@@ -29,7 +29,7 @@ const findFirstVowelPosition = (names) => {
 const NameGrid = (props) => {
 
     // let fullName = ['OKR', 'API', 'EOD'];
-let fullName = ['RUSSELL', 'PRODUCT', 'CODE'];
+let fullName = ['JOSHUA', 'PRODUCT', 'CODE'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
     letterChangeAudioDown,

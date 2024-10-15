@@ -7,7 +7,7 @@ const themeList = [
   { name: 'rail-pop', icon: 'track' },
   { name: 'charge-back', icon: 'recharging' },
   { name: 'urban-pulse', icon: 'building-skyscraper' },
-  { name: 'neon-nostalgia', icon: 'brand-apple-arcade' },
+  { name: 'neon-nostalgia', icon: 'device-gamepad' },
   { name: 'pastel-pop', icon: 'lollipop' },
   { name: 'vision-tech', icon: 'device-vision-pro' },
   { name: 'surfside-vibes', icon: 'wave-sine' },

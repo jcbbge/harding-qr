@@ -170,6 +170,7 @@
 
     .nameRow {
         grid-template-columns: repeat(var(--name-length), 1fr);
+        gap: .5rem;
     }
 
     .letterBox {

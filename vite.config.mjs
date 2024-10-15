@@ -49,7 +49,9 @@ const requiredIcons = [
   'grid-dots',
   'caret-up-down',
   'components',
-  'help-small'
+  'help-small',
+  'home',
+  'device-gamepad'
 ];
 
 // Updated function to copy icons

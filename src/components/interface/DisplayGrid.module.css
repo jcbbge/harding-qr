@@ -1,0 +1,157 @@
+.displayGrid {
+    display: grid;
+    gap: 11px;
+    margin-bottom: 55px;
+}
+.displayContent {
+    grid-column: 1 / -1;
+    letter-spacing: -0.05em;
+}
+
+.displayRow {
+    display: grid;
+    grid-template-columns: repeat(var(--name-length), 1fr);
+    gap: 11px;
+    /* column-gap: 5px; */
+    /* Gap between columns (elements in a row) */
+    /* row-gap: 5px; */
+    /* Gap between rows (if needed) */
+}
+
+.displayLetter {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 0.15rem solid var(--text-primary);
+    /* 2px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1rem, 6vw, 5rem);
+    /* 11px to 16px */
+    transition: all 0.3s ease;
+    font-family: 'Array-BoldWide', sans-serif;
+    position: relative;
+    /* Add this if not already present */
+    z-index: 1;
+    /* Ensure letterBox is above the expanded container */
+    background-color: var(--gradient-base-bottom);
+    box-sizing: border-box;
+    /* Include padding and border in the element's total width and height */
+    min-width: 1.5em;
+    /* Set a minimum width based on the font size */
+    overflow: hidden;
+    /* Hide overflow content */
+}
+
+.displayLetter:last-child {
+    margin-right: 0;
+}
+
+
+
+.displayLetter.vowel {
+    background-color: var(--accent-opposite);
+    color: var(--text-secondary);
+}
+
+.displayLetter.matched.vowel {
+    background-color: var(--accent);
+}
+
+.displayLetter.matched {
+    border: 0.18rem solid var(--text-primary);
+    /* 2px */
+    background-color: var(--accent-unexpected);
+    color: var(--text-secondary);
+}
+
+.displayLetter.emptyBox {
+    background-color: var(--accent-fun);
+}
+
+.displayLetter:focus,
+.displayLetter.focused {
+    outline: 2px solid var(--accent-opposite) !important;
+    box-shadow: 0 0 0 4px var(--accent-opposite) !important;
+    z-index: 12 !important;
+    background-color: var(--accent) !important;
+    color: var(--text-secondary) !important;
+    position: relative;
+    /* Ensure the z-index works */
+}
+
+/* Add a specific rule for focus-visible */
+.displayLetter:focus-visible {
+    outline: 2px solid var(--accent-opposite) !important;
+    box-shadow: 0 0 0 4px var(--accent-opposite) !important;
+}
+
+/* Add a new rule to ensure focus is visible even when using mouse */
+.displayLetter:focus:not(:focus-visible) {
+    outline: 2px solid var(--accent) !important;
+    box-shadow: 0 0 0 4px var(--accent) !important;
+}
+
+
+
+/* Styles for larger mobile devices (375px and up) */
+@media (min-width: 34.09rem) {
+
+    /* 375px */
+    .displayGrid {
+        gap: clamp(1rem, 2.5vw, 1.5rem) clamp(0.55rem, 1.5vw, 0.91rem);
+        /* padding: clamp(1.09rem, 2vw, 1.82rem);  */
+    }
+}
+
+/* Styles for tablets and large phones (600px and up) */
+@media (min-width: 54.55rem) {
+
+    /* 600px */
+    .displayGrid {
+        gap: clamp(1.2rem, 3vw, 1.8rem) clamp(0.73rem, 2vw, 1.09rem);
+        /* padding: clamp(1.45rem, 3vw, 2.18rem);  */
+    }
+}
+
+/* Styles for laptops and small desktops (992px and up) */
+@media (min-width: 90.18rem) {
+
+    /* 992px */
+    .displayGrid {
+        gap: clamp(1.5rem, 3.5vw, 2.2rem) clamp(0.91rem, 2.5vw, 1.27rem);
+        /* padding: clamp(1.82rem, 4vw, 2.55rem); */
+    }
+
+}
+
+/* Styles for larger desktops (1200px and above) */
+@media (min-width: 109.09rem) {
+
+    /* 1200px */
+    .displayGrid {
+        gap: clamp(1.8rem, 4vw, 2.5rem) clamp(1.09rem, 3vw, 1.45rem);
+        padding: clamp(2.18rem, 5vw, 2.91rem);
+        /* 24px to 32px */
+    }
+
+}
+
+/* Add this at the end of the file */
+@media (max-width: 768px) {
+    .displayRow {
+        grid-template-columns: repeat(var(--name-length), 1fr);
+        gap: .5rem;
+    }
+
+    .displayLetter {
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: none;
+    }
+
+    .icon {
+        width: 16px;
+        height: 16px;
+    }
+}

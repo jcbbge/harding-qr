@@ -877,6 +877,29 @@ body {
 .code-right {
   text-align: right;
 }
+.stlon,
+.stltw,
+.stlth {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  color: var(--text-primary);
+  font-size: 33px;
+  margin: 1rem 0;
+}
+
+.stlon-left,
+.stltw-left,
+.stlth-left {
+  text-align: left;
+}
+
+.stlon-right,
+.stltw-right,
+.stlth-right {
+  text-align: right;
+}
 
 .snap-container {
   overflow: hidden;
@@ -957,6 +980,13 @@ body {
   .name-intro,
   .product-intro,
   .code-intro {
+    font-size: 17px;
+    margin: 0.5rem 0;
+  }
+
+  .stlon,
+  .stltw,
+  .stlth {
     font-size: 17px;
     margin: 0.5rem 0;
   }

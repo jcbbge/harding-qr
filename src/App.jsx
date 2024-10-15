@@ -1,5 +1,6 @@
 import { createSignal, onMount, createEffect } from 'solid-js';
 import NameGrid from './components/interface/NameGrid';
+import DisplayGrid from './components/interface/DisplayGrid';
 
 function App() {
   const [company, setCompany] = createSignal('');
@@ -98,6 +99,42 @@ function App() {
     </div>
   ];    
 
+  const gridWords = ['JOURNEY', 'WONDERS'];
+  const gridElements = [
+    <div class="stlon">
+        <span class="stlon-left">I consider every</span>
+        <span class="stlon-right"><p>project a</p></span>
+    </div>,
+    <div class="stltw">
+      <span class="stltw-left"><p>filled with</p></span>
+      <span class="stltw-right"><p>hidden</p></span>
+    </div>,
+    <div class="stlth">
+      <span class="stlth-left"><p>waiting,</p></span>
+      <span class="stlth-right"><p>to be discovered.</p></span>
+    </div>
+  ];  
+  const gridWords2 = ['SPARK', 'FORGE'];
+  const gridElements2 = [
+    <div class="product-intro">
+      <span class="product-left">
+        I build  
+      </span>
+      <span class="product-right">worlds that</span>
+    </div>,
+    <div class="code-intro">
+      <span class="code-left">joy, </span>
+      <span class="code-right">
+      invite exploration, and
+      </span>
+    </div>,
+    <div class="code-intro">
+      <span class="code-left">connections. </span>
+      <span class="code-right"></span>
+    </div>
+  ];
+    
+
   return (
     <div class="main-content">
       <div class={`snap-container ${heroUnlocked() ? 'unlocked' : ''}`}>
@@ -113,12 +150,20 @@ function App() {
           </div>
         </section>
         <section class="snap-section">
-          <h2>Section 2</h2>
-          <p>Content for section 2 goes here.</p>
+          <div class="name-grid-container">
+            <DisplayGrid
+              gridWords={gridWords}
+              gridElements={gridElements}
+            />
+          </div>
         </section>
         <section class="snap-section">
-          <h2>Section 3</h2>
-          <p>Content for section 3 goes here.</p>
+          <div class="name-grid-container">
+            <DisplayGrid
+              gridWords={gridWords2}
+              gridElements={gridElements2}
+            />
+          </div>
         </section>
       </div>
     </div>

@@ -34,6 +34,37 @@
   margin: 0;
 }
 
+.footerText a {
+  color: var(--text-secondary);
+  margin: 0 11px;
+  padding: 11px;
+  text-decoration: none;
+  position: relative; /* Ensures the ::after pseudo-element is positioned correctly */
+  transition: color 0.3s ease;
+}
+
+.footerText a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px; /* Increased height for better visibility */
+  bottom: 5px;
+  left: 0;
+  background-color: var(--accent-opposite); /* Underline color */
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.footerText a:hover {
+  color: var(--accent-opposite);
+}
+
+.footerText a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
 @media (max-width: 767px) {
   .footerMenu {
     flex-direction: column;

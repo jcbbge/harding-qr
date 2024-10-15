@@ -17,7 +17,7 @@ const Footer = () => {
         </div>
         <div class={styles.footerRight}>
           <p class={styles.footerText}>
-            <a href="https://www.solidjs.com">solid.js</a> 👨🏾‍💻 site by jrg &copy; {currentYear()} All rights reserved.
+            <a href="https://www.solidjs.com">solid.js</a>👨🏾‍💻 site by jrg &copy; {currentYear()} All rights reserved.
           </p>
         </div>
       </div>

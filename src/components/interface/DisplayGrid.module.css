@@ -11,7 +11,7 @@
 .displayRow {
     display: grid;
     grid-template-columns: repeat(var(--name-length), 1fr);
-    gap: 11px;
+    gap: 0;
     /* column-gap: 5px; */
     /* Gap between columns (elements in a row) */
     /* row-gap: 5px; */
@@ -138,10 +138,9 @@
 }
 
 /* Add this at the end of the file */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .displayRow {
         grid-template-columns: repeat(var(--name-length), 1fr);
-        gap: .5rem;
     }
 
     .displayLetter {

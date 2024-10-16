@@ -937,6 +937,12 @@ body {
     margin-left: -5px;
 }
 
+.code-left {
+    letter-spacing: -0.05em;
+}
+.name-right {
+    letter-spacing: -0.05em;
+}
 /* .code-left {
   font-size: 33px;
   font-weight: var(--font-weight-bold);

@@ -94,8 +94,8 @@ function App() {
       </span>
     </div>,
     <div class="code-intro">
-      <span class="code-left"><s>Design</s> <s>Management</s> <b>Stuff.</b></span>
-      <span class="code-right">I also</span>
+      <span class="code-left"><s class="spacing-tighter">Design</s> <s class="spacing-tighter">Management</s> <b class="spacing-tigh">Stuff.</b></span>
+      <span class="code-right"> &nbsp;I</span>
     </div>
   ];    
 

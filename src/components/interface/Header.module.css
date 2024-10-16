@@ -5,7 +5,7 @@
   right: 0;
   z-index: 10;
   width: 100%;
-  border-bottom: 1px solid var(--text-primary);
+  border-bottom: 2px solid var(--text-primary);
 }
 
 .navMenu {
@@ -21,7 +21,7 @@
 }
 
 .navLeft {
-  border-right: 1px solid var(--text-primary);
+  border-right: 2px solid var(--text-primary);
   padding-right: 11px;
 }
 

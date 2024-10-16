@@ -538,8 +538,8 @@ const initializeWordList = () => {
       </For>
       <Show when={props.jsxElements}>
         <div class="name-intro">
-            <span class="name-left">Lately,</span>
-            <span class="name-right"> I've been building w/ AI</span>
+            <span class="name-left spacing-tight">too. </span>
+            <span class="name-right spacing-tighter"> I build w/ AI</span>
         </div>
       </Show>
     </div>

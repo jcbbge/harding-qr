@@ -1,19 +1,12 @@
 .nameGrid {
     display: grid;
     gap: 11px;
-
-    /* width: calc(100% - 10px);
-    margin: 0 auto;
-    justify-content: center;
-    align-items: center;
-    overflow: visible; */
 }
 
 .nameRow {
     display: grid;
     grid-template-columns: repeat(var(--name-length), 1fr);
-    gap: 11px;
-    /* column-gap: 5px; */
+    column-gap: 11px;
     /* Gap between columns (elements in a row) */
     /* row-gap: 5px; */
     /* Gap between rows (if needed) */
@@ -22,15 +15,14 @@
 .letterBox {
     width: 100%;
     aspect-ratio: 1 / 1;
-    border: 0.15rem solid var(--text-primary);
-    /* 2px */
+    border: 2px solid var(--text-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(1rem, 6vw, 5rem);
+    font-size: clamp(2rem, 7vw, 3rem);
     /* 11px to 16px */
     transition: all 0.3s ease;
-    font-family: 'Array-BoldWide', sans-serif;
+    /* font-family: 'Array-BoldWide', sans-serif; */
     position: relative;
     /* Add this if not already present */
     z-index: 1;
@@ -63,7 +55,6 @@
 }
 
 .letterBox.matched {
-    border: 0.18rem solid var(--text-primary);
     /* 2px */
     background-color: var(--accent-unexpected);
     color: var(--text-secondary);
@@ -166,7 +157,7 @@
 }
 
 /* Add this at the end of the file */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
     .nameRow {
         grid-template-columns: repeat(var(--name-length), 1fr);

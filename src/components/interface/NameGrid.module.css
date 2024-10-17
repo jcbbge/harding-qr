@@ -1,30 +1,26 @@
 .nameGrid {
     display: grid;
-    gap: 11px;
 }
 
 .nameRow {
     display: grid;
     grid-template-columns: repeat(var(--name-length), 1fr);
-    column-gap: 11px;
-    /* Gap between columns (elements in a row) */
-    /* row-gap: 5px; */
-    /* Gap between rows (if needed) */
+    gap: 0;
 }
 
 .letterBox {
     width: 100%;
     aspect-ratio: 1 / 1;
-    border: 2px solid var(--text-primary);
+    border: 0.15rem solid var(--text-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(2rem, 7vw, 3rem);
+    font-size: clamp(2.5rem, 6vw, 5rem);
     /* 11px to 16px */
     transition: all 0.3s ease;
-    /* font-family: 'Array-BoldWide', sans-serif; */
+    font-family: 'Array-BoldWide', sans-serif;
     position: relative;
-    /* Add this if not already present */
+    /* Add this if not alreadypresent */
     z-index: 1;
     /* Ensure letterBox is above the expanded container */
     background-color: var(--gradient-base-bottom);
@@ -125,17 +121,7 @@
 
 }
 
-/* Styles for larger desktops (1200px and above) */
-@media (min-width: 109.09rem) {
 
-    /* 1200px */
-    .nameGrid {
-        gap: clamp(1.8rem, 4vw, 2.5rem) clamp(1.09rem, 3vw, 1.45rem);
-        padding: clamp(2.18rem, 5vw, 2.91rem);
-        /* 24px to 32px */
-    }
-
-}
 
 .touching {
     background-color: #e0e0e0;
@@ -158,11 +144,6 @@
 
 /* Add this at the end of the file */
 @media (max-width: 767px) {
-
-    .nameRow {
-        grid-template-columns: repeat(var(--name-length), 1fr);
-        gap: .5rem;
-    }
 
     .letterBox {
         user-select: none;

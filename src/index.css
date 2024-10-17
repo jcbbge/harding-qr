@@ -862,7 +862,7 @@ body {
   align-items: center;
   width: 100%;
   color: var(--text-primary);
-  font-size: 33px;
+  font-size: 3rem;
   margin: 1rem 0;
 }
 
@@ -885,7 +885,7 @@ body {
   align-items: center;
   width: 100%;
   color: var(--text-primary);
-  font-size: 33px;
+  font-size: 3rem;
   margin: 1rem 0;
 }
 
@@ -983,18 +983,21 @@ body {
         gap: 11px;
     padding: 0; 
   }
+
+  .nameRow {
+    gap: 0;
+  }
+
   .name-intro,
   .product-intro,
   .code-intro {
-    font-size: 17px;
-    margin: 0.5rem 0;
+    font-size: 1.5rem;
   }
 
   .stlon,
   .stltw,
   .stlth {
-    font-size: 17px;
-    margin: 0.5rem 0;
+    font-size: 1.5rem;
   }
 
   .name-grid-container {

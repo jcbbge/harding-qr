@@ -5,7 +5,7 @@ const DisplayGrid = (props) => {
   console.log("DisplayGrid props:", props);
 
   const isVowel = (letter) => ['A', 'E', 'I', 'O', 'U'].includes(letter.toUpperCase());
-  const MAX_LENGTH = 8;
+  const MAX_LENGTH = 7;
 
   const padWord = (word) => {
     const padding = ' '.repeat(Math.max(0, MAX_LENGTH - word.length));

@@ -1,21 +1,15 @@
 .displayGrid {
     display: grid;
-    gap: 11px;
-    margin-bottom: 55px;
 }
 .displayContent {
     grid-column: 1 / -1;
-    letter-spacing: -0.05em;
+    font-size: 44px;
 }
 
 .displayRow {
     display: grid;
     grid-template-columns: repeat(var(--name-length), 1fr);
     gap: 0;
-    /* column-gap: 5px; */
-    /* Gap between columns (elements in a row) */
-    /* row-gap: 5px; */
-    /* Gap between rows (if needed) */
 }
 
 .displayLetter {
@@ -26,7 +20,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(1rem, 6vw, 5rem);
+    font-size: clamp(2.5rem, 6vw, 5rem);
     /* 11px to 16px */
     transition: all 0.3s ease;
     font-family: 'Array-BoldWide', sans-serif;
@@ -139,8 +133,10 @@
 
 /* Add this at the end of the file */
 @media (max-width: 767px) {
-    .displayRow {
-        grid-template-columns: repeat(var(--name-length), 1fr);
+
+    .displayContent {
+        gap: 11px;
+        padding: 0;
     }
 
     .displayLetter {

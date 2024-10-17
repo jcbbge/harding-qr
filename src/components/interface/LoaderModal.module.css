@@ -14,7 +14,6 @@
 .modal {
   background-color: var(--gradient-base-bottom);
   padding: 20px;
-  border-radius: 15px;
   max-width: 800px;
   width: 100%;
 }
@@ -22,6 +21,7 @@
 .content {
   display: flex;
   flex-direction: column;
+  margin-top: 2rem;
 }
 .title {
   text-transform: uppercase;
@@ -29,15 +29,16 @@
 }
 
 .textDisplay {
-  border: 1px solid var(--text-color);
-  margin-bottom: 5px;
+  min-height: 10rem;
+  margin-bottom: 22px;
   width: 100%;
   overflow-y: hidden;
+  color: var(--text-primary);
 }
 
 .terminalLine {
-  white-space: pre-wrap;
-  line-height: 1.2;
+  display: flex;
+  align-items: center;
 }
 
 .cursor {
@@ -62,15 +63,17 @@
   display: flex;
   align-items: center;
   width: 100%;
+  border: 2px solid var(--text-primary);
 }
 
 .progressBar {
   flex-grow: 1;
-  height: 15px;
-  background-color: var(--gradient-base-top);
-  border: 1px solid var(--text-color);
+  height: 22px;
+  background-color: var(--accent);
+  border: 2px solid var(--accent-opposite);
   overflow: hidden;
-  margin-right: 10px;
+  width: 100%;
+  margin-right: 0;
 }
 
 .progressBarFill {
@@ -81,9 +84,9 @@
 
 .progressText {
   font-family: var(--font-family);
-  color: var(--text-color);
-  min-width: 40px;
-  text-align: right;
+  color: var(--text-primary);
+  min-width: 77px;
+  text-align: center;
 }
 
 .icon-align-bottom {
@@ -92,27 +95,26 @@
   display: inline-block;
 }
 
-.tableWrapper {
-  overflow-x: auto;
-  margin-bottom: 1rem;
-}
 
-.header {
+.tab {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--base-font-size);
   line-height: var(--line-height);
+  color: var(--text-primary);
+  margin-bottom: 3rem;
 }
 
-.header th,
-.header td {
+.tab th,
+.tab td {
   border: var(--border-thickness) solid var(--text-primary);
   padding: 0.5rem;
   text-align: left;
 }
 
-.header th {
+.tab th {
   font-weight: var(--font-weight-bold);
+  margin-bottom: 3rem;
 }
 
 .widthMin {
@@ -133,6 +135,13 @@
 .subtitle {
   font-size: 0.9rem;
   display: block;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  vertical-align: middle;
 }
 
 /* Responsive styles */

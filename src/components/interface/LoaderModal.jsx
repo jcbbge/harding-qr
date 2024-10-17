@@ -1,7 +1,5 @@
 import { createSignal, createEffect } from 'solid-js';
 import styles from './LoaderModal.module.css';
-import { Icon } from '../util/Icon';
-import NavigationGuide from './NavigationGuide';
 
 const LoaderModal = props => {
   const [displayLines, setDisplayLines] = createSignal([]);
@@ -13,60 +11,44 @@ const LoaderModal = props => {
   const role = props.role;
   const company = props.company;
 
+  const spacebar = '\u2423';
+  const returnKey = '\u23CE';
+  const shiftKey = '\u21E7';
   const displayOutput = [
+    ` Welcome!`,
     ` Initializing ${company} ${role} Sequence`,
     ` Booting FindMyNextPM.exe...`,
-    ` Welcome! Your next Product Manager has been selected.`,
-    ` Click Anywhere to Start`
-    // ` Roadmap Generator... LOADED`,
-    // ` Stakeholder Alignment Protocols... ONLINE`,
-    // ` Feature Prioritization Matrix... ACTIVATED`,
-    // ` Market Research Analyzer... CONFIGURED`,
-    // ` User Feedback Aggregator... SYNCED`,
-    // ` Loading Advanced Modules...`,
-    // ` Agile Workflow Integrator... INITIALIZING`,
-    // ` Sprint Planning Module... READY`,
-    // ` Cross-Functional Team Collaborator... ONLINE`,
-    // ` MVP Launch Sequence... ENGAGED`,
-    // ` KPI Tracker... SYNCHRONIZED`,
-    // ` Risk Management Matrix... OPTIMIZED`,
-    // ` Performing Final System Checks...`,
-    // ` Innovation Engine... TUNED`,
-    // ` Growth Strategy Analyzer... ACTIVE`,
-    // ` Customer-Centric Design Framework... LOADED`,
-    // ` Competitive Analysis... COMPLETE`,
-    // ` Problem-Solving Algorithm... CALIBRATED`,
-    // ` Recruiting Interface... CONNECTED`,
-    // ` Talent Matchmaker... OPERATIONAL`,
-    // ` Finalizing Boot Sequence...`,
-    // ` System Ready!`,
-    // ` C:\\>_`,
-    // ` Launching FindMyNextPM.exe`,
-    // ` C:\\>_`,
-    // ` Matching with Ideal Profile...`,
-    // ` Match Found! Loading Profile...`,
-    // ` C:\\>_ ${role}`,
-    // ` Welcome! You've found your next Product Manager.`,
-    // ` Press Enter to Proceed`,
-    // ` C:\\>_`,
-    // ` System Ready!`,
-    // ` Launching FindMyNextPM.exe`,
-    // ` Connecting to Talent Database...`,
-    // ` Searching for Product Manager Candidates...`,
-    // ` C:\\>_`,
-    // ` Matching with Ideal Profile...`,
-    // ` Match Found! Loading Profile...`,
-    // ` C:\\>_`,
+    ` Market Research Analyzer... CONFIGURED`,
+    ` Agile Workflow Integrator... INITIALIZING`,
+    ` Cross-Functional Team Collaborator... ONLINE`,
+    ` Risk Management Matrix... OPTIMIZED`,
+    ` Innovation Engine... TUNED`,
+    ` Customer-Centric Design Framework... LOADED`,
+    ` Recruiting Interface... CONNECTED`,
+    ` Talent Matchmaker... OPERATIONAL`,
+    ` Finalizing Boot ${company} Sequence...`,
+    ` ${role} System Ready!`,
+    ` Launching FindMyNextPM.exe`,
+    ` Connecting to Talent Database...`,
+    ` Searching for ${role} Candidates...`,
+    ` Matches Found! Loading Profiles...`,
+    ` HELP MENU`,
+    ` Keyboard Navigation: Arrow Keys← → ↑ ↓ `,
+    ` Keyboard Navigation: Letter Keys W A S D`,
+    ` Change Squares: RETURN ${returnKey} or SPACEBAR ${spacebar}`,
+    ` Change Squares: or SHIFT ${shiftKey} + RETURN ${returnKey}`,
+    ` Change Squares: and SHIFT ${shiftKey} + SPACEBAR ${spacebar}`,
+    ` Click Anywhere to Start`,
   ];
 
   const totalSentences = displayOutput.length;
 
-  // Increased timing constants for slower sequence
-  const MIN_CHAR_DELAY = 30; // Increased from 10
-  const MAX_CHAR_DELAY = 50; // Increased from 50
-  const MIN_LINE_DELAY = 500; // Increased from 200
-  const MAX_LINE_DELAY = 1000; // Increased from 500
-  const CURSOR_BLINK_INTERVAL = 400; // Unchanged
+  // Timing constants for controlling the speed of the animation
+  const MIN_CHAR_DELAY = 10; // Minimum delay between characters (in milliseconds)
+  const MAX_CHAR_DELAY = 30; // Maximum delay between characters (in milliseconds)
+  const MIN_LINE_DELAY = 10; // Minimum delay between lines (in milliseconds)
+  const MAX_LINE_DELAY = 100; // Maximum delay between lines (in milliseconds)
+  const CURSOR_BLINK_INTERVAL = 400; // Cursor blink interval (in milliseconds)
 
   const processNextSentence = () => {
     if (currentIndex() < displayOutput.length && !isTyping()) {
@@ -84,12 +66,13 @@ const LoaderModal = props => {
               } else {
                 newLines[newLines.length - 1] = sentence.substring(0, charIndex + 1);
               }
-              return newLines.slice(-3);
+              return newLines.slice(-10); // Changed from -3 to -10
             });
             charIndex++;
           } else {
             clearInterval(typingInterval);
             setProgress(prev => {
+              // Adjust this calculation to change how quickly the progress bar fills
               const newProgress = Math.min(100, prev + 100 / displayOutput.length);
               return newProgress;
             });
@@ -102,7 +85,7 @@ const LoaderModal = props => {
                 if (nextIndex < displayOutput.length) {
                   setDisplayLines(prev => {
                     let newLines = [...prev, ''];
-                    return newLines.slice(-3);
+                    return newLines.slice(-7);
                   });
                   setIsTyping(false);
                   processNextSentence();
@@ -110,10 +93,12 @@ const LoaderModal = props => {
                   setIsTyping(false);
                 }
               },
+              // Adjust this to change the delay between lines
               Math.random() * (MAX_LINE_DELAY - MIN_LINE_DELAY) + MIN_LINE_DELAY
             );
           }
         },
+        // Adjust this to change the typing speed
         Math.random() * (MAX_CHAR_DELAY - MIN_CHAR_DELAY) + MIN_CHAR_DELAY
       );
     }
@@ -124,7 +109,6 @@ const LoaderModal = props => {
 
   // Start processing sentences
   createEffect(() => {
-    console.log('Starting to process sentences'); // Debug log
     processNextSentence();
   });
 
@@ -140,44 +124,49 @@ const LoaderModal = props => {
   return (
     <div class={styles.modalOverlay} onClick={props.onClose}>
       <div class={styles.modal}>
-        <div class={styles.tableWrapper}>
-          <table class={styles.header}>
-            <tbody>
-              <tr>
-                <td colspan="2" rowspan="2" class={styles.widthAuto}>
-                  <h1 class={styles.title}>Find My Next PM</h1>
-                  <span class={styles.subtitle}>Web application framework to find your next Product Manager</span>
-                </td>
-                <th>Version</th>
-                <td class={styles.widthMin}>v0.2.1</td>
-              </tr>
-              <tr>
-                <th>Updated</th>
-                <td class={styles.widthMin}><time style="white-space: pre;">2024-10-15</time></td>
-              </tr>
-              <tr>
-                <th class={styles.widthMin}>Author</th>
-                <td class={styles.widthAuto}>Gantt, Joshua Russell</td>
-                <th class={styles.widthMin}>License</th>
-                <td>MIT</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <table class={styles.tab}>
+          <tbody>
+            <tr>
+              <td colspan="2" rowspan="2" class={styles.widthAuto}>
+                <h1 class={styles.title}>Find My Next PM</h1>
+                <span class={styles.subtitle}>{company}'s internal application framework to find top {role} candidates</span>
+              </td>
+              <th>Version</th>
+              <td class={styles.widthMin}>v0.2.1</td>
+            </tr>
+            <tr>
+              <th>Updated</th>
+              <td class={styles.widthMin}><time style="white-space: pre;">2024-10-15</time></td>
+            </tr>
+            <tr>
+              <th class={styles.widthMin}>Author</th>
+              <td class={styles.widthAuto}>Gantt, Joshua Russell</td>
+              <th class={styles.widthMin}>License</th>
+              <td>MIT</td>
+            </tr>
+          </tbody>
+        </table>
         <div class={styles.content}>
-          <NavigationGuide />
           <div class={styles.textDisplay}>
             {displayLines().map((line, index) => (
               <div class={styles.terminalLine}>
-                <Icon
-                  name="terminal-2"
-                  size={16}
-                  class="icon-align-bottom"
-                  style={{
-                    'vertical-align': 'text-top',
-                    'margin-left': '2px'
-                  }}
-                />
+                <svg
+                  class={styles.icon}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M8 9l3 3l-3 3" />
+                  <path d="M13 15l3 0" />
+                  <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                </svg>
                 {line}
                 {index === displayLines().length - 1 && showCursor() && (
                   <span

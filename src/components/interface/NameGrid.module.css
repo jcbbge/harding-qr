@@ -5,13 +5,15 @@
 .nameRow {
     display: grid;
     grid-template-columns: repeat(var(--name-length), 1fr);
-    gap: 0;
+    gap: 2px;
+    background-color: var(--text-primary);
+    padding: 2px;
 }
 
 .letterBox {
     width: 100%;
     aspect-ratio: 1 / 1;
-    border: 0.15rem solid var(--text-primary);
+    /* border: 2px solid var(--text-primary); */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,7 +25,6 @@
     /* Add this if not alreadypresent */
     z-index: 1;
     /* Ensure letterBox is above the expanded container */
-    background-color: var(--gradient-base-bottom);
     box-sizing: border-box;
     /* Include padding and border in the element's total width and height */
     min-width: 1.5em;

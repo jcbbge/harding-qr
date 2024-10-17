@@ -9,7 +9,9 @@
 .displayRow {
     display: grid;
     grid-template-columns: repeat(var(--name-length), 1fr);
-    gap: 0;
+    gap: 2px;
+    background-color: var(--text-primary);
+    padding: 2px;
 }
 
 .displayLetter {
@@ -28,7 +30,6 @@
     /* Add this if not already present */
     z-index: 1;
     /* Ensure letterBox is above the expanded container */
-    background-color: var(--gradient-base-bottom);
     box-sizing: border-box;
     /* Include padding and border in the element's total width and height */
     min-width: 1.5em;

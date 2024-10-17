@@ -15,12 +15,17 @@
   background-color: var(--gradient-base-bottom);
   padding: 20px;
   border-radius: 15px;
-  max-width: 500px;
+  max-width: 800px;
+  width: 100%;
 }
 
 .content {
   display: flex;
   flex-direction: column;
+}
+.title {
+  text-transform: uppercase;
+  font-size: 2rem;
 }
 
 .textDisplay {
@@ -75,7 +80,7 @@
 }
 
 .progressText {
-  font-family: monospace;
+  font-family: var(--font-family);
   color: var(--text-color);
   min-width: 40px;
   text-align: right;
@@ -85,4 +90,91 @@
   vertical-align: -0.25em; /* Adjust as needed */
   height: 1em; /* Ensures the icon scales with text size */
   display: inline-block;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.header {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--base-font-size);
+  line-height: var(--line-height);
+}
+
+.header th,
+.header td {
+  border: var(--border-thickness) solid var(--text-primary);
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.header th {
+  font-weight: var(--font-weight-bold);
+}
+
+.widthMin {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.widthAuto {
+  width: auto;
+}
+
+.title {
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  display: block;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .modal {
+    padding: 10px;
+    max-width: 95%;
+  }
+
+  .header {
+    font-size: 0.9rem;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+  }
+
+  .header th,
+  .header td {
+    padding: 0.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    font-size: 0.8rem;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .subtitle {
+    font-size: 0.7rem;
+  }
+
+  .header th,
+  .header td {
+    padding: 0.2rem;
+  }
 }

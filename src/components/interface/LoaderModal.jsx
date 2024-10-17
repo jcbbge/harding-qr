@@ -138,11 +138,32 @@ const LoaderModal = props => {
   });
 
   return (
-    <div
-      class={styles.modalOverlay}
-      onClick={props.onClose}
-    >
+    <div class={styles.modalOverlay} onClick={props.onClose}>
       <div class={styles.modal}>
+        <div class={styles.tableWrapper}>
+          <table class={styles.header}>
+            <tbody>
+              <tr>
+                <td colspan="2" rowspan="2" class={styles.widthAuto}>
+                  <h1 class={styles.title}>Find My Next PM</h1>
+                  <span class={styles.subtitle}>Web application framework to find your next Product Manager</span>
+                </td>
+                <th>Version</th>
+                <td class={styles.widthMin}>v0.2.1</td>
+              </tr>
+              <tr>
+                <th>Updated</th>
+                <td class={styles.widthMin}><time style="white-space: pre;">2024-10-15</time></td>
+              </tr>
+              <tr>
+                <th class={styles.widthMin}>Author</th>
+                <td class={styles.widthAuto}>Gantt, Joshua Russell</td>
+                <th class={styles.widthMin}>License</th>
+                <td>MIT</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div class={styles.content}>
           <NavigationGuide />
           <div class={styles.textDisplay}>

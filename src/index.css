@@ -328,6 +328,101 @@ a {
   border-bottom: var(--border-thickness) solid var(--gradient-base-bottom);
 }
 
+
+table {
+  position: relative;
+  top: 1rem;
+  width: calc(round(down, 100%, 1ch));
+  border-collapse: collapse;
+  margin-bottom: 11rem;
+}
+
+th, td {
+  border: var(--border-thickness) solid var(--text-primary);
+  padding: 1rem;
+  line-height: var(--line-height);
+  vertical-align: top;
+  text-align: left;
+}
+
+table tbody tr td:last-child {
+  text-align: right;
+}
+
+label {
+  display: block;
+  width: calc(round(down, 100%, 1ch));
+  height: auto;
+  line-height: var(--line-height);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+}
+
+label input {
+  width: 100%;
+}
+
+ul, ol {
+  padding: 0;
+  margin: 0 0 var(--line-height);
+}
+
+ul {
+  list-style-type: square;
+  padding: 0 0 0 2ch;
+}
+ol {
+  list-style-type: none;
+  counter-reset: item;
+  padding: 0;
+}
+ol ul,
+ol ol,
+ul ol,
+ul ul {
+  padding: 0 0 0 3ch;
+  margin: 0;
+}
+ol li:before { 
+  content: counters(item, ".") ". ";
+  counter-increment: item;
+  font-weight: var(--font-weight-medium);
+}
+
+li {
+  margin: 0;
+  padding: 0;
+}
+
+li::marker {
+  line-height: 0;
+}
+
+::-webkit-scrollbar {
+    height: var(--line-height);
+}
+
+
+th {
+  font-weight: 700;
+}
+.width-min {
+  width: 0%;
+}
+.width-auto {
+  width: 100%;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+.header h1 {
+  margin: 0;
+}
+.header tr td:last-child {
+  text-align: right;
+}
+
 /* Components */
 nav.container {
   display: flex;

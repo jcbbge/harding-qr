@@ -18,26 +18,20 @@ const LoaderModal = props => {
     ` Welcome!`,
     ` Initializing ${company} ${role} Sequence`,
     ` Booting FindMyNextPM.exe...`,
-    ` Market Research Analyzer... CONFIGURED`,
-    ` Agile Workflow Integrator... INITIALIZING`,
-    ` Cross-Functional Team Collaborator... ONLINE`,
-    ` Risk Management Matrix... OPTIMIZED`,
-    ` Innovation Engine... TUNED`,
-    ` Customer-Centric Design Framework... LOADED`,
     ` Recruiting Interface... CONNECTED`,
     ` Talent Matchmaker... OPERATIONAL`,
     ` Finalizing Boot ${company} Sequence...`,
-    ` ${role} System Ready!`,
     ` Launching FindMyNextPM.exe`,
     ` Connecting to Talent Database...`,
     ` Searching for ${role} Candidates...`,
-    ` Matches Found! Loading Profiles...`,
+    ` Potential Match Found. Loading Profile...`,
+    ` ${company} ${role} Sequence Ready.`,
     ` HELP MENU`,
-    ` Keyboard Navigation: Arrow Keys← → ↑ ↓ `,
-    ` Keyboard Navigation: Letter Keys W A S D`,
-    ` Change Squares: RETURN ${returnKey} or SPACEBAR ${spacebar}`,
-    ` Change Squares: or SHIFT ${shiftKey} + RETURN ${returnKey}`,
-    ` Change Squares: and SHIFT ${shiftKey} + SPACEBAR ${spacebar}`,
+    ` KEYBOARD NAVIGATION:`,
+    ` Use ← → ↑ ↓ Arrow Keys or W A S D Letter Keys`,
+    ` CHANGE SQUARES:`,
+    ` Use ${returnKey} Return Key (${shiftKey} Shift + ${returnKey} Return Key)`,
+    ` OR ${spacebar} Spacebar (${shiftKey} Shift + ${spacebar} Spacebar)`,
     ` Click Anywhere to Start`,
   ];
 
@@ -48,7 +42,7 @@ const LoaderModal = props => {
   const MAX_CHAR_DELAY = 30; // Maximum delay between characters (in milliseconds)
   const MIN_LINE_DELAY = 10; // Minimum delay between lines (in milliseconds)
   const MAX_LINE_DELAY = 100; // Maximum delay between lines (in milliseconds)
-  const CURSOR_BLINK_INTERVAL = 400; // Cursor blink interval (in milliseconds)
+  const CURSOR_BLINK_INTERVAL = 350; // Cursor blink interval (in milliseconds)
 
   const processNextSentence = () => {
     if (currentIndex() < displayOutput.length && !isTyping()) {
@@ -73,7 +67,7 @@ const LoaderModal = props => {
             clearInterval(typingInterval);
             setProgress(prev => {
               // Adjust this calculation to change how quickly the progress bar fills
-              const newProgress = Math.min(100, prev + 100 / displayOutput.length);
+              const newProgress = Math.min(100, prev + 110 / displayOutput.length);
               return newProgress;
             });
 

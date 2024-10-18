@@ -28,8 +28,8 @@ const findFirstVowelPosition = (names) => {
 
 const NameGrid = (props) => {
 
-    // let fullName = ['OKR', 'API', 'EOD'];
-let fullName = ['JOSHUA', 'PRODUCT', 'CODE'];
+    // let wordList = ['OKR', 'API', 'EOD'];
+let wordList = ['JOSHUA', 'PRODUCT', 'CODE'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 let letterChangeAudio,
     letterChangeAudioDown,
@@ -39,12 +39,13 @@ let letterChangeAudio,
     rightKeyAudio;
 let correctWordAudios = [];
 
-if(props.wordList) {
-  fullName = props.wordList;
-}
+if(props.wordList)
+  wordList = props.wordList;
+
+const maxLength = Math.max(...wordList.map(name => name.length)) + 1;
 
 const initializeWordList = () => {
-  const maxLength = Math.max(...fullName.map(name => name.length), 4);
+
 
   const isVowel = char => 'AEIOU'.includes(char.toUpperCase());
   const getRandomLetter = (exclude) => {
@@ -58,7 +59,7 @@ const initializeWordList = () => {
     return paddedName;
   };
 
-  const paddedNames = fullName.map(padder);
+  const paddedNames = wordList.map(padder);
 
   const result = paddedNames.map(name => {
     return name.split('').map(char => ({
@@ -82,9 +83,6 @@ const initializeWordList = () => {
   const [lastTouchTime, setLastTouchTime] = createSignal(0);
   const [isGridFocused, setIsGridFocused] = createSignal(false);
 
-  // Add this line to get the maxLength
-  const maxLength = Math.max(...fullName.map(name => name.length), 4);
-
   // Add this effect to set the CSS custom property
   createEffect(() => {
     document.documentElement.style.setProperty('--grid-columns', maxLength.toString());
@@ -98,7 +96,7 @@ const initializeWordList = () => {
     }
     
     if (props.role && props.company) {
-      fullName = [props.company, split(props.role, ' ')];
+      wordList = [props.company, split(props.role, ' ')];
     }
   });
 

@@ -146,6 +146,11 @@
 /* Add this at the end of the file */
 @media (max-width: 767px) {
 
+    .nameRow {
+        gap: 1px;
+        padding: 1px;
+    }
+
     .letterBox {
         user-select: none;
         -webkit-tap-highlight-color: transparent;

@@ -984,7 +984,7 @@ body {
 }
 
 .snap-container.unlocked {
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .snap-section {
@@ -995,6 +995,22 @@ body {
 /* Prevent scrolling on touch devices when locked */
 .snap-container:not(.unlocked) {
   touch-action: none;
+}
+
+.snap-container {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.snap-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.snap-container {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
 }
 
 .icon {

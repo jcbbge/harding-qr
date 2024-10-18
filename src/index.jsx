@@ -72,8 +72,8 @@ const RolecoWrapper = () => {
 
   return (
     <Roleco
-      role={parsedParams.role}
-      company={parsedParams.company}
+      role={parsedParams.role.toUpperCase()}
+      company={parsedParams.company.toUpperCase()}
     />
   );
 };

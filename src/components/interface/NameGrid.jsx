@@ -39,9 +39,9 @@ let letterChangeAudio,
     rightKeyAudio;
 let correctWordAudios = [];
 
-    if(props.wordList) {
-      fullName = props.wordList;
-    }
+if(props.wordList) {
+  fullName = props.wordList;
+}
 
 const initializeWordList = () => {
   const maxLength = Math.max(...fullName.map(name => name.length), 4);
@@ -95,6 +95,10 @@ const initializeWordList = () => {
     const storedTheme = localStorage.getItem('theme');
     if (storedTheme) {
       updateTheme(0, storedTheme);
+    }
+    
+    if (props.role && props.company) {
+      fullName = [props.company, split(props.role, ' ')];
     }
   });
 

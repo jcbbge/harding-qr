@@ -6,7 +6,7 @@ function App() {
   const [company, setCompany] = createSignal('');
   const [role, setRole] = createSignal('');
   const [contentHeight, setContentHeight] = createSignal(0);
-  const [heroUnlocked, setHeroUnlocked] = createSignal(false);
+  const [heroUnlocked, setHeroUnlocked] = createSignal(true);
 
   onMount(() => {
     const urlPath = window.location.pathname;
@@ -94,7 +94,7 @@ function App() {
       </span>
     </div>,
     <div class="code-intro">
-      <span class="code-left"><s class="spacing-tighter">Design</s> <s class="spacing-tighter">Management</s> <b class="spacing-tigh">Stuff.</b></span>
+      <span class="code-left"><s class="spacing-tighter">Design</s> <s class="spacing-tighter">Management</s> <b class="spacing-tight">Stuff.</b></span>
       <span class="code-right"> &nbsp;I</span>
     </div>
   ];    

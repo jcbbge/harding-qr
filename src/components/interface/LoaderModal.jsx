@@ -6,7 +6,8 @@ const LoaderModal = props => {
   const [showCursor, setShowCursor] = createSignal(true);
   const [progress, setProgress] = createSignal(0);
   const [currentIndex, setCurrentIndex] = createSignal(0);
-  const [isTyping, setIsTyping] = createSignal(false); // Flag to track typing state
+  const [isTyping, setIsTyping] = createSignal(false);
+  const [isLoadingComplete, setIsLoadingComplete] = createSignal(false);
 
   const role = props.role;
   const company = props.company;
@@ -85,6 +86,7 @@ const LoaderModal = props => {
                   processNextSentence();
                 } else {
                   setIsTyping(false);
+                  setIsLoadingComplete(true);  // Set loading as complete
                 }
               },
               // Adjust this to change the delay between lines
@@ -115,8 +117,15 @@ const LoaderModal = props => {
     return () => clearInterval(cursorInterval);
   });
 
+  const handleClose = (event) => {
+    event.stopPropagation();
+    if (isLoadingComplete()) {
+      props.onClose();
+    }
+  };
+
   return (
-    <div class={styles.modalOverlay} onClick={props.onClose}>
+    <div class={styles.modalOverlay} onClick={handleClose}>
       <div class={styles.modal}>
         <table class={styles.tab}>
           <tbody>

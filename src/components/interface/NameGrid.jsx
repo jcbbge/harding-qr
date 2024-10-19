@@ -180,13 +180,23 @@ const initializeWordList = () => {
     }
   });
 
+  // Add this near the top of the component, after the signals and stores
+  let debounceTimer;
+  const debouncedUpdateLetterBox = (row, col, direction, isShiftEquivalent) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      updateLetterBox(row, col, direction, isShiftEquivalent);
+    }, 100); // 200ms debounce time, adjust as needed
+  };
+
+  // Modify the gridNavigate function
   const gridNavigate = event => {
     const { key, shiftKey } = event;
     const { row, col } = focusedPosition();
     let direction;
 
     // Prevent default for all navigation keys
-    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'a', 'w', 's', 'd', ' ', 'Tab'].includes(key)) {
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'a', 'w', 's', 'd', ' ', 'Tab', 'Enter'].includes(key)) {
       event.preventDefault();
     }
 
@@ -213,7 +223,7 @@ const initializeWordList = () => {
         break;
       case 'Enter':
       case ' ':
-        updateLetterBox(row, col, shiftKey ? -1 : 1);
+        debouncedUpdateLetterBox(row, col, shiftKey ? -1 : 1, false);
         return;
       case 'Tab':
         direction = shiftKey ? 'left' : 'right';
@@ -379,6 +389,7 @@ const initializeWordList = () => {
 
     document.removeEventListener('click', handleClickOutside);
     document.removeEventListener('focusin', handleFocusChange);
+    clearTimeout(debounceTimer); // Clear the debounce timer on cleanup
   });
 
   const handleTouchStart = (event, rowIndex, colIndex) => {

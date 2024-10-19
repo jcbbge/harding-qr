@@ -8,6 +8,7 @@ const Roleco = props => {
   const [contentHeight, setContentHeight] = createSignal(0);
   const [heroUnlocked, setHeroUnlocked] = createSignal(false);
   const [showModal, setShowModal] = createSignal(true);
+  const [modalClosed, setModalClosed] = createSignal(false);
 
   createEffect(() => {
     console.log('Roleco: Props changed', { role: props.role, company: props.company });
@@ -79,7 +80,9 @@ const Roleco = props => {
   }
 
   function handleModalClose() {
-    return setShowModal(false);
+    setShowModal(false);
+    setModalClosed(true);
+    return;
   }
 
   function preventArrowScroll(e) {
@@ -107,6 +110,7 @@ console.log('Roleco: Current state', { role: role(), company: company() });
                 wordList={[company(), role().split(' ')[0], role().split(' ')[1]]}
                 onLetterUnlock={handleLetterUnlock}
                 onAllLettersMatched={handleAllLettersMatched}
+                modalClosed={modalClosed()}
               />
             </div>
           </section>

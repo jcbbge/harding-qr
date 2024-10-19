@@ -448,6 +448,15 @@ const initializeWordList = () => {
     }, 0);
   }
 
+  createEffect(() => {
+    if (props.modalClosed) {
+      // Set focus to the first vowel position when the modal is closed
+      const firstVowelPosition = findFirstVowelPosition(names);
+      setFocus(firstVowelPosition.row, firstVowelPosition.col);
+      setIsGridFocused(true);
+    }
+  });
+
   return (
     <div class={styles.nameGrid}>
       <For each={names}>

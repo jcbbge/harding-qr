@@ -53,10 +53,13 @@ const initializeWordList = () => {
     return availableLetters[Math.floor(Math.random() * availableLetters.length)];
   };
 
-  const padder = (name) => {
-    // Simply pad the name to maxLength
-    const paddedName = name.padStart(maxLength, ' ');
-    return paddedName;
+  const longestWordLength = Math.max(...wordList.map(word => word.length));
+  const allSameLength = wordList.every(word => word.length === longestWordLength);
+  const totalColumns = allSameLength ? longestWordLength + 1 : longestWordLength;
+
+  const padder = (word) => {
+    const spacesToAdd = totalColumns - word.length;
+    return word.padStart(totalColumns, ' ');
   };
 
   const paddedNames = wordList.map(padder);

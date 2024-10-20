@@ -1,9 +1,11 @@
-import { createSignal, onMount, createEffect } from 'solid-js';
+import { createSignal, onMount, createEffect, createResource } from 'solid-js';
 import { Motion } from 'solid-motionone';
 import NameGrid from '../components/interface/NameGrid';
 import LoaderModal from '../components/interface/LoaderModal';
 import styles from './Roleco.module.css';
 import confetti from 'canvas-confetti';
+
+import PRD from '../components/interface/Prd';
 
 const MatchFoundButton = (props) => {
   return (
@@ -31,6 +33,19 @@ const Roleco = props => {
   const [modalClosed, setModalClosed] = createSignal(props.testMode || false);
   const [allWordsMatched, setAllWordsMatched] = createSignal(props.testMode || false);
   const [buttonClicked, setButtonClicked] = createSignal(false);
+
+  const [showPRD, setShowPRD] = createSignal(false);
+
+  const [companyContent, { refetch }] = createResource(company, async (companyName) => {
+    if (!companyName) return '';
+    try {
+      const content = await getKVValue(companyName);
+      return JSON.parse(content);
+    } catch (error) {
+      console.error('Error fetching company data:', error);
+      return '';
+    }
+  });
 
   createEffect(() => {
     console.log('Roleco: Props changed', { role: props.role, company: props.company });
@@ -153,6 +168,10 @@ const Roleco = props => {
 
   console.log('Roleco: Current state', { role: role(), company: company() });
 
+  const handleReveal = () => {
+    setShowPRD(true);
+  };
+
   return (
     <>
       {showModal() && !props.testMode && (
@@ -183,7 +202,11 @@ const Roleco = props => {
           </section>
           <section class="snap-section">
             <div class="name-grid-container">
-              PRD DOCUMENT TEMPLATE GOES HERE...
+              Roleco PRD goes here...
+              {showPRD() && companyContent() && <PRD 
+                content={companyContent().prd} 
+                brandColors={companyContent().brandColors} 
+              />}
             </div>
           </section>
         </div>

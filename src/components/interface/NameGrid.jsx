@@ -192,6 +192,9 @@ const initializeWordList = () => {
     }, 100); // 200ms debounce time, adjust as needed
   };
 
+  // Add these signals to track if audio is loaded
+  const [audioLoaded, setAudioLoaded] = createSignal(false);
+
   // Modify the gridNavigate function
   const gridNavigate = event => {
     const { key, shiftKey } = event;
@@ -244,14 +247,15 @@ const initializeWordList = () => {
     direction = undefined;
   };
 
+  // Modify the playSound function
   const playSound = audio => {
-    if (audio) {
+    if (audio && audioLoaded()) {
       audio.currentTime = 0;
       audio.play().catch(error => {
         console.error('Error playing audio:', error);
       });
     } else {
-      console.error('Audio not found');
+      console.error('Audio not found or not loaded');
     }
   };
 
@@ -356,6 +360,8 @@ const initializeWordList = () => {
 
   onMount(() => {
     window.addEventListener('keydown', gridNavigate);
+    
+    // Load audio files
     letterChangeAudio = new Audio(letterChangeSound);
     letterChangeAudioDown = new Audio(letterChangeSoundDown);
     correctLetterAudio = new Audio(correctLetterSound);
@@ -367,6 +373,21 @@ const initializeWordList = () => {
     allWordsCompleteAudio = new Audio(allWordsCompleteSound);
     leftKeyAudio = new Audio(leftKeySound);
     rightKeyAudio = new Audio(rightKeySound);
+
+    // Wait for all audio to load
+    Promise.all([
+      letterChangeAudio.load(),
+      letterChangeAudioDown.load(),
+      correctLetterAudio.load(),
+      ...correctWordAudios.map(audio => audio.load()),
+      allWordsCompleteAudio.load(),
+      leftKeyAudio.load(),
+      rightKeyAudio.load()
+    ]).then(() => {
+      setAudioLoaded(true);
+    }).catch(error => {
+      console.error('Error loading audio:', error);
+    });
 
     checkMobile();
     window.addEventListener('resize', checkMobile);

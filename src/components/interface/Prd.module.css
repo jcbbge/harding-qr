@@ -1,0 +1,154 @@
+.prdContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(230, 230, 250, 0.7);
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: var(--font-family);
+  font-size: var(--base-font-size);
+  line-height: var(--line-height);
+  padding: 22px;
+  overflow: hidden;
+}
+
+.prdHeader,
+.prdFooter {
+  width: 100%;
+  border-collapse: collapse;
+  flex-shrink: 0;
+}
+
+.prdHeader {
+  margin-bottom: 22px;
+}
+
+.prdFooter {
+  margin-top: 22px;
+}
+
+.prdHeader th,
+.prdHeader td,
+.prdFooter th,
+.prdFooter td {
+  border: var(--border-thickness) solid var(--text-primary);
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.prdHeader th,
+.prdFooter th {
+  font-weight: var(--font-weight-bold);
+}
+
+.widthMin {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.widthAuto {
+  width: auto;
+}
+
+.title {
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  display: block;
+}
+
+.prdContent {
+  flex: 1;
+  overflow-y: auto;
+  border: var(--border-thickness) solid var(--text-primary);
+  padding: 22px;
+  margin-bottom: 22px;
+}
+
+.prdContent h1,
+.prdContent h2,
+.prdContent h3,
+.prdContent h4,
+.prdContent h5,
+.prdContent h6 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.prdContent p {
+  margin-bottom: 10px;
+}
+
+.prdContent ul,
+.prdContent ol {
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+.prdContent pre,
+.prdContent code {
+  background-color: rgba(176, 226, 255, 0.5);
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: var(--font-family);
+}
+
+.prdContent blockquote {
+  border-left: 4px solid var(--accent);
+  padding-left: 10px;
+  margin-left: 0;
+  opacity: 0.8;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .prdContainer,
+  .prdOverlay {
+    padding: 11px;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+  }
+
+  .prdHeader th,
+  .prdHeader td,
+  .prdFooter th,
+  .prdFooter td,
+  .prdContent {
+    border-width: 1px;
+  }
+
+  .prdHeader th,
+  .prdHeader td,
+  .prdFooter th,
+  .prdFooter td {
+    padding: 0.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1rem;
+  }
+
+  .subtitle {
+    font-size: 0.7rem;
+  }
+
+  .prdHeader th,
+  .prdHeader td,
+  .prdFooter th,
+  .prdFooter td {
+    padding: 0.2rem;
+  }
+}

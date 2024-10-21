@@ -74,7 +74,7 @@ const RolecoWrapper = () => {
     <Roleco
       role={parsedParams.role.toUpperCase()}
       company={parsedParams.company.toUpperCase()}
-      testMode={false}
+      testMode={true}
     />
   );
 };

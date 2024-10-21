@@ -104,12 +104,15 @@ const Roleco = props => {
   }
 
   function handleAllLettersMatched() {
-    setHeroUnlocked(true);
     setAllWordsMatched(true);
 
     const end = Date.now() + 2000;
     const companyData = sheetData()?.find(item => item.comp_param.toLowerCase() === company().toLowerCase());
-    let colors = ['#bb0000', '#ffffff']; // Default colors as an array
+    
+    // Get the default colors from CSS variables
+    const defaultColor1 = getComputedStyle(document.documentElement).getPropertyValue('--accent-opposite').trim();
+    const defaultColor2 = getComputedStyle(document.documentElement).getPropertyValue('--accent-fun').trim();
+    let colors = [defaultColor1, defaultColor2];
 
     if (companyData && companyData.company_colors) {
       // Split the string into an array of colors
@@ -169,6 +172,7 @@ const Roleco = props => {
   }
 
   function scrollToSecondSection() {
+    setHeroUnlocked(true);
     setButtonClicked(true);
     setShowPRD(true);
     setScrolledToPRD(true);

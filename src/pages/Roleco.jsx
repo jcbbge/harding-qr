@@ -6,10 +6,9 @@ import confetti from 'canvas-confetti';
 
 import PRD from '../components/interface/Prd';
 
-// Add this new function to fetch data from the Google Sheet
 async function fetchSheetData() {
   const sheetId = '1uwuzV2pK7VS9UwRjAC3VBr98IdMwaEQAvk64aoUPHS4';
-  const sheetName = 'PortfolioCompData'; // Update this if your sheet has a different name
+  const sheetName = 'PortfolioCompData';
   const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
   try {
@@ -17,22 +16,20 @@ async function fetchSheetData() {
     const text = await response.text();
     const data = JSON.parse(text.substr(47).slice(0, -2));
 
-    console.log('Fetched sheet data:', data); // Debug log
-
-    const processedData = data.table.rows.map(row => {
-      const [comp_param, company_name, company_colors, prd_md] = row.c;
+    const processedData = data.table.rows.map((row) => {
+      const [comp_param, company_name, company_colors, prd_title, prd_subtitle, prd_md] = row.c;
       return {
         comp_param: comp_param?.v,
         company_name: company_name?.v,
         company_colors: company_colors?.v,
+        prd_title: prd_title?.v,
+        prd_subtitle: prd_subtitle?.v,
         prd_md: prd_md?.v
       };
     });
 
-    console.log('Processed sheet data:', processedData); // Debug log
     return processedData;
   } catch (error) {
-    console.error('Error fetching sheet data:', error);
     return [];
   }
 }
@@ -68,47 +65,25 @@ const Roleco = props => {
   const [scrolledToPRD, setScrolledToPRD] = createSignal(false);
 
   createEffect(() => {
-    console.log('Roleco: Props changed', { role: props.role, company: props.company });
     setRole(props.role || '');
     setCompany(props.company || '');
   });
 
   onMount(() => {
-    console.log('Roleco: Component mounted', { role: role(), company: company() });
-    // Get the height of the content
     const content = document.querySelector('.hero-section');
     if (content) {
       setContentHeight(content.offsetHeight);
     }
 
-    // Center the content
     centerContent();
 
-    // Add resize event listener
     window.addEventListener('resize', centerContent);
-
-    // Add this event listener to prevent default scrolling on arrow keys
     window.addEventListener('keydown', preventArrowScroll);
-
-    // Add scroll event listener
     window.addEventListener('scroll', handleScroll);
-    return;
-
   });
 
   createEffect(() => {
-    // Recenter content when contentHeight changes
     centerContent();
-    return;
-  });
-
-  createEffect(() => {
-    const data = sheetData();
-    if (data) {
-      console.log('Sheet data loaded:', data); // Debug log
-      const companyData = data.find(item => item.comp_param.toLowerCase() === company().toLowerCase());
-      console.log('Found company data:', companyData); // Debug log
-    }
   });
 
   function centerContent() {
@@ -122,38 +97,50 @@ const Roleco = props => {
         behavior: 'auto'
       });
     }
-    return;
-
   }
 
   function handleLetterUnlock() {
-    console.log('Letter unlocked App.jsx callback');
-    return;
+    // Functionality can be added here if needed
   }
 
   function handleAllLettersMatched() {
     setHeroUnlocked(true);
     setAllWordsMatched(true);
-    console.log('All letters matched, hero section unlocked');
 
     const end = Date.now() + 2000;
-    const colors = ['#bb0000', '#ffffff'];
+    const companyData = sheetData()?.find(item => item.comp_param.toLowerCase() === company().toLowerCase());
+    let colors = ['#bb0000', '#ffffff']; // Default colors as an array
+
+    if (companyData && companyData.company_colors) {
+      // Split the string into an array of colors
+      colors = companyData.company_colors.replace(/[\[\]]/g, '').split(',').map(color => color.trim());
+      console.log('Company colors:', colors);
+    } else {
+      console.log('Using default colors:', colors);
+    }
+
+    console.log('Colors type:', typeof colors);
+    console.log('Colors value:', colors);
 
     const frame = () => {
-      confetti({
-        particleCount: 2,
-        angle: 60,
-        spread: 65,
-        origin: { x: 0 },
-        colors,
-      });
-      confetti({
-        particleCount: 2,
-        angle: 120,
-        spread: 45,
-        origin: { x: 1 },
-        colors,
-      });
+      try {
+        confetti({
+          particleCount: 2,
+          angle: 60,
+          spread: 65,
+          origin: { x: 0 },
+          colors: colors
+        });
+        confetti({
+          particleCount: 2,
+          angle: 120,
+          spread: 45,
+          origin: { x: 1 },
+          colors: colors
+        });
+      } catch (error) {
+        console.error('Error in confetti function:', error);
+      }
 
       if (Date.now() < end) {
         requestAnimationFrame(frame);
@@ -161,7 +148,6 @@ const Roleco = props => {
     };
 
     frame();
-    return;
   }
 
   function handleScroll(event) {
@@ -169,40 +155,31 @@ const Roleco = props => {
       event.preventDefault();
       window.scrollTo(0, 0);
     }
-    return;
   }
 
   function handleModalClose() {
     setShowModal(false);
     setModalClosed(true);
-    return;
   }
 
   function preventArrowScroll(e) {
     if (['ArrowUp', 'ArrowDown', 'Space'].includes(e.key)) {
       e.preventDefault();
     }
-    return;
   }
 
   function scrollToSecondSection() {
     setButtonClicked(true);
-    setShowPRD(true); // Ensure PRD is set to show
-    setScrolledToPRD(true); // Set this to true to trigger the scroll effect
+    setShowPRD(true);
+    setScrolledToPRD(true);
 
-    // Use setTimeout to ensure the DOM has updated before scrolling
     setTimeout(() => {
       const prdSection = document.querySelector('.prd-section');
       if (prdSection) {
         prdSection.scrollIntoView({ behavior: 'smooth' });
-        console.log('Scrolling to PRD section');
-      } else {
-        console.log('PRD section not found');
       }
     }, 100);
   }
-
-  console.log('Roleco: Current state', { role: role(), company: company() });
 
   const handleReveal = () => {
     setShowPRD(true);
@@ -242,6 +219,8 @@ const Roleco = props => {
                 md_content={sheetData().find(item => item.comp_param.toLowerCase() === company().toLowerCase())?.prd_md || ''}
                 company={company()}
                 role={role()}
+                prd_title={sheetData().find(item => item.comp_param.toLowerCase() === company().toLowerCase())?.prd_title}
+                prd_subtitle={sheetData().find(item => item.comp_param.toLowerCase() === company().toLowerCase())?.prd_subtitle}
               />
             )}
           </section>

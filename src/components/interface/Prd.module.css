@@ -1,5 +1,4 @@
 .prdContainer {
-  flex: 1;
   display: flex;
   flex-direction: column;
   background-color: rgba(230, 230, 250, 0.7);
@@ -10,6 +9,8 @@
   line-height: var(--line-height);
   padding: 22px;
   overflow: hidden;
+  height: 100vh; 
+  max-height: 100vh;
 }
 
 .prdHeader,
@@ -32,7 +33,7 @@
 .prdFooter th,
 .prdFooter td {
   border: var(--border-thickness) solid var(--text-primary);
-  padding: 0.5rem;
+  padding: 11px;
   text-align: left;
 }
 
@@ -54,6 +55,7 @@
   text-transform: uppercase;
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
+  font-weight: var(--font-weight-bold);
 }
 
 .subtitle {
@@ -64,9 +66,6 @@
 .prdContent {
   flex: 1;
   overflow-y: auto;
-  border: var(--border-thickness) solid var(--text-primary);
-  padding: 22px;
-  margin-bottom: 22px;
 }
 
 .prdContent h1,
@@ -103,6 +102,89 @@
   padding-left: 10px;
   margin-left: 0;
   opacity: 0.8;
+}
+
+.markdownContent {
+
+
+  /* Headings */
+  & h1, & h2, & h3, & h4, & h5, & h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+  }
+
+  & h1 { font-size: 2em; }
+  & h2 { font-size: 1.5em; }
+  & h3 { font-size: 1.3em; }
+  & h4 { font-size: 1.2em; }
+  & h5 { font-size: 1.1em; }
+  & h6 { font-size: 1em; }
+
+  /* Paragraphs */
+  & p {
+    margin-bottom: 1em;
+  }
+
+  /* Lists */
+  & ul, & ol {
+    margin-bottom: 1em;
+    padding-left: 2em;
+  }
+
+  & li {
+    margin-bottom: 0.5em;
+  }
+
+  /* Links */
+  & a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+
+  & a:hover {
+    text-decoration: underline;
+  }
+
+  /* Code blocks */
+  & pre, & code {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+    padding: 0.2em 0.4em;
+  }
+
+  & pre {
+    padding: 1em;
+    overflow-x: auto;
+  }
+
+  /* Blockquotes */
+  & blockquote {
+    border-left: 4px solid #ddd;
+    padding-left: 1em;
+    margin-left: 0;
+    font-style: italic;
+  }
+
+  /* Tables */
+  & table {
+    border-collapse: collapse;
+    margin-bottom: 1em;
+    width: 100%;
+  }
+
+  & th, & td {
+    border: 1px solid #ddd;
+    padding: 0.5em;
+  }
+
+  & th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
 }
 
 /* Responsive styles */
@@ -149,6 +231,9 @@
   .prdHeader td,
   .prdFooter th,
   .prdFooter td {
-    padding: 0.2rem;
+    padding: 0.5rem;
+    font-size: 0.8rem;
   }
 }
+
+

@@ -896,6 +896,7 @@ body {
   align-items: center;
   min-height: 100vh;
   color: var(--text-primary);
+  padding: 77px 44px 77px 44px;
 }
 
 .name-grid-container {
@@ -1043,6 +1044,67 @@ body {
 .name-right {
     letter-spacing: -0.05em;
 }
+
+.dark-mode .icon {
+  filter: invert(1);
+}
+
+.matchFoundButton {
+  position: relative;
+  transform: none;
+  left: auto;
+  bottom: auto;
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  padding: 12px 24px;
+  border-radius: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: bold;
+  font-size: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+  border: 2px solid var(--text-primary);
+}
+
+.matchFoundButton:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  animation: none;
+}
+
+.buttonIcon {
+  width: 3rem;
+  height: 3rem;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+   50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.buttonContainer {
+  color: var(--text-primary);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 110px; /* Changed from 20px to 110px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
 /* .code-left {
   font-size: 33px;
   font-weight: var(--font-weight-bold);
@@ -1113,59 +1175,7 @@ body {
     vertical-align: middle;
     margin: 0 2px; /* Add some spacing between icons */
   }
-}
 
-.dark-mode .icon {
-  filter: invert(1);
-}
-
-.matchFoundButton {
-  position: relative;
-  transform: none;
-  left: auto;
-  bottom: auto;
-  background-color: var(--primary-color);
-  color: var(--background-color);
-  padding: 12px 24px;
-  border-radius: 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: bold;
-  font-size: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  animation: pulse 2s infinite;
-  border: 2px solid var(--text-primary);
-}
-
-.matchFoundButton:hover {
-  background-color: var(--accent-color);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
-  animation: none;
-}
-
-.buttonIcon {
-  width: 3rem;
-  height: 3rem;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-   50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* Media query for mobile devices */
-@media (max-width: 768px) {
   .matchFoundButton {
     border-width: 1px;
     font-size: 1.5rem; /* Reduce font size for mobile */
@@ -1175,16 +1185,10 @@ body {
     width: 2rem;
     height: 2rem;
   }
+
+  .prd-section {
+    padding: 55px 22px 88px 22px;
+  }
 }
 
-.buttonContainer {
-  color: var(--text-primary);
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 110px; /* Changed from 20px to 110px */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
+

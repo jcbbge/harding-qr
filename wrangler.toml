@@ -1,8 +1,0 @@
-name = "roleco-prd"
-account_id = "bf52793ac9971d81c0efed16c984b512"
-workers_dev = true
-compatibility_date = "2023-05-18"
-
-kv_namespaces = [
-  { binding = "portfolio", id = "66c678cacee140c79731f49fc913ab36" }
-]

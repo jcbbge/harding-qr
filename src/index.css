@@ -1137,16 +1137,13 @@ body {
 
 /* Mobile styles (up to 767px) */
 @media (max-width: 767px) {
+  
   .layout {
     padding: 0; 
   }
   .main-content {
         gap: 11px;
     padding: 0; 
-  }
-
-  .nameRow {
-    gap: 0;
   }
 
   .name-intro,

@@ -5,9 +5,9 @@
 .nameRow {
     display: grid;
     grid-template-columns: repeat(var(--name-length), 1fr);
-    gap: 2px;
+    gap: 3px;
     background-color: var(--text-primary);
-    padding: 2px;
+    padding: 3px;
 }
 
 .letterBox {
@@ -147,8 +147,8 @@
 @media (max-width: 767px) {
 
     .nameRow {
-        gap: 1px;
-        padding: 1px;
+        gap: 2px;
+        padding: 2px;
     }
 
     .letterBox {

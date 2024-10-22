@@ -146,9 +146,22 @@
 
 /* Responsive styles */
 @media (max-width: 768px) {
+
+  .progressContainer {
+    border: 1px solid var(--text-primary);
+  }
+
+  .progressBar {
+    border: 1px solid var(--accent-opposite);
+  } 
   .modal {
     padding: 10px;
     max-width: 95%;
+  }
+
+  .tab th,
+  .tab td {
+    border: 1px solid var(--text-primary);
   }
 
   .header {
@@ -170,6 +183,19 @@
 }
 
 @media (max-width: 480px) {
+
+  .progressContainer {
+    border: 1px solid var(--text-primary);
+  }
+
+  .progressBar {
+    border: 1px solid var(--accent-opposite);
+  } 
+
+  .tab th,
+  .tab td {
+    border: 1px solid var(--text-primary);
+  }
   .header {
     font-size: 0.8rem;
   }

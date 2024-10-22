@@ -9,15 +9,15 @@
 .displayRow {
     display: grid;
     grid-template-columns: repeat(var(--name-length), 1fr);
-    gap: 2px;
+    gap: 3px;
     background-color: var(--text-primary);
-    padding: 2px;
+    padding: 3px;
 }
 
 .displayLetter {
     width: 100%;
     aspect-ratio: 1 / 1;
-    border: 0.15rem solid var(--text-primary);
+
     /* 2px */
     display: flex;
     align-items: center;
@@ -54,7 +54,6 @@
 }
 
 .displayLetter.matched {
-    border: 0.18rem solid var(--text-primary);
     /* 2px */
     background-color: var(--accent-unexpected);
     color: var(--text-secondary);
@@ -134,6 +133,11 @@
 
 /* Add this at the end of the file */
 @media (max-width: 767px) {
+
+    .displayRow {
+        gap: 2px;
+        padding: 2px;
+    }
 
     .displayContent {
         gap: 11px;

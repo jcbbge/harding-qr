@@ -6,7 +6,7 @@ function App() {
   const [company, setCompany] = createSignal('');
   const [role, setRole] = createSignal('');
   const [contentHeight, setContentHeight] = createSignal(0);
-  const [heroUnlocked, setHeroUnlocked] = createSignal(true);
+  const [heroUnlocked, setHeroUnlocked] = createSignal(false);
 
   onMount(() => {
     const urlPath = window.location.pathname;

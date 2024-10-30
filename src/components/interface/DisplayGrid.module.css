@@ -25,7 +25,7 @@
     font-size: clamp(2.5rem, 6vw, 5rem);
     /* 11px to 16px */
     transition: all 0.3s ease;
-    font-family: 'Array-BoldWide', sans-serif;
+    font-family: var(--font-family);
     position: relative;
     /* Add this if not already present */
     z-index: 1;

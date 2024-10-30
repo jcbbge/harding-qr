@@ -585,7 +585,7 @@ const initializeWordList = () => {
       <Show when={props.jsxElements}>
         <div class="name-intro">
             <span class="name-left spacing-tight">too. </span>
-            <span class="name-right spacing-tighter"> I build w/ AI</span>
+            <span class="name-right spacing-tighter"> I like to build w/ AI</span>
         </div>
       </Show>
     </div>

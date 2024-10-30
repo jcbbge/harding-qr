@@ -1,12 +1,6 @@
 @import url('@/assets/fonts/Array/css/array.css');
 @import url('@/assets/fonts/DepartureMono/css/departure-mono.css');
 
-@font-face {
-  font-family: 'Departure Mono';
-  src: url('path-to-departure-mono-font-file.woff2') format('woff2');
-  /* Add additional src lines for other font formats if available */
-}
-
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;

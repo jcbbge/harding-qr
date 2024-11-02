@@ -940,8 +940,8 @@ body {
   align-items: center;
   width: 100%;
   color: var(--text-primary);
-  font-size: 3rem;
-  margin: 1rem 0;
+  font-size: 2rem;
+  margin: 2.21rem 0;
 }
 
 .name-left,
@@ -953,29 +953,6 @@ body {
 .name-right,
 .product-right,
 .code-right {
-  text-align: right;
-}
-.stlon,
-.stltw,
-.stlth {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  color: var(--text-primary);
-  font-size: 3rem;
-  margin: 1rem 0;
-}
-
-.stlon-left,
-.stltw-left,
-.stlth-left {
-  text-align: left;
-}
-
-.stlon-right,
-.stltw-right,
-.stlth-right {
   text-align: right;
 }
 
@@ -1016,10 +993,11 @@ body {
 }
 
 .icon {
-  width: 33px; /* Adjust size as needed */
-  height: 33px;
+  width: 22px; /* Adjust size as needed */
+  height: 22px;
   vertical-align: middle;
   margin-right: 5px;
+  color: var(--accent-fun);
 }
 .icon::first-child {
   margin-left: 0px;
@@ -1142,13 +1120,8 @@ body {
 
   .name-intro,
   .product-intro,
-  .code-intro {
-    font-size: 1.5rem;
-  }
-
-  .stlon,
-  .stltw,
-  .stlth {
+  .code-intro,
+  .dgHeader {
     font-size: 1.5rem;
   }
 

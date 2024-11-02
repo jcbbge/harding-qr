@@ -1,6 +1,7 @@
 .displayGrid {
     display: grid;
 }
+
 .displayContent {
     grid-column: 1 / -1;
     font-size: 44px;
@@ -12,6 +13,25 @@
     gap: 3px;
     background-color: var(--text-primary);
     padding: 3px;
+    --cell-width: calc((100% - (var(--name-length) - 1) * 3px) / var(--name-length));
+}
+
+.dgHeader, .questionSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  color: var(--text-primary);
+  font-size: 2rem;
+  margin: 2.21rem 0;
+}
+
+.dgHeaderLeft {
+  text-align: left;
+}
+
+.dgHeaderRight {
+  text-align: right;
 }
 
 .displayLetter {
@@ -22,7 +42,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-size: clamp(2.5rem, 6vw, 4rem);
     /* 11px to 16px */
     transition: all 0.3s ease;
     font-family: var(--font-family);
@@ -41,9 +61,6 @@
 .displayLetter:last-child {
     margin-right: 0;
 }
-
-
-
 .displayLetter.vowel {
     background-color: var(--accent-opposite);
     color: var(--text-secondary);
@@ -86,51 +103,6 @@
     box-shadow: 0 0 0 4px var(--accent) !important;
 }
 
-
-
-/* Styles for larger mobile devices (375px and up) */
-@media (min-width: 34.09rem) {
-
-    /* 375px */
-    .displayGrid {
-        gap: clamp(1rem, 2.5vw, 1.5rem) clamp(0.55rem, 1.5vw, 0.91rem);
-        /* padding: clamp(1.09rem, 2vw, 1.82rem);  */
-    }
-}
-
-/* Styles for tablets and large phones (600px and up) */
-@media (min-width: 54.55rem) {
-
-    /* 600px */
-    .displayGrid {
-        gap: clamp(1.2rem, 3vw, 1.8rem) clamp(0.73rem, 2vw, 1.09rem);
-        /* padding: clamp(1.45rem, 3vw, 2.18rem);  */
-    }
-}
-
-/* Styles for laptops and small desktops (992px and up) */
-@media (min-width: 90.18rem) {
-
-    /* 992px */
-    .displayGrid {
-        gap: clamp(1.5rem, 3.5vw, 2.2rem) clamp(0.91rem, 2.5vw, 1.27rem);
-        /* padding: clamp(1.82rem, 4vw, 2.55rem); */
-    }
-
-}
-
-/* Styles for larger desktops (1200px and above) */
-@media (min-width: 109.09rem) {
-
-    /* 1200px */
-    .displayGrid {
-        gap: clamp(1.8rem, 4vw, 2.5rem) clamp(1.09rem, 3vw, 1.45rem);
-        padding: clamp(2.18rem, 5vw, 2.91rem);
-        /* 24px to 32px */
-    }
-
-}
-
 /* Add this at the end of the file */
 @media (max-width: 767px) {
 
@@ -144,6 +116,10 @@
         padding: 0;
     }
 
+    .dgHeader {
+        font-size: 1.5rem;
+    }
+
     .displayLetter {
         user-select: none;
         -webkit-tap-highlight-color: transparent;
@@ -155,3 +131,34 @@
         height: 16px;
     }
 }
+
+/* First down arrow points to first empty box */
+.gridArrow[data-grid-position="0"] {
+  margin-left: 22px;
+}
+
+/* Second down arrow points to third empty box */
+.gridArrow[data-grid-position="2"] {
+  margin-left: 114px;
+}
+
+/* Up arrow points to second empty box */
+.gridArrow[data-grid-position="1"] {
+  margin-left: 96px;
+}
+
+/* Add responsive adjustments if needed */
+@media (max-width: 767px) {
+  .gridArrow[data-grid-position="0"] {
+    margin-left: 15px;
+  }
+  
+  .gridArrow[data-grid-position="2"] {
+    margin-left: 70px;
+  }
+  
+  .gridArrow[data-grid-position="1"] {
+    margin-left: 60px;
+  }
+}
+

@@ -51,7 +51,10 @@ const requiredIcons = [
   'components',
   'help-small',
   'home',
-  'device-gamepad'
+  'device-gamepad',
+  'mail', 
+  'butterfly',
+  'brand-linkedin',
 ];
 
 // Updated function to copy icons

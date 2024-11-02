@@ -70,71 +70,6 @@ function App() {
     }
   }
 
-  const jsxElements = [
-    <div class="name-intro">
-      <span class="name-left">
-        <img id="ficon" src="/assets/icons/arrow-narrow-left.svg" alt="Left arrow" class="icon" />
-        <img src="/assets/icons/arrow-narrow-right.svg" alt="Right arrow" class="icon" />
-        <img src="/assets/icons/arrow-narrow-up.svg" alt="Up arrow" class="icon" />
-        <img src="/assets/icons/arrow-narrow-down.svg" alt="Down arrow" class="icon" />
-        <img src="/assets/icons/space.svg" alt="Spacebar" class="icon" />
-        <img src="/assets/icons/arrow-back.svg" alt="Return key" class="icon" />
-      </span>
-      <span class="name-right">Hi. I'm</span>
-    </div>,
-    <div class="product-intro">
-      <span class="product-left">I do</span>
-      <span class="product-right">
-        <img id="ficon" src="/assets/icons/arrow-narrow-left.svg" alt="Left arrow" class="icon" />
-        <img src="/assets/icons/arrow-narrow-right.svg" alt="Right arrow" class="icon" />
-        <img src="/assets/icons/arrow-narrow-up.svg" alt="Up arrow" class="icon" />
-        <img src="/assets/icons/arrow-narrow-down.svg" alt="Down arrow" class="icon" />
-        <img src="/assets/icons/space.svg" alt="Spacebar" class="icon" />
-        <img src="/assets/icons/arrow-back.svg" alt="Return key" class="icon" />
-      </span>
-    </div>,
-    <div class="code-intro">
-      <span class="code-left"><s class="spacing-tighter">Design</s> <s class="spacing-tighter">Management</s> <b class="spacing-tight">Stuff.</b></span>
-      <span class="code-right"> &nbsp;I</span>
-    </div>
-  ];    
-
-  const gridWords = ['JOURNEY', 'WONDERS'];
-  const gridElements = [
-    <div class="stlon">
-        <span class="stlon-left">I consider every</span>
-        <span class="stlon-right"><p>project a</p></span>
-    </div>,
-    <div class="stltw">
-      <span class="stltw-left"><p>filled with</p></span>
-      <span class="stltw-right"><p>hidden</p></span>
-    </div>,
-    <div class="stlth">
-      <span class="stlth-left"><p>waiting,</p></span>
-      <span class="stlth-right"><p>to be discovered.</p></span>
-    </div>
-  ];  
-  const gridWords2 = ['SPARK', 'FORGE'];
-  const gridElements2 = [
-    <div class="product-intro">
-      <span class="product-left">
-        I build  
-      </span>
-      <span class="product-right">worlds that</span>
-    </div>,
-    <div class="code-intro">
-      <span class="code-left">joy, </span>
-      <span class="code-right">
-      invite exploration, and
-      </span>
-    </div>,
-    <div class="code-intro">
-      <span class="code-left">connections. </span>
-      <span class="code-right"></span>
-    </div>
-  ];
-    
-
   return (
     <div class="main-content">
       <div class={`snap-container ${heroUnlocked() ? 'unlocked' : ''}`}>
@@ -145,23 +80,24 @@ function App() {
               role={role()}
               onLetterUnlock={handleLetterUnlock}
               onAllLettersMatched={handleAllLettersMatched}
-              jsxElements={jsxElements}
+              displayGridHeaders={true}
             />
           </div>
         </section>
         <section class="snap-section">
           <div class="name-grid-container">
             <DisplayGrid
-              gridWords={gridWords}
-              gridElements={gridElements}
+              dreamCoder={true}
+            />
+            <DisplayGrid
+              joyEngineer={true}
             />
           </div>
         </section>
         <section class="snap-section">
           <div class="name-grid-container">
             <DisplayGrid
-              gridWords={gridWords2}
-              gridElements={gridElements2}
+              letsWork={true}
             />
           </div>
         </section>

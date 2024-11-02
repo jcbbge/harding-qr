@@ -83,10 +83,8 @@ const Layout = props => {
   return (
     <div class="layout">
       <Header />
-      <main class="main-content">
-        <div class="snap-container">
+      <main>
           {props.children}
-        </div>
       </main>
       <Footer />
     </div>

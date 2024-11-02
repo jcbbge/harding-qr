@@ -846,33 +846,39 @@ body {
 .layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
-  overflow: hidden; /* Prevent scrolling on the layout */
+  overflow: hidden;
+  padding: 0;
 }
 
 .main-content {
-  flex-grow: 1;
+  flex: 1;
   overflow: hidden;
-  height: 100vh; /* Full viewport height */
+  position: relative;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 .snap-container {
-  flex-grow: 1;
+  flex: 1;
+  height: 100%;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 .snap-section {
-  height: 100%;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
+  min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 /* Hero section specific styles */
@@ -887,9 +893,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  width: 100%;
   color: var(--text-primary);
-  padding: 77px 44px 77px 44px;
+  padding: 2rem;
+  min-height: 100%;
 }
 
 .name-grid-container {
@@ -1150,8 +1157,9 @@ body {
   }
 
   .prd-section {
-    padding: 55px 22px 88px 22px;
+    padding: 55px 6px 134px 22px;
   }
 }
+
 
 

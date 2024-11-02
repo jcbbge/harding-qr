@@ -17,10 +17,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-size: clamp(2.5rem, 6vw, 4rem);
     /* 11px to 16px */
     transition: all 0.3s ease;
-    /* font-family: 'Server Mono-Regular', monospace; */
+    font-family: var(--font-family);
     position: relative;
     /* Add this if not alreadypresent */
     z-index: 1;
@@ -88,41 +88,7 @@
 
 .jsxElement {
     grid-column: 1 / -1;
-    letter-spacing: -0.05em;
 }
-
-/* Styles for larger mobile devices (375px and up) */
-@media (min-width: 34.09rem) {
-
-    /* 375px */
-    .nameGrid {
-        gap: clamp(1rem, 2.5vw, 1.5rem) clamp(0.55rem, 1.5vw, 0.91rem);
-        /* padding: clamp(1.09rem, 2vw, 1.82rem);  */
-    }
-}
-
-/* Styles for tablets and large phones (600px and up) */
-@media (min-width: 54.55rem) {
-
-    /* 600px */
-    .nameGrid {
-        gap: clamp(1.2rem, 3vw, 1.8rem) clamp(0.73rem, 2vw, 1.09rem);
-        /* padding: clamp(1.45rem, 3vw, 2.18rem);  */
-    }
-}
-
-/* Styles for laptops and small desktops (992px and up) */
-@media (min-width: 90.18rem) {
-
-    /* 992px */
-    .nameGrid {
-        gap: clamp(1.5rem, 3.5vw, 2.2rem) clamp(0.91rem, 2.5vw, 1.27rem);
-        /* padding: clamp(1.82rem, 4vw, 2.55rem); */
-    }
-
-}
-
-
 
 .touching {
     background-color: #e0e0e0;

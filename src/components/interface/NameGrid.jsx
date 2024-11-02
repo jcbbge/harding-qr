@@ -492,13 +492,42 @@ const initializeWordList = () => {
     }
   });
 
+  const gridHeaders = [
+    <div class="name-intro">
+      <span class="name-left">
+        <img id="ficon" src="/assets/icons/arrow-narrow-left.svg" alt="Left arrow" class="icon" />
+        <img src="/assets/icons/arrow-narrow-right.svg" alt="Right arrow" class="icon" />
+        <img src="/assets/icons/arrow-narrow-up.svg" alt="Up arrow" class="icon" />
+        <img src="/assets/icons/arrow-narrow-down.svg" alt="Down arrow" class="icon" />
+        <img src="/assets/icons/space.svg" alt="Spacebar" class="icon" />
+        <img src="/assets/icons/arrow-back.svg" alt="Return key" class="icon" />
+      </span>
+      <span class="name-right">Hi. I'm</span>
+    </div>,
+    <div class="product-intro">
+      <span class="product-left">I do</span>
+      <span class="product-right">
+        <img id="ficon" src="/assets/icons/arrow-narrow-left.svg" alt="Left arrow" class="icon" />
+        <img src="/assets/icons/arrow-narrow-right.svg" alt="Right arrow" class="icon" />
+        <img src="/assets/icons/arrow-narrow-up.svg" alt="Up arrow" class="icon" />
+        <img src="/assets/icons/arrow-narrow-down.svg" alt="Down arrow" class="icon" />
+        <img src="/assets/icons/space.svg" alt="Spacebar" class="icon" />
+        <img src="/assets/icons/arrow-back.svg" alt="Return key" class="icon" />
+      </span>
+    </div>,
+    <div class="code-intro">
+      <span class="code-left"><s class="">design</s> <s class="">management</s> <b class="">stuff.</b></span>
+      <span class="code-right"> &nbsp;I also</span>
+    </div>
+  ];
+
   return (
     <div class={styles.nameGrid}>
       <For each={names}>
         {(name, nameIndex) => (
           <>
-            <Show when={props.jsxElements && props.jsxElements[nameIndex()]}>
-              <div class={styles.jsxElement}>{props.jsxElements[nameIndex()]}</div>
+            <Show when={props.displayGridHeaders && gridHeaders[nameIndex()]}>
+              <div class={styles.jsxElement}>{gridHeaders[nameIndex()]}</div>
             </Show>
             <div
               class={styles.nameRow}
@@ -582,10 +611,10 @@ const initializeWordList = () => {
           </>
         )}
       </For>
-      <Show when={props.jsxElements}>
+      <Show when={props.displayGridHeaders}>
         <div class="name-intro">
-            <span class="name-left spacing-tight">too. </span>
-            <span class="name-right spacing-tighter"> I like to build w/ AI</span>
+            <span class="name-left">Lately,</span>
+            <span class="name-right">I've been building w/ AI.</span>
         </div>
       </Show>
     </div>

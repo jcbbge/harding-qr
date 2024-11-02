@@ -117,13 +117,7 @@ const Roleco = props => {
     if (companyData && companyData.company_colors) {
       // Split the string into an array of colors
       colors = companyData.company_colors.replace(/[\[\]]/g, '').split(',').map(color => color.trim());
-      console.log('Company colors:', colors);
-    } else {
-      console.log('Using default colors:', colors);
     }
-
-    console.log('Colors type:', typeof colors);
-    console.log('Colors value:', colors);
 
     const frame = () => {
       try {

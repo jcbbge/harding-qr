@@ -1,7 +1,10 @@
 import { For, Show, createSignal } from 'solid-js';
+import { useTheme } from '../../contexts/ThemeContext';
 import styles from './DisplayGrid.module.css';
 
 const DisplayGrid = (props) => {
+  const [theme] = useTheme();
+
   console.log("DisplayGrid props:", props);
 
   const isVowel = (letter) => ['A', 'E', 'I', 'O', 'U'].includes(letter.toUpperCase());
@@ -12,11 +15,6 @@ const DisplayGrid = (props) => {
     return padding + word;
   };
 
-
-  /*
-    https://bsky.app/profile/grussellj.bsky.social
-    https://www.linkedin.com/in/joshua-g-b2430b11b/
-  */ 
   const dcQuestions = [
     "What's the most unexpected way technology has delighted you recently?",
     "What's the most surprising way technology has made you smile lately?",
@@ -65,7 +63,7 @@ const DisplayGrid = (props) => {
     </div>
   ];
 
-  const [randomQuestion, setRandomQuestion] = createSignal('');
+  const [randomQuestion, setRandomQuestion] = createSignal({ headers: [], text: '' });
 
   const randomizeQuestion = () => {
     const randomIndex = Math.floor(Math.random() * dcQuestions.length);
@@ -92,7 +90,7 @@ const DisplayGrid = (props) => {
       </div>
     ];
     
-    setRandomQuestion(questionHeaders);
+    setRandomQuestion({ headers: questionHeaders, text: selectedQuestion });
   };
 
   if (props.letsWork) {
@@ -159,13 +157,66 @@ const DisplayGrid = (props) => {
 
   const content = getGridContent();
 
+  const getSettingIcon = (letter, nameIndex, letterIndex) => {
+    if (letter === ' ' && props.letsWork) {
+      const emptyIndexInRow = padWord(lwGridWord[nameIndex])
+        .split('')
+        .slice(0, letterIndex)
+        .filter(l => l === ' ').length;
+      const emptyIndexInGrid = emptyIndexInRow;
+
+      const icons = {
+        0: {
+          src: '/assets/icons/mail.svg',
+          href: 'mailto:' + ['abc', 'joshuarussell', 'xyz'].join('@') + 
+               '?subject=Hello%20Joshua&body=' + 
+               encodeURIComponent(`I visited your website and wanted to reach out...\n\nRegarding your question:\n"${randomQuestion().text}"\n\nMy thoughts are:`),
+          alt: 'Send email'
+        },
+        1: {
+          src: '/assets/icons/butterfly.svg',
+          href: 'https://bsky.app/profile/grussellj.bsky.social',
+          alt: 'Bluesky'
+        },
+        2: {
+          src: '/assets/icons/brand-linkedin.svg',
+          href: 'https://www.linkedin.com/in/joshua-g-b2430b11b/',
+          alt: 'LinkedIn'
+        }
+      };
+
+      if (icons[emptyIndexInGrid]) {
+        const isDarkMode = theme.mode() === 'dark';
+        const icon = icons[emptyIndexInGrid];
+        
+        return (
+          <a
+            href={icon.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={styles.iconLink}
+            aria-label={icon.alt}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={icon.src}
+              alt={icon.alt}
+              class={`${styles.icon} ${isDarkMode ? styles.iconInverted : ''}`}
+            />
+          </a>
+        );
+      }
+    }
+    return null;
+  };
+
   return (
     <div class={styles.displayGrid} style={{ "max-width": "486px", margin: "0 auto" }}>
       <Show when={props.letsWork}>
         <div class={styles.displayContent}>
-            <For each={randomQuestion()}>
-              {(header) => header}
-            </For>
+          <For each={randomQuestion().headers}>
+            {(header) => header}
+          </For>
         </div>
       </Show>
 
@@ -185,9 +236,12 @@ const DisplayGrid = (props) => {
               style={{ '--name-length': MAX_LENGTH }}
             >
               <For each={padWord(word)}>
-                {(letter) => (
+                {(letter, letterIndex) => (
                   <div class={`${styles.displayLetter} ${styles.matched} ${isVowel(letter) ? styles.vowel : ''} ${letter === ' ' ? styles.emptyBox : ''}`}>
-                    <span>{letter !== ' ' ? letter : ''}</span>
+                    {letter === ' ' ? 
+                      getSettingIcon(letter, nameIndex(), letterIndex()) : 
+                      <span>{letter}</span>
+                    }
                   </div>
                 )}
               </For>

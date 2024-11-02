@@ -63,7 +63,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  border: 2px solid var(--text-primary);
+  border: 2px solid var(--text-secondary);
 }
 
 .progressBar {
@@ -101,13 +101,13 @@
   border-collapse: collapse;
   font-size: var(--base-font-size);
   line-height: var(--line-height);
-  color: var(--text-primary);
+  color: var(--text-secondary);
   margin-bottom: 3rem;
 }
 
 .tab th,
 .tab td {
-  border: var(--border-thickness) solid var(--text-primary);
+  border: var(--border-thickness) solid var(--text-secondary);
   padding: 0.5rem;
   text-align: left;
 }
@@ -148,7 +148,7 @@
 @media (max-width: 768px) {
 
   .progressContainer {
-    border: 1px solid var(--text-primary);
+    border: 1px solid var(--text-secondary);
   }
 
   .progressBar {
@@ -161,7 +161,7 @@
 
   .tab th,
   .tab td {
-    border: 1px solid var(--text-primary);
+    border: 1px solid var(--text-secondary);
   }
 
   .header {
@@ -185,7 +185,7 @@
 @media (max-width: 480px) {
 
   .progressContainer {
-    border: 1px solid var(--text-primary);
+    border: 1px solid var(--text-secondary);
   }
 
   .progressBar {
@@ -194,7 +194,7 @@
 
   .tab th,
   .tab td {
-    border: 1px solid var(--text-primary);
+    border: 1px solid var(--text-secondary);
   }
   .header {
     font-size: 0.8rem;

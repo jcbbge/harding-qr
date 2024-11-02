@@ -315,13 +315,13 @@ a {
 
 /* Borders */
 .border {
-  border: var(--border-thickness) solid var(--gradient-base-bottom);
+  border: var(--border-thickness) solid var(--text-secondary);
 }
 .border-t {
-  border-top: var(--border-thickness) solid var(--gradient-base-bottom);
+  border-top: var(--border-thickness) solid var(--text-secondary);
 }
 .border-b {
-  border-bottom: var(--border-thickness) solid var(--gradient-base-bottom);
+  border-bottom: var(--border-thickness) solid var(--text-secondary);
 }
 
 
@@ -333,7 +333,7 @@ table {
 }
 
 th, td {
-  border: var(--border-thickness) solid var(--text-primary);
+  border: var(--border-thickness) solid var(--text-secondary);
   padding: 1rem;
   line-height: var(--line-height);
   vertical-align: top;
@@ -1038,7 +1038,7 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   animation: pulse 2s infinite;
-  border: 2px solid var(--text-primary);
+  border: 2px solid var(--text-secondary);
 }
 
 .matchFoundButton:hover {

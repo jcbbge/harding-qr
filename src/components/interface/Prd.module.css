@@ -32,7 +32,7 @@
 .prdHeader td,
 .prdFooter th,
 .prdFooter td {
-  border: var(--border-thickness) solid var(--text-primary);
+  border: var(--border-thickness) solid var(--text-secondary);
   padding: 11px;
   text-align: left;
 }

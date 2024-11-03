@@ -72,3 +72,13 @@
     border-left: 1px solid var(--text-primary);
   }
 }
+
+@media (max-width: 768px) {
+  .themeText {
+    display: none;
+  }
+
+  .icon {
+    margin-right: 0;
+  }
+}

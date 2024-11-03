@@ -895,7 +895,7 @@ body {
   align-items: center;
   width: 100%;
   color: var(--text-primary);
-  padding: 2rem;
+  /* padding: 2rem; */
   min-height: 100%;
 }
 
@@ -1083,19 +1083,7 @@ body {
   align-items: center;
   padding: 20px;
 }
-/* .code-left {
-  font-size: 33px;
-  font-weight: var(--font-weight-bold);
-}
 
-.name-right {
-  font-size: 33px;
-  font-weight: var(--font-weight-bold);
-}
-.product-left {
-  font-size: 33px;
-  font-weight: var(--font-weight-bold);
-} */
 
 
 /* Desktop styles (1024px and above) */
@@ -1156,10 +1144,8 @@ body {
     height: 2rem;
   }
 
-  .prd-section {
-    padding: 55px 6px 134px 22px;
-  }
 }
+
 
 
 

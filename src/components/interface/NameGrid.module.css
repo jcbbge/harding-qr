@@ -1,13 +1,14 @@
 .nameGrid {
     display: grid;
+    gap: 3px;
+    background-color: var(--text-primary);
+    padding: 3px;
 }
 
 .nameRow {
     display: grid;
     grid-template-columns: repeat(var(--name-length), 1fr);
     gap: 3px;
-    background-color: var(--text-primary);
-    padding: 3px;
 }
 
 .letterBox {
@@ -112,9 +113,13 @@
 /* Add this at the end of the file */
 @media (max-width: 767px) {
 
+    .nameGrid {
+        gap: 1px;
+        padding: 1px;
+    }
+
     .nameRow {
-        gap: 2px;
-        padding: 2px;
+        gap: 1px;
     }
 
     .letterBox {

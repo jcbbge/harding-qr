@@ -10,9 +10,9 @@
 .displayRow {
     display: grid;
     grid-template-columns: repeat(var(--name-length), 1fr);
-    gap: 3px;
+    gap: 2px;
     background-color: var(--text-primary);
-    padding: 3px;
+    padding: 2px;
     --cell-width: calc((100% - (var(--name-length) - 1) * 3px) / var(--name-length));
 }
 
@@ -107,8 +107,8 @@
 @media (max-width: 767px) {
 
     .displayRow {
-        gap: 2px;
-        padding: 2px;
+        gap: 1px;
+        padding: 1px;
     }
 
     .displayContent {
@@ -154,7 +154,7 @@
   }
   
   .gridArrow[data-grid-position="2"] {
-    margin-left: 70px;
+    margin-left: 80px;
   }
   
   .gridArrow[data-grid-position="1"] {

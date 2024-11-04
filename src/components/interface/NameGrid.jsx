@@ -522,7 +522,7 @@ const initializeWordList = () => {
   ];
 
   return (
-    <div class={styles.nameGrid}>
+    <div class={`${styles.nameGrid} ${props.displayGridHeaders ? styles.nameGridWithHeaders : ''}`}>
       <For each={names}>
         {(name, nameIndex) => (
           <>
@@ -530,7 +530,7 @@ const initializeWordList = () => {
               <div class={styles.jsxElement}>{gridHeaders[nameIndex()]}</div>
             </Show>
             <div
-              class={styles.nameRow}
+              class={`${styles.nameRow} ${props.displayGridHeaders ? styles.nameRowWithHeaders : ''}`}
               style={{ '--name-length': name.length }}
             >
               <For each={name}>

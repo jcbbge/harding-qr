@@ -159,3 +159,28 @@
         /* Prevent text selection on mobile */
     }
 }
+
+/* Add these new classes for homepage-specific styling */
+.nameGridWithHeaders {
+  padding: 6px;
+  background-color: inherit;
+  /* Add any other homepage-specific grid styles */
+}
+
+.nameRowWithHeaders {
+  background-color: var(--text-primary);
+  border: 2px solid var(--text-primary);
+  /* Add any other homepage-specific row styles */
+}
+
+/* Homepage-specific media queries */
+@media (max-width: 767px) {
+  .nameGridWithHeaders {
+    gap: 3px;
+    padding: 3px;
+  }
+
+  .nameRowWithHeaders {
+    border: 1px solid var(--text-primary);
+  }
+}

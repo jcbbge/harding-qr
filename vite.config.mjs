@@ -55,6 +55,8 @@ const requiredIcons = [
   'mail', 
   'butterfly',
   'brand-linkedin',
+  'calendar',
+  'download'
 ];
 
 // Updated function to copy icons

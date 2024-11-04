@@ -1,19 +1,19 @@
 .prdWrapper {
   display: flex;
+  align-items: flex-start;
   justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  padding: 2rem;
+  /* width: 100%; */
+  padding-top: 5vh;
+  padding-bottom: 5vh;
 }
 
 .prdContainer {
-  width: 100%;
-  max-width: 1200px;
-  height: auto;
-  min-height: 0;
-  max-height: calc(100vh - 200px);
-  margin: auto;
+  /* width: 100%; */
+  max-width: 800px;
+  /* height: auto; */
+  /* min-height: 0; */
+  max-height: calc(100vh - 220px);
+  /* margin: auto; */
   display: flex;
   flex-direction: column;
   background-color: var(--gradient-base-top);
@@ -33,7 +33,7 @@
 }
 
 .prdHeader {
-  margin-bottom: 22px;
+  margin-bottom: 11px;
 }
 
 .prdFooter {
@@ -52,6 +52,51 @@
 .prdHeader th,
 .prdFooter th {
   font-weight: var(--font-weight-bold);
+}
+
+.prdButtonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.prdButton {
+  position: relative;
+  transform: none;
+  left: auto;
+  bottom: auto;
+  padding: 11px 22px;
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  border-radius: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  animation: pulse 4s infinite;
+  border: 2px solid var(--text-secondary);
+}
+
+.prdButton:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  animation: none;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+   50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .widthMin {
@@ -218,6 +263,10 @@
     box-shadow: 5px 5px 0px var(--text-primary);
   }
 
+  .prdHeader {
+    margin-bottom: 0;
+  }
+
   .title {
     font-size: 1.2rem;
   }
@@ -238,7 +287,8 @@
   .prdHeader td,
   .prdFooter th,
   .prdFooter td {
-    padding: 0.3rem;
+    padding: 7px;
+    font-size: 7px;
   }
 
   .markdownContent {
@@ -249,24 +299,141 @@
     & h5 { font-size: 0.7em; }
     & h6 { font-size: 0.6em; }
   }
+
+  .iconLink {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 0;
+  }
+
+  /* Hide the text span in mobile view */
+  .iconLink span {
+    display: none;
+  }
+
+  /* Adjust icon container for better mobile display */
+  .equalWidth {
+    padding: 8px;
+    width: 25%;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  /* Update icon styles for mobile with higher specificity */
+  .prdContainer .iconLink {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .prdContainer .icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 0;
+  }
+
+  /* Force hide the text span in mobile view with !important */
+  .prdContainer .iconLink span {
+    display: none !important;
+  }
+
+  .prdContainer .equalWidth {
+    padding: 8px;
+  }
 }
 
-/* @media (max-width: 480px) {
-  .title {
-    font-size: 1rem;
+.iconLink {
+  display: flex;
+  align-items: center;
+  color: var(--text-primary);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.iconLink::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: -5px;
+  left: 0;
+  background-color: var(--accent-fun);
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.iconLink:hover {
+  color: var(--accent-fun);
+}
+
+.iconLink:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.icon {
+  width: 11px;
+  height: 11px;
+  margin-right: 11px;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+  display: inline-block;
+}
+
+.icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+}
+
+@media (max-width: 767px) {
+
+  .prdWrapper {
+    padding: 2rem;
+    padding-bottom: 10vh;
   }
 
-  .subtitle {
-    font-size: 0.7rem;
+  .icon {
+    margin-right: 0;
   }
+  
+  .iconLink span {
+    display: none;
+  }
+}
 
-  .prdHeader th,
-  .prdHeader td,
-  .prdFooter th,
-  .prdFooter td {
-    padding: 0.5rem;
-    font-size: 0.8rem;
-  }
-} */
+/* Remove any flex-direction properties that might be causing issues */
+.iconLink span {
+  display: inline;
+  white-space: nowrap;
+}
+
+/* Update the existing button styles if needed */
+.prdFooter button,
+.prdFooter a {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: opacity 0.2s;
+}
+
+.prdFooter button:hover,
+.prdFooter a:hover {
+  opacity: 1;
+}
+
+
 
 

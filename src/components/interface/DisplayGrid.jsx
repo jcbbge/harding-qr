@@ -168,7 +168,7 @@ const DisplayGrid = (props) => {
       const icons = {
         0: {
           src: '/assets/icons/mail.svg',
-          href: 'mailto:' + ['abc', 'joshuarussell', 'xyz'].join('@') + 
+          href: 'mailto:' + ['abc', 'joshuarussell.xyz'].join('@') + 
                '?subject=Hello%20Joshua&body=' + 
                encodeURIComponent(`I visited your website and wanted to reach out...\n\nRegarding your question:\n"${randomQuestion().text}"\n\nMy thoughts are:`),
           alt: 'Send email'

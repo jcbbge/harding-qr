@@ -13,6 +13,7 @@ import App from './App';
 import Roleco from './pages/Roleco';
 import Scrumble from './pages/Scrumble';
 import NotFound from './pages/NotFound';
+import About from './pages/About';
 
 import './index.css';
 
@@ -104,6 +105,10 @@ render(
           <Route
             path="/:roleco"
             component={RolecoWrapper}
+          />
+          <Route
+            path="/about"
+            component={About}
           />
           {/* <Route
             path="/scrumble"

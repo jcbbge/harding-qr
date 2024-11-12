@@ -56,7 +56,8 @@ const requiredIcons = [
   'butterfly',
   'brand-linkedin',
   'calendar',
-  'download'
+  'download',
+  'robot'
 ];
 
 // Updated function to copy icons

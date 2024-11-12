@@ -70,6 +70,10 @@
   transition: color 0.2s ease;
 }
 
+.borderLeft {
+  border-left: 2px solid var(--text-primary);
+}
+
 @media (max-width: 767px) {
 
   .header {
@@ -87,6 +91,10 @@
   }
   .navLeft {
     border-right: 1px solid var(--text-primary);
+    padding-right: 11px;
+  }
+  .borderLeft {
+    border-left: 1px solid var(--text-primary);
     padding-right: 11px;
   }
   .hideOnMobile {

@@ -18,7 +18,20 @@ const Header = () => {
         </div>
 
         <div class={styles.navRight}>
-          <span class={styles.navLink}>
+          <span class={`${styles.navLink} ${styles.borderLeft}`}>
+            <a href="/about">
+              <svg class={styles.icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z" />
+                <path d="M3 13a9 9 0 0 1 9-9h0a9 9 0 0 1 9 9v1a3 3 0 0 1-3 3h-12a3 3 0 0 1-3-3z" />
+                <path d="M12 16v2" />
+                <path d="M9 20h6" />
+                <path d="M7 10h1" />
+                <path d="M16 10h1" />
+              </svg>
+              <span class={styles.hideOnMobile}>About</span>
+            </a>
+          </span>
+          <span class={`${styles.navLink} ${styles.borderLeft}`}>
             <a href="/scrumble">
               <svg class={styles.icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>

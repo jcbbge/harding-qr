@@ -5,8 +5,6 @@ import styles from './DisplayGrid.module.css';
 const DisplayGrid = (props) => {
   const [theme] = useTheme();
 
-  console.log("DisplayGrid props:", props);
-
   const isVowel = (letter) => ['A', 'E', 'I', 'O', 'U'].includes(letter.toUpperCase());
   const MAX_LENGTH = 7;
 
@@ -126,6 +124,86 @@ const DisplayGrid = (props) => {
     </>
   ];
 
+  const digitalGridWord = ['DESIGN'];
+  const digitalTopHeader = [
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}></span>
+      <span class={styles.dgHeaderRight}><p>Joshua</p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}></span>
+      <span class={styles.dgHeaderRight}><p>innovates at</p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}> </span>
+      <span class={styles.dgHeaderRight}><p>the crossroads of</p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}> </span>
+      <span class={styles.dgHeaderRight}><p>tech and human-centered</p></span>
+    </div>
+  ];
+  const digitalBottomHeader = [
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}></span>
+      <span class={styles.dgHeaderRight}><p>Blending technical skill</p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}></span>
+      <span class={styles.dgHeaderRight}><p>and creative vision,</p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}></span>
+      <span class={styles.dgHeaderRight}><p>he transforms</p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}></span>
+      <span class={styles.dgHeaderRight}><p>challenges</p></span>
+    </div>
+  ];
+
+  const interactionGridWord = ['YOUR'];
+  const interactionTopHeader = [
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}>into</span>
+      <span class={styles.dgHeaderRight}><p></p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}>elegant solutions.</span>
+      <span class={styles.dgHeaderRight}><p></p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}>He's not just building products,</span>
+      <span class={styles.dgHeaderRight}><p></p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}>but shaping digital</span>
+      <span class={styles.dgHeaderRight}><p></p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}>interactions.</span>
+      <span class={styles.dgHeaderRight}><p></p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}>Connect</span>
+      <span class={styles.dgHeaderRight}><p>with</p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}></span>
+      <span class={styles.dgHeaderRight}><p>Joshua to bring</p></span>
+    </div>,
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}></span>
+      <span class={styles.dgHeaderRight}><p>fresh perspectives to</p></span>
+    </div>
+  ];
+  const interactionBottomHeader = [
+    <div class={styles.dgHeader}>
+      <span class={styles.dgHeaderLeft}></span>
+      <span class={styles.dgHeaderRight}><p>next project.</p></span>
+    </div>
+  ];
+
   const getGridContent = () => {
     if (props.dreamCoder) {
       return {
@@ -148,6 +226,20 @@ const DisplayGrid = (props) => {
         bottomHeaders: lwBottomHeader
       };
     }
+    if (props.digital) {
+      return {
+        gridWords: digitalGridWord,
+        topHeaders: digitalTopHeader,
+        bottomHeaders: digitalBottomHeader
+      };
+    }
+    if (props.interaction) {
+      return {
+        gridWords: interactionGridWord,
+        topHeaders: interactionTopHeader,
+        bottomHeaders: interactionBottomHeader
+      };
+    }
     return {
       gridWords: props.gridWords || [],
       topHeaders: [],
@@ -158,8 +250,8 @@ const DisplayGrid = (props) => {
   const content = getGridContent();
 
   const getSettingIcon = (letter, nameIndex, letterIndex) => {
-    if (letter === ' ' && props.letsWork) {
-      const emptyIndexInRow = padWord(lwGridWord[nameIndex])
+    if ((props.letsWork || props.interaction) && letter === ' ') {
+      const emptyIndexInRow = padWord(props.letsWork ? lwGridWord[nameIndex] : interactionGridWord[nameIndex])
         .split('')
         .slice(0, letterIndex)
         .filter(l => l === ' ').length;

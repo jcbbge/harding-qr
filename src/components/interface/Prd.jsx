@@ -24,8 +24,8 @@ const PRD = (props) => {
           <polyline points="22,6 12,13 2,6" />
         </svg>
       ),
-      href: 'mailto:' + ['abc', 'joshuarussell.xyz'].join('@') + 
-           '?subject=Hello%20Joshua&body=' + 
+      href: 'mailto:' + ['abc', 'joshuarussell.xyz'].join('@') +
+           '?subject=Hello%20Joshua&body=' +
            encodeURIComponent(`Hey Joshua, I loved your website and I want to make a spot for you on my team...`),
       alt: 'Send email',
       text: 'Email Joshua'
@@ -67,7 +67,7 @@ const PRD = (props) => {
           <path d="M12 4l0 12" />
         </svg>
       ),
-      href: 'https://docs.google.com/document/d/1vTBwufdUAmp0oU3Z6FzdY350lA5zSZFCzs-_prPSiaw/export?format=pdf',
+      href: 'https://docs.google.com/document/d/1CHDfmqyXxRysxtVKCYoOl-fT2QBPRfPn-EOPJrEMPhQ/export?format=pdf',
       alt: 'Download Resume',
       text: 'Download Joshua\'s Resume'
     }
@@ -99,8 +99,8 @@ const PRD = (props) => {
           </tbody>
         </table>
         <div class={styles.prdContent}>
-          <Show 
-            when={parsedMarkdownContent()} 
+          <Show
+            when={parsedMarkdownContent()}
             fallback={<p>Loading PRD content...</p>}
           >
             <div class={styles.markdownContent} innerHTML={parsedMarkdownContent()} />

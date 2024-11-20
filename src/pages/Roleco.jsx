@@ -3,36 +3,98 @@ import { Motion } from 'solid-motionone';
 import NameGrid from '../components/interface/NameGrid';
 import LoaderModal from '../components/interface/LoaderModal';
 import confetti from 'canvas-confetti';
+import Airtable from 'airtable'
+import { useNavigate } from '@solidjs/router';
+import { Show } from 'solid-js';
 
 import PRD from '../components/interface/Prd';
 
-async function fetchSheetData() {
-  const sheetId = '1uwuzV2pK7VS9UwRjAC3VBr98IdMwaEQAvk64aoUPHS4';
-  const sheetName = 'PortfolioCompData';
-  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+// Airtable client setup
+const airtableClient = () => {
+  return new Airtable({
+    apiKey: import.meta.env.VITE_AIRTABLE_API_KEY
+  }).base('appAJc59Qfb9sP9zo')
+} 
 
-  try {
-    const response = await fetch(url);
-    const text = await response.text();
-    const data = JSON.parse(text.substr(47).slice(0, -2));
+// Add this function near the top with other utility functions
+const CACHE_PREFIX = 'company_data_'
+const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
 
-    const processedData = data.table.rows.map((row) => {
-      const [comp_param, company_name, company_colors, prd_title, prd_subtitle, prd_md] = row.c;
-      return {
-        comp_param: comp_param?.v,
-        company_name: company_name?.v,
-        company_colors: company_colors?.v,
-        prd_title: prd_title?.v,
-        prd_subtitle: prd_subtitle?.v,
-        prd_md: prd_md?.v
-      };
-    });
-
-    return processedData;
-  } catch (error) {
-    return [];
+const getFromCache = (companyName) => {
+  const cached = localStorage.getItem(`${CACHE_PREFIX}${companyName}`)
+  if (!cached) return null
+  
+  const { data, timestamp } = JSON.parse(cached)
+  
+  // Check if cache is expired
+  if (Date.now() - timestamp > CACHE_DURATION) {
+    localStorage.removeItem(`${CACHE_PREFIX}${companyName}`)
+    return null
   }
+  
+  return data
 }
+
+const setToCache = (companyName, data) => {
+  localStorage.setItem(
+    `${CACHE_PREFIX}${companyName}`,
+    JSON.stringify({
+      data,
+      timestamp: Date.now()
+    })
+  )
+}
+
+// New fetch function
+const fetchCompanyData = async (companyName) => {
+  if (!companyName) return null;
+  
+  // Check cache first
+  const cached = getFromCache(companyName);
+  if (cached) {
+    return cached;
+  }
+  
+  const base = airtableClient();
+  
+  try {
+    const records = await base('params')
+      .select({
+        filterByFormula: `LOWER({comp_param}) = LOWER("${companyName}")`,
+        maxRecords: 1
+      })
+      .firstPage();
+
+    if (!records.length) {
+      return null;
+    }
+
+    const record = records[0];
+    let wordlist = record.get('grid_wordlist');
+    
+    if (typeof wordlist === 'string') {
+      const prepared = wordlist.replace(/'/g, '"');
+      wordlist = JSON.parse(prepared);
+    }
+
+    const data = {
+      name: record.get('company_name'),
+      company_colors: record.get('company_colors'),
+      prd_title: record.get('prd_title'),
+      prd_subtitle: record.get('prd_subtitle'),
+      prd_md: record.get('prd_md'),
+      wordlist: Array.isArray(wordlist) ? wordlist : [],
+    };
+
+    // Cache the response
+    setToCache(companyName, data);
+    
+    return data;
+  } catch (error) {
+    console.error('Error fetching from Airtable:', error);
+    throw error; // Let createResource handle the error
+  }
+};
 
 const MatchFoundButton = (props) => {
   return (
@@ -61,12 +123,21 @@ const Roleco = props => {
   const [allWordsMatched, setAllWordsMatched] = createSignal(props.testMode || false);
   const [buttonClicked, setButtonClicked] = createSignal(false);
   const [showPRD, setShowPRD] = createSignal(false);
-  const [sheetData] = createResource(fetchSheetData);
+  const navigate = useNavigate();
   const [scrolledToPRD, setScrolledToPRD] = createSignal(false);
 
+  // Replace createSignal for companyData with createResource
+  const [companyData, { refetch }] = createResource(
+    () => props.company?.toLowerCase(),
+    fetchCompanyData
+  );
+
+  // Update the createEffect that watches companyData
   createEffect(() => {
-    setRole(props.role || '');
-    setCompany(props.company || '');
+    // Only redirect if we have a completed response that's null (not while loading)
+    if (!companyData.loading && companyData() === null) {
+      navigate('/', { replace: true });
+    }
   });
 
   onMount(() => {
@@ -107,17 +178,12 @@ const Roleco = props => {
     setAllWordsMatched(true);
 
     const end = Date.now() + 2000;
-    const companyData = sheetData()?.find(item => item.comp_param.toLowerCase() === company().toLowerCase());
-    
-    // Get the default colors from CSS variables
-    const defaultColor1 = getComputedStyle(document.documentElement).getPropertyValue('--accent-opposite').trim();
-    const defaultColor2 = getComputedStyle(document.documentElement).getPropertyValue('--accent-fun').trim();
-    let colors = [defaultColor1, defaultColor2];
-
-    if (companyData && companyData.company_colors) {
-      // Split the string into an array of colors
-      colors = companyData.company_colors.replace(/[\[\]]/g, '').split(',').map(color => color.trim());
-    }
+    const colors = companyData()?.company_colors
+      ? companyData().company_colors.replace(/[\[\]]/g, '').split(',').map(color => color.trim())
+      : [
+          getComputedStyle(document.documentElement).getPropertyValue('--accent-opposite').trim(),
+          getComputedStyle(document.documentElement).getPropertyValue('--accent-fun').trim()
+        ];
 
     const frame = () => {
       try {
@@ -185,7 +251,7 @@ const Roleco = props => {
 
   return (
     <>
-      {showModal() && !props.testMode && (
+      { companyData() && showModal() && !props.testMode && (
         <LoaderModal
           role={role()}
           company={company()}
@@ -197,12 +263,23 @@ const Roleco = props => {
           <section class="snap-section hero-section">
             <div class="name-grid-container">
               {!props.testMode && (
-                <NameGrid
-                  wordList={[company(), role().split(' ')[0], role().split(' ')[1]]}
-                  onLetterUnlock={handleLetterUnlock}
-                  onAllLettersMatched={handleAllLettersMatched}
-                  modalClosed={modalClosed()}
-                />
+                <Show 
+                  when={!companyData.loading} 
+                  fallback={<div>Loading...</div>}
+                >
+                  <NameGrid
+                    wordList={
+                      companyData()?.wordlist || [
+                        company(),
+                        role().split(' ')[0], 
+                        role().split(' ')[1]
+                      ]
+                    }
+                    onLetterUnlock={handleLetterUnlock}
+                    onAllLettersMatched={handleAllLettersMatched}
+                    modalClosed={modalClosed()}
+                  />
+                </Show>
               )}
             </div>
             {(allWordsMatched() || props.testMode) && !buttonClicked() && (
@@ -212,13 +289,13 @@ const Roleco = props => {
             )}
           </section>
           <section class="snap-section prd-section">
-            {(showPRD() || scrolledToPRD()) && sheetData() && (
+            {(showPRD() || scrolledToPRD()) && companyData() && (
               <PRD 
-                md_content={sheetData().find(item => item.comp_param.toLowerCase() === company().toLowerCase())?.prd_md || ''}
-                company={company()}
+                md_content={companyData().prd_md || ''}
+                company={companyData().name}
                 role={role()}
-                prd_title={sheetData().find(item => item.comp_param.toLowerCase() === company().toLowerCase())?.prd_title}
-                prd_subtitle={sheetData().find(item => item.comp_param.toLowerCase() === company().toLowerCase())?.prd_subtitle}
+                prd_title={companyData().prd_title}
+                prd_subtitle={companyData().prd_subtitle}
               />
             )}
           </section>

@@ -1,6 +1,6 @@
 import { render } from 'solid-js/web';
 import { ErrorBoundary } from 'solid-js';
-import { Router, Route, useParams, useNavigate } from '@solidjs/router';
+import { Router, Route, useParams } from '@solidjs/router';
 import { Navigate } from '@solidjs/router';
 import 'solid-devtools';
 
@@ -39,30 +39,32 @@ patternLayer.className = 'pattern-layer';
 document.body.insertBefore(patternLayer, root);
 
 const RolecoWrapper = () => {
-  const params = useParams();
-  const navigate = useNavigate();
 
-  const parseRoleco = rolecoParam => {
-    if (!rolecoParam || rolecoParam.length < 3) {
+  const params = useParams();
+  const parseRoleco = (param) => {
+
+    if (!param || param.length < 3) {
       return null;
     }
-
-    const roleCode = rolecoParam.substring(0, 2).toLowerCase();
-    const company = rolecoParam.substring(2);
-
-    let role;
-    switch (roleCode) {
-      case 'pm':
-        role = 'product manager';
-        break;
-      case 'po':
-        role = 'product owner';
-        break;
-      default:
-        return null;
+    // Handle old URL format
+    if (param.startsWith('pm')) {
+      return {
+        role: 'product manager',
+        company: param.slice(2)
+      }
     }
-
-    return { role, company };
+    if (param.startsWith('po')) {
+      return {
+        role: 'product owner',
+        company: param.slice(2)
+      }
+    }
+    
+    // Handle new URL format - default to product manager
+    return {
+      role: 'product manager',
+      company: param
+    }
   };
 
   const parsedParams = parseRoleco(params.roleco);

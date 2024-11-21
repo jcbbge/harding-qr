@@ -3,6 +3,7 @@ import { createStore } from 'solid-js/store';
 import { useTheme } from '../../contexts/ThemeContext';
 import styles from './NameGrid.module.css';
 import MobileScrollUnlock from './MobileScrollUnlock';
+import { Howl } from 'howler';
 
 import letterChangeSound from '../../assets/sounds/natural-tap-1.wav';
 import letterChangeSoundDown from '../../assets/sounds/natural-tap-3.wav';
@@ -31,13 +32,52 @@ const NameGrid = (props) => {
     // let wordList = ['OKR', 'API', 'EOD'];
 let wordList = ['JOSHUA', 'PRODUCT', 'CODE'];
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-let letterChangeAudio,
-    letterChangeAudioDown,
-    correctLetterAudio,
-    allWordsCompleteAudio,
-    leftKeyAudio,
-    rightKeyAudio;
-let correctWordAudios = [];
+
+// Replace the sounds object with this optimized version
+const sounds = {
+  letterChange: new Howl({
+    src: [letterChangeSound],
+    preload: true,
+    html5: false, // Change to WebAudio API
+    pool: 5 // Increase pool size
+  }),
+  letterChangeDown: new Howl({
+    src: [letterChangeSoundDown],
+    preload: true,
+    html5: false,
+    pool: 5
+  }),
+  correctLetter: new Howl({
+    src: [correctLetterSound],
+    preload: true,
+    html5: false,
+    pool: 3
+  }),
+  allWordsComplete: new Howl({
+    src: [allWordsCompleteSound],
+    preload: true,
+    html5: false,
+    pool: 1 // Only needs 1 since it plays once
+  }),
+  leftKey: new Howl({
+    src: [leftKeySound],
+    preload: true,
+    html5: false,
+    pool: 5
+  }),
+  rightKey: new Howl({
+    src: [rightKeySound],
+    preload: true,
+    html5: false,
+    pool: 5
+  })
+};
+
+const correctWordSounds = [
+  new Howl({ src: [correctWordSound1], preload: true, html5: false, pool: 2 }),
+  new Howl({ src: [correctWordSound2], preload: true, html5: false, pool: 2 }),
+  new Howl({ src: [correctWordSound3], preload: true, html5: false, pool: 2 })
+];
 
 if(props.wordList)
   wordList = props.wordList;
@@ -210,22 +250,22 @@ const initializeWordList = () => {
       case 'ArrowLeft':
       case 'a':
         direction = 'left';
-        playSound(leftKeyAudio);
+        playSound(sounds.leftKey);
         break;
       case 'ArrowRight':
       case 'd':
         direction = 'right';
-        playSound(rightKeyAudio);
+        playSound(sounds.rightKey);
         break;
       case 'ArrowUp':
       case 'w':
         direction = 'up';
-        playSound(rightKeyAudio);
+        playSound(sounds.rightKey);
         break;
       case 'ArrowDown':
       case 's':
         direction = 'down';
-        playSound(rightKeyAudio);
+        playSound(sounds.rightKey);
         break;
       case 'Enter':
       case ' ':
@@ -233,7 +273,7 @@ const initializeWordList = () => {
         return;
       case 'Tab':
         direction = shiftKey ? 'left' : 'right';
-        playSound(shiftKey ? leftKeyAudio : rightKeyAudio);
+        playSound(shiftKey ? sounds.leftKey : sounds.rightKey);
         break;
       default:
         return;
@@ -247,15 +287,13 @@ const initializeWordList = () => {
     direction = undefined;
   };
 
-  // Modify the playSound function
-  const playSound = audio => {
-    if (audio && audioLoaded()) {
-      audio.currentTime = 0;
-      audio.play().catch(error => {
-        console.error('Error playing audio:', error);
-      });
-    } else {
-      console.error('Audio not found or not loaded');
+  // Modify the playSound function to handle the pool better
+  const playSound = (sound) => {
+    if (sound) {
+      // Stop any currently playing instances of this sound
+      sound.stop();
+      // Play new instance
+      sound.play();
     }
   };
 
@@ -271,15 +309,15 @@ const initializeWordList = () => {
       switch (emptyIndexInGrid) {
         case 0:
           updateTheme(direction);
-          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
+          playSound(direction > 0 ? sounds.letterChange : sounds.letterChangeDown);
           break;
         case 1:
           updateMode(direction);
-          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
+          playSound(direction > 0 ? sounds.letterChange : sounds.letterChangeDown);
           break;
         case 2:
           updatePattern(direction);
-          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
+          playSound(direction > 0 ? sounds.letterChange : sounds.letterChangeDown);
           break;
         default:
           // This is a truly empty letterbox, do nothing and don't play any sound
@@ -301,26 +339,23 @@ const initializeWordList = () => {
 
           if (newLetter === letter.correctLetter) {
             props.onLetterUnlock(row, col);
-            // Check if this is the last unmatched vowel in the word
             const isLastVowel = names[row].filter(l => l.isVowel && !l.matched).length === 1;
-
-            // Check if this is the last word with unmatched vowels
             const isLastWord = names.every(
               (word, index) => index === row || word.every(l => !l.isVowel || l.matched)
             );
 
             if (isLastWord && isLastVowel) {
-              playSound(allWordsCompleteAudio);
+              playSound(sounds.allWordsComplete);
             } else if (isLastVowel) {
-              playSound(correctWordAudios[row]);
+              playSound(correctWordSounds[row]);
             } else {
-              playSound(correctLetterAudio);
+              playSound(sounds.correctLetter);
             }
 
             return { ...letter, currentLetter: newLetter, matched: true };
           }
-          // Play sound for vowels
-          playSound(direction > 0 ? letterChangeAudio : letterChangeAudioDown);
+          
+          playSound(direction > 0 ? sounds.letterChange : sounds.letterChangeDown);
           return { ...letter, currentLetter: newLetter };
         }
         return letter;
@@ -360,35 +395,6 @@ const initializeWordList = () => {
 
   onMount(() => {
     window.addEventListener('keydown', gridNavigate);
-    
-    // Load audio files
-    letterChangeAudio = new Audio(letterChangeSound);
-    letterChangeAudioDown = new Audio(letterChangeSoundDown);
-    correctLetterAudio = new Audio(correctLetterSound);
-    correctWordAudios = [
-      new Audio(correctWordSound1),
-      new Audio(correctWordSound2),
-      new Audio(correctWordSound3)
-    ];
-    allWordsCompleteAudio = new Audio(allWordsCompleteSound);
-    leftKeyAudio = new Audio(leftKeySound);
-    rightKeyAudio = new Audio(rightKeySound);
-
-    // Wait for all audio to load
-    Promise.all([
-      letterChangeAudio.load(),
-      letterChangeAudioDown.load(),
-      correctLetterAudio.load(),
-      ...correctWordAudios.map(audio => audio.load()),
-      allWordsCompleteAudio.load(),
-      leftKeyAudio.load(),
-      rightKeyAudio.load()
-    ]).then(() => {
-      setAudioLoaded(true);
-    }).catch(error => {
-      console.error('Error loading audio:', error);
-    });
-
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
@@ -403,6 +409,9 @@ const initializeWordList = () => {
     const firstVowelPosition = findFirstVowelPosition(names);
     setFocus(firstVowelPosition.row, firstVowelPosition.col);
     setIsGridFocused(true);
+
+    // Set audioLoaded to true since Howler handles loading internally
+    setAudioLoaded(true);
   });
 
   onCleanup(() => {

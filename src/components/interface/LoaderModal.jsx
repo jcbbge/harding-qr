@@ -124,6 +124,20 @@ const LoaderModal = props => {
     }
   };
 
+  const getCustomContent = (company, role) => {
+    const lowercaseCompany = company.toLowerCase()
+    if (lowercaseCompany === 'gumroad' || lowercaseCompany === 'antiwork') {
+      return {
+        title: 'FIND MY NEXT DESIGNGINEER',
+        subtitle: `${company}'s internal application framework to find top PRODUCT / DESIGNER / ENGINEER / AI BUILDER candidates`
+      }
+    }
+    return {
+      title: 'Find My Next PM',
+      subtitle: `${company}'s internal application framework to find top ${role} candidates`
+    }
+  }
+
   return (
     <div class={styles.modalOverlay} onClick={handleClose}>
       <div class={styles.modal}>
@@ -131,8 +145,8 @@ const LoaderModal = props => {
           <tbody>
             <tr>
               <td colspan="2" rowspan="2" class={styles.widthAuto}>
-                <h1 class={styles.title}>Find My Next PM</h1>
-                <span class={styles.subtitle}>{company}'s internal application framework to find top {role} candidates</span>
+                <h1 class={styles.title}>{getCustomContent(company, role).title}</h1>
+                <span class={styles.subtitle}>{getCustomContent(company, role).subtitle}</span>
               </td>
               <th>Version</th>
               <td class={styles.widthMin}>v0.2.1</td>

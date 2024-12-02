@@ -77,6 +77,10 @@ const fetchCompanyData = async (companyName) => {
       wordlist = JSON.parse(prepared);
     }
 
+    // Add more detailed logging for logo URL extraction
+    const logoAttachment = record.get('company_logo');
+    const logoUrl = Array.isArray(logoAttachment) && logoAttachment[0]?.url;
+
     const data = {
       name: record.get('company_name'),
       company_colors: record.get('company_colors'),
@@ -84,6 +88,7 @@ const fetchCompanyData = async (companyName) => {
       prd_subtitle: record.get('prd_subtitle'),
       prd_md: record.get('prd_md'),
       wordlist: Array.isArray(wordlist) ? wordlist : [],
+      company_logo: logoUrl // Store just the URL string
     };
 
     // Cache the response
@@ -92,7 +97,7 @@ const fetchCompanyData = async (companyName) => {
     return data;
   } catch (error) {
     console.error('Error fetching from Airtable:', error);
-    throw error; // Let createResource handle the error
+    throw error;
   }
 };
 
@@ -261,6 +266,26 @@ const Roleco = props => {
       <div class="main-content">
         <div class={`snap-container ${heroUnlocked() ? 'unlocked' : ''}`}>
           <section class="snap-section hero-section">
+            {companyData()?.company_logo && (
+              <div style={{
+                "display": "flex",
+                "justify-content": "center",
+                "align-items": "center",
+                "margin-bottom": "2rem"
+              }}>
+                {console.log('Rendering logo section')}
+                {console.log('Logo URL from companyData:', companyData().company_logo)}
+                <img 
+                  src={companyData().company_logo[0].url} 
+                  alt="Company Logo"
+                  style={{
+                    "max-width": "300px",
+                    "max-height": "150px",
+                    "object-fit": "contain"
+                  }}
+                />
+              </div>
+            )}
             <div class="name-grid-container">
               {!props.testMode && (
                 <Show 

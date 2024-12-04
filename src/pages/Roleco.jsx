@@ -266,26 +266,6 @@ const Roleco = props => {
       <div class="main-content">
         <div class={`snap-container ${heroUnlocked() ? 'unlocked' : ''}`}>
           <section class="snap-section hero-section">
-            {companyData()?.company_logo && (
-              <div style={{
-                "display": "flex",
-                "justify-content": "center",
-                "align-items": "center",
-                "margin-bottom": "2rem"
-              }}>
-                {console.log('Rendering logo section')}
-                {console.log('Logo URL from companyData:', companyData().company_logo)}
-                <img 
-                  src={companyData().company_logo[0].url} 
-                  alt="Company Logo"
-                  style={{
-                    "max-width": "300px",
-                    "max-height": "150px",
-                    "object-fit": "contain"
-                  }}
-                />
-              </div>
-            )}
             <div class="name-grid-container">
               {!props.testMode && (
                 <Show 

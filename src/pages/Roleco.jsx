@@ -16,44 +16,9 @@ const airtableClient = () => {
   }).base('appAJc59Qfb9sP9zo')
 } 
 
-// Add this function near the top with other utility functions
-const CACHE_PREFIX = 'company_data_'
-const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
-
-const getFromCache = (companyName) => {
-  const cached = localStorage.getItem(`${CACHE_PREFIX}${companyName}`)
-  if (!cached) return null
-  
-  const { data, timestamp } = JSON.parse(cached)
-  
-  // Check if cache is expired
-  if (Date.now() - timestamp > CACHE_DURATION) {
-    localStorage.removeItem(`${CACHE_PREFIX}${companyName}`)
-    return null
-  }
-  
-  return data
-}
-
-const setToCache = (companyName, data) => {
-  localStorage.setItem(
-    `${CACHE_PREFIX}${companyName}`,
-    JSON.stringify({
-      data,
-      timestamp: Date.now()
-    })
-  )
-}
-
-// New fetch function
+// New fetch function - removed cache operations
 const fetchCompanyData = async (companyName) => {
   if (!companyName) return null;
-  
-  // Check cache first
-  const cached = getFromCache(companyName);
-  if (cached) {
-    return cached;
-  }
   
   const base = airtableClient();
   
@@ -77,24 +42,18 @@ const fetchCompanyData = async (companyName) => {
       wordlist = JSON.parse(prepared);
     }
 
-    // Add more detailed logging for logo URL extraction
     const logoAttachment = record.get('company_logo');
     const logoUrl = Array.isArray(logoAttachment) && logoAttachment[0]?.url;
 
-    const data = {
+    return {
       name: record.get('company_name'),
       company_colors: record.get('company_colors'),
       prd_title: record.get('prd_title'),
       prd_subtitle: record.get('prd_subtitle'),
       prd_md: record.get('prd_md'),
       wordlist: Array.isArray(wordlist) ? wordlist : [],
-      company_logo: logoUrl // Store just the URL string
+      company_logo: logoUrl
     };
-
-    // Cache the response
-    setToCache(companyName, data);
-    
-    return data;
   } catch (error) {
     console.error('Error fetching from Airtable:', error);
     throw error;

@@ -8,14 +8,21 @@ const LoaderModal = props => {
   const [currentIndex, setCurrentIndex] = createSignal(0);
   const [isTyping, setIsTyping] = createSignal(false);
   const [isLoadingComplete, setIsLoadingComplete] = createSignal(false);
+  let role = props.role;
+  let company = props.company;
 
-  const role = props.role;
-  const company = props.company;
+  let cool = false;
+
+  if (props.company === 'CHLOE'){
+    cool = true;
+    company = 'CHLOE';
+    role = 'YAN'
+  }
 
   const spacebar = '\u2423';
   const returnKey = '\u23CE';
   const shiftKey = '\u21E7';
-  const displayOutput = [
+  let displayOutput = [
     ` Welcome!`,
     ` Initializing ${company} ${role} Sequence`,
     ` Booting FindMyNextPM.exe...`,
@@ -35,6 +42,28 @@ const LoaderModal = props => {
     ` OR ${spacebar} Spacebar (${shiftKey} Shift + ${spacebar} Spacebar)`,
     ` Click Anywhere to Start`,
   ];
+
+  if (cool) {
+    displayOutput = [
+    `Welcome!`,
+    `Initializing ${company} ${role} Sequence - A True Pioneer in Their Field`,
+    `Booting _${company}${role}ISCOOL.exe... Powered by Unmatched Dedication and Skill`,
+    `Magnet for Excellence Interface... CONNECTED `,
+    `Genius Recognition... OPERATIONAL`,
+    `Finalizing Boot ${company} Sequence... Setting New Standards of Brilliance`,
+    `Launching _${company}${role}ISCOOL.exe...`,
+    `A Journey Guided by Passion and Innovation.. Searching Amongst the Elite`,
+    `Potential Match Found. Loading Profile... Prepare to Be Inspired`,
+    `${company} ${role} Sequence Ready - A Beacon of Inspiration and Achievement`,
+    ` HELP MENU`,
+    ` KEYBOARD NAVIGATION:`,
+    ` Use ← → ↑ ↓ Arrow Keys or W A S D Letter Keys`,
+    ` CHANGE SQUARES:`,
+    ` Use ${returnKey} Return Key (${shiftKey} Shift + ${returnKey} Return Key)`,
+    ` OR ${spacebar} Spacebar (${shiftKey} Shift + ${spacebar} Spacebar)`,
+    ` Click Anywhere to Start`,
+    ];
+  }
 
   const totalSentences = displayOutput.length;
 
@@ -130,6 +159,12 @@ const LoaderModal = props => {
       return {
         title: 'FIND MY NEXT DESIGNGINEER',
         subtitle: `${company}'s internal application framework to find top PRODUCT / DESIGNER / ENGINEER / AI BUILDER candidates`
+      }
+    }
+    if (cool) {
+      return {
+        title: `${company} ${role} IS EXCEPTIONAL`,
+        subtitle: `A Showcase of Excellence: Discover the Unique Qualities That Make ${company} ${role} Truly Stand Out.`
       }
     }
     return {

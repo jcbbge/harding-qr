@@ -5,6 +5,11 @@ import styles from './Prd.module.css';
 import { useTheme } from '../../contexts/ThemeContext';
 
 const PRD = (props) => {
+
+  let displayFooter = true;
+  if (props.cool) {
+    displayFooter = false;
+  }
   const [theme] = useTheme();
 
   const parsedMarkdownContent = createMemo(() => {
@@ -108,7 +113,8 @@ const PRD = (props) => {
         </div>
         <table class={styles.prdHeader}>
           <tbody>
-            <tr>
+            <Show when={displayFooter}>
+              <tr>
               <For each={footerIcons}>
                 {(icon) => (
                   <td class={styles.equalWidth}>
@@ -128,6 +134,7 @@ const PRD = (props) => {
                 )}
               </For>
             </tr>
+            </Show>
             <tr>
               <td class={styles.widthMin}>Confidential</td>
               <td colspan="2" class={styles.widthAuto}>{props.company} Internal Use Only</td>

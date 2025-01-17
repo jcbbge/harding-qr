@@ -89,7 +89,11 @@ const Roleco = props => {
   const [showPRD, setShowPRD] = createSignal(false);
   const navigate = useNavigate();
   const [scrolledToPRD, setScrolledToPRD] = createSignal(false);
+  let cool = false;
 
+  if (props.company === 'CHLOE') {
+    cool = true;
+  }
   // Replace createSignal for companyData with createResource
   const [companyData, { refetch }] = createResource(
     () => props.company?.toLowerCase(),
@@ -260,6 +264,7 @@ const Roleco = props => {
                 role={role()}
                 prd_title={companyData().prd_title}
                 prd_subtitle={companyData().prd_subtitle}
+                cool={cool}
               />
             )}
           </section>

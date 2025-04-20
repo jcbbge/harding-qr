@@ -196,3 +196,10 @@ which python
 python -c "import sys; print('\n'.join(sys.path))"
 
 # Remember: Always activate your virtual environment before working on your project!
+
+```
+
+# Harding QR
+
+<!-- Test deployment trigger -->
+```

@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@cloudflare/kv-asset-handler": "^0.4.0",
+    "@neondatabase/serverless": "^1.0.0",
     "@solidjs/router": "^0.14.3",
     "solid-js": "^1.8.11"
   }

@@ -1,8 +1,71 @@
-## Usage
+# SolidJS Starter Template
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+A clean, minimal SolidJS starter template with routing and TailwindCSS pre-configured.
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+## Features
+
+- 🚀 [SolidJS](https://www.solidjs.com/) for reactive UI
+- 🛣️ [@solidjs/router](https://github.com/solidjs/solid-router) for routing
+- 🎨 [TailwindCSS](https://tailwindcss.com/) for styling
+- ⚡️ [Vite](https://vitejs.dev/) for fast development
+- 🔧 [Prettier](https://prettier.io/) for code formatting
+
+## Getting Started
+
+1. Clone the repository:
+
+```bash
+git clone [your-repo-url]
+cd [your-repo-name]
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Start the development server:
+
+```bash
+npm run dev
+```
+
+4. Build for production:
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+```
+├── docs/
+│   └── templates/          # Development and debugging guides
+├── public/
+│   └── assets/            # Static assets
+├── src/
+│   ├── components/        # Reusable components
+│   ├── pages/            # Page components
+│   ├── App.jsx           # Main app component
+│   ├── index.jsx         # App entry point
+│   └── index.css         # Global styles
+├── index.html            # HTML entry point
+├── package.json          # Project dependencies
+├── vite.config.mjs       # Vite configuration
+└── README.md            # Project documentation
+```
+
+## Development Guides
+
+Check the `docs/templates` directory for:
+
+- Feature Development Guide
+- Debugging Guide
+
+## License
+
+MIT
 
 ```bash
 $ npm install # or pnpm install or yarn install
@@ -70,50 +133,66 @@ tabxnavigator
 
 09/30/2024
 cloned a python cli tool called o1-eng. set up a virtual environment and installed the dependencies. added the venv to .gitignore. Follow these steps to get setup:
+
 # Navigate to your project directory
+
 cd ~/webdevelopment/solidjs/jrg-portfolio
 
 # Create a new virtual environment
+
 python3 -m venv venv
 
 # Activate the virtual environment
+
 source venv/bin/activate
 
 # Deactivate the virtual environment
+
 deactivate
 
 # Install a package
+
 pip install package_name
 
 # Install multiple packages
+
 pip install package1 package2 package3
 
 # Install packages from requirements.txt
+
 pip install -r requirements.txt
 
 # Create or update requirements.txt
+
 pip freeze > requirements.txt
 
 # Run your script (from any directory)
+
 python ~/webdevelopment/o1-engineer/o1-eng.py
 
 # Run your script (from the script's directory)
+
 cd ~/webdevelopment/o1-engineer
 python o1-eng.py
 
 # Activate venv from a different directory
+
 source ~/webdevelopment/solidjs/jrg-portfolio/venv/bin/activate
 
 # Check installed packages
+
 pip list
 
 # Check Python version
+
 python --version
 
 # Check where Python is installed
+
 which python
 
 # Check sys.path (Python's search path for modules)
+
 python -c "import sys; print('\n'.join(sys.path))"
 
 # Remember: Always activate your virtual environment before working on your project!

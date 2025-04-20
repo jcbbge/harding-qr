@@ -8,15 +8,19 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "pages:dev": "wrangler pages dev dist",
+    "pages:deploy": "npm run build && wrangler pages deploy dist --project-name=harding-qr"
   },
   "license": "MIT",
   "devDependencies": {
     "prettier": "^3.3.3",
     "vite": "^5.0.11",
-    "vite-plugin-solid": "^2.8.2"
+    "vite-plugin-solid": "^2.8.2",
+    "wrangler": "^3.34.2"
   },
   "dependencies": {
+    "@cloudflare/kv-asset-handler": "^0.4.0",
     "@solidjs/router": "^0.14.3",
     "solid-js": "^1.8.11"
   }
